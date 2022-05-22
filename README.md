@@ -13,3 +13,5 @@ Tech/Framework used are React Native and Firebase.
 Mission control 1 (Git/Github) - 2hrs 0 min <br />
 Mission control 1 (React Native) - 4hrs 0 min <br />
 Meet the advisor - 20 min <br />
+
+First Header | Second Header———— | ————-Content from cell 1 | Content from cell 2Content in the first column | Content in the second column

@@ -15,7 +15,7 @@ Mission control 1 (React Native) - 4hrs 0 min <br />
 Meet the advisor - 20 min <br />
 Creating README file - 1hrs 30 min
 
-| First Header | Second Header |
+| Activity | Time clocked |
 | ---- | ---- |
 | Content from cell 1 | Content from cell 2 |
 | Content in the first column | Content in the second column |

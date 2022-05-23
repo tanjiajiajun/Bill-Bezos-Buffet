@@ -1,4 +1,4 @@
-## Bill-Bezos-Buffet
+# Bill-Bezos-Buffet
 
 Orbital (a.k.a., CP2106: Independent Software Development Project) is the NUS School of Computing's 1st year summer self-directed, independent work course.
 
@@ -9,12 +9,13 @@ https://www.bloomberg.com/features/2015-stock-chart-trading-game/
 
 Tech/Framework used are React Native and Firebase.
 
-# Activity log
+## Activity log
 Mission control 1 (Git/Github) - 2hrs 0 min <br />
 Mission control 1 (React Native) - 4hrs 0 min <br />
 Meet the advisor - 20 min <br />
+Creating README file - 1hrs 30 min
 
-| First Header | Second Header |
+| Activity | Time clocked |
 | ---- | ---- |
 | Content from cell 1 | Content from cell 2 |
 | Content in the first column | Content in the second column |

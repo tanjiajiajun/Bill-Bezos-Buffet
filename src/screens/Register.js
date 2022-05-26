@@ -26,7 +26,7 @@ export class Register extends Component {
                 console.log(result)
             })
             .catch((error) => {
-                console.log(result)
+                console.log(error)
             })
     }
 
@@ -39,12 +39,12 @@ export class Register extends Component {
           />
             <TextInput
             placeholder="email"
-            onChangeText={(email) => this.setState({ name })}
+            onChangeText={(email) => this.setState({ email })}
           />
             <TextInput
             placeholder="password"
             secureTextEntry={true}
-            onChangeText={(password) => this.setState({ name })}
+            onChangeText={(password) => this.setState({ password })}
           />
 
           <Button

@@ -18,7 +18,7 @@ const LoginScreen = () => {
             <StatusBar style="dark" />
             <InnerContainer>
                 <PageLogo resizeMode="cover" source={require('../../assets/icon.png')} />
-                <PageTitle>Bulls VS Bears</PageTitle>
+                <PageTitle>Bulls vs Bears</PageTitle>
                 <SubTitle>Account Login</SubTitle>
             </InnerContainer>
         </StyledContainer>

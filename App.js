@@ -1,12 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import HomeScreen from './src/screens/HomeScreen';
-import Stock from './src/components/Stock';
+import AnimatedStock from './src/components/AnimatedStock';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Stock/>
+      <AnimatedStock/>
     </View>
   );
 }

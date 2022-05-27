@@ -61,19 +61,22 @@ class Stock extends React.Component {
 
         return (
 
-            <View>
-                <Text>Hello TESTSDSDSDSDSDSHDKISHDKJDSHKHK</Text>
+            <View style={{width:'100%'}}>
                 <AreaChart
                 style={{ height: 200 }}
                 data={array}
                 contentInset={{ top: 30, bottom: 30 }}
                 curve={shape.curveNatural}
                 svg={{ fill: 'rgba(134, 65, 244, 0.2)' }}
+                animate={true}
+                animationDuration={3000}
             >
                 <Grid/>
                 <Line/>
             </AreaChart>
+                <Text>Hello DKISHDKJDSHKHK</Text>
             </View>
+
             
 
         );

@@ -1,7 +1,10 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 
-import { initializeApp } from 'firebase/app';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/database';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyBEd3yG8hljm0SI4uWMy4F--yXOlf-AhPQ",
@@ -13,14 +16,21 @@ const firebaseConfig = {
   measurementId: "G-H432944NB2"
 };
 
-const app = initializeApp(firebaseConfig);
 
+let app;
+if (firebase.apps.length === 0) {
+  app = firebase.initializeApp(firebaseConfig);
+} else {
+  app = firebase.app()
+}
+
+const auth = firebase.auth()
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import LandingScreen from './src/screens/Landing'
-import RegisterScreen from './src/screens/Register'
+import RegisterScreen from './src/screens/RegisterScreen'
 
 const Stack = createStackNavigator();
 export default function App() {

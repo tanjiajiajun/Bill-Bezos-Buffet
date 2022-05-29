@@ -9,7 +9,7 @@ function AnimatedStock(props) {
 
     const data = require('../data/AAPL.json')
     let xData = []
-    let yData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    let yData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
     const [count, setCount] = useState(0)
     const [yList, setyList] = useState(yData)
@@ -26,8 +26,8 @@ function AnimatedStock(props) {
 
     //if (toggle === true) {
     useEffect( ()=> {
-        const id = setInterval(() => setCount(prevCount => prevCount + 1),1000);
-        const iv = setInterval(() => setyList(prevyList => [...prevyList, data[count]["Adj Close"]].slice(1)),1000)
+        const id = setInterval(() => setCount(prevCount => prevCount + 1),10);
+        const iv = setInterval(() => setyList(prevyList => [...prevyList, data[count]["Adj Close"]].slice(1)),10)
         console.log(yList)
         return () => {
             clearInterval(id)
@@ -53,9 +53,6 @@ function AnimatedStock(props) {
     return (
     <View style={{width:'100%'}}>
         <Text>Hello!</Text>
-        <TouchableHighlight onPress={() => onpress()}>
-            <Text>{textValue}</Text>
-        </TouchableHighlight>
         <AreaChart
                 style={{ height: 200 }}
                 data={yList}
@@ -63,11 +60,13 @@ function AnimatedStock(props) {
                 curve={shape.curveNatural}
                 svg={{ fill: 'rgba(134, 65, 244, 0.2)' }}
                 animate={true}
-                animationDuration={100}
+                animationDuration={10}
             >
     
                 <Line/>
+                <Grid/>
             </AreaChart>
+
     </View>
     );
 }

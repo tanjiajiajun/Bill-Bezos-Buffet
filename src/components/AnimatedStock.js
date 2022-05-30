@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {View, Text, TouchableHighlight} from 'react-native'
 
 import { Path } from 'react-native-svg'
@@ -26,8 +26,8 @@ function AnimatedStock(props) {
 
     //if (toggle === true) {
     useEffect( ()=> {
-        const id = setInterval(() => setCount(prevCount => prevCount + 1),10);
-        const iv = setInterval(() => setyList(prevyList => [...prevyList, data[count]["Adj Close"]].slice(1)),10)
+        const id = setInterval(() => setCount(prevCount => prevCount + 1),100);
+        const iv = setInterval(() => setyList(prevyList => [...prevyList, data[count]["Adj Close"]].slice(1)),100)
         console.log(yList)
         return () => {
             clearInterval(id)
@@ -43,11 +43,6 @@ function AnimatedStock(props) {
             stroke={'rgb(134, 65, 244)'}
             fill={'none'}
         />)
-
-    
-
-    
-    
 
 
     return (
@@ -65,8 +60,8 @@ function AnimatedStock(props) {
     
                 <Line/>
             </AreaChart>
-        <TouchableHighlight title='Long'></TouchableHighlight>
-        <TouchableHighlight title='Short'></TouchableHighlight>
+                <Grid/>
+
     </View>
     );
 }

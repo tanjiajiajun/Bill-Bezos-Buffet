@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#0782F9',
         borderRadius:15,
         width: '60%',
-        alignItems:'center'
+        alignItems:'center',
     
     },
     buttonTextContainer: {

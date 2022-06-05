@@ -1,102 +1,140 @@
-import React, { Component } from 'react'
-import { View, Button, TextInput, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/core'
+import React, { useEffect, useState } from 'react'
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/database';
-
+import { auth } from '../components/firebase';
+import { getAuth, sendEmailVerification } from "firebase/auth";
 
 
 
 
-export class RegisterScreen extends Component {
-    constructor(props) {
-        super(props);
+const RegisterScreen = () => {
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
-        this.state = {
-            email : '',
-            password: '',
-            name: '',
-        }
+    const navigation = useNavigation()
 
-        this.onSignup = this.onSignup.bind(this)
+    const handleSignUp = () => {
+        auth
+        .createUserWithEmailAndPassword(email,password)
+        .then(userCredential => {
+            const user = userCredential.user;
+            userCredential.user.sendEmailVerification();
+            handleStatusMessage(AUTH_SUCCESS);
+            auth.signOut();
+            alert("Email sent");
+            console.log('Registered with:', user.email);
+            navigation.navigate("VerifyEmail")
+
+        })
+        .catch(error => alert(error.message))
     }
 
-    onSignup() {
-        const { email, password, name } = this.state;
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((result) => {
-                console.log(result)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.textContainer}>Create account</Text>
-                <TextInput style={styles.inputContainer}
-                    placeholder="name"
-                    onChangeText={(name) => this.setState({ name })}
+
+    return (
+        <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        >
+            <Text style={styles.headerTextContainer}>Create account</Text>
+
+            <View style={styles.inputContainer}>
+                <TextInput
+                    placeholder="Name"
+                    value={name}
+                    onChangeText={text => setName(text)}
+                    style={styles.input}
                 />
-                <TextInput style={styles.inputContainer}
-                    placeholder="email"
-                    onChangeText={(email) => this.setState({ email })}
-                 />
-                <TextInput style={styles.inputContainer}
-                    placeholder="password"
-                    secureTextEntry={true}
-                    onChangeText={(password) => this.setState({ password })}
+                <TextInput
+                    placeholder="Email"
+                    value={email}
+                    onChangeText={text => setEmail(text)}
+                    style={styles.input}
                 />
-                <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                    onPress={() => this.onSignup()}>
-                        <Text style={styles.buttonTextContainer}>Sign Up</Text>
-                </TouchableOpacity>
-             </View>
-             </View>
-    )
-  }
+                <TextInput
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={text => setPassword(text)}
+                    style={styles.input}
+                    secureTextEntry
+                />
+        </View>
+
+
+        <View style={styles.ButtonContainer}>
+            <TouchableOpacity
+            onPress={handleSignUp}
+            style={styles.signUpButton}
+            >
+            <Text style={styles.signUpButtonText}>Register</Text>
+            </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+            onPress={() => navigation.navigate("Login")}
+            >
+            <Text style={styles.bottomButtonLogInText}>If you already have an account.{"\n"}Log In</Text>
+            </TouchableOpacity>
+        
+        </KeyboardAvoidingView>
+  )
 }
 
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 150
     },
-    textContainer:{
+
+    headerTextContainer:{
         fontSize: 30,
         fontWeight: 'bold',
-        marginBottom: 40
+        marginBottom: 25,
     },
+
     inputContainer: {
         width: '80%',
-        backgroundColor:'white',
-        borderRadius:10,
-        padding:8,
-        paddingLeft:15,
-        margin:5
     },
+
+    input: {
+        backgroundColor: 'white',
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        borderRadius: 10,
+        marginTop: 5,
+    },
+
     buttonContainer: {
-        margin: 5,
-        padding: 5,
-        backgroundColor:'#0782F9',
-        borderRadius:15,
-        width: '60%',
-        alignItems:'center',
-    
+        justifyContent: 'center',
+        paddingHorizontal: 1,
+        width: "60%",
     },
-    buttonTextContainer: {
-        color:'white',
-        padding:5,
-        fontSize:16,
-        fontWeight:'700'
-    }
+
+    signUpButton: {
+        backgroundColor: '#0782F9',
+        width: "100%",
+        padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+
+    signUpButtonText: {
+        color: 'white',
+        fontWeight: '700',
+        fontSize: 16,
+    },
+
+    bottomButtonLogInText: {
+        alignItems: 'center',
+        color:"red",
+        fontSize: 16,
+
+    },
+
 })

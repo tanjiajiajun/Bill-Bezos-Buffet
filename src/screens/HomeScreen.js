@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { auth } from '../../firebase';
+import { auth } from '../components/firebase';
 
 import Stock from '../components/Stock';
 import AnimatedStock from '../components/AnimatedStock';
@@ -14,6 +14,7 @@ const HomeScreen = (props) => {
         auth
             .signOut()
             .then(() => {
+                console.log('User signed out!')
                 navigation.replace('Login')
             })
             .catch(e => alert(e.message))
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     headerText:{
-        fontSize: 30,
+        fontSize: 3,
         fontWeight: '700',
         padding: 15,
         paddingBottom: 0,

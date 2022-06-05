@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../../firebase'
+import { auth } from '../components/firebase'
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -15,26 +15,21 @@ const LoginScreen = () => {
         navigation.navigate("Home")
       }
     })
-
     return unsubscribe
   }, [])
 
-  const handleSignUp = () => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Registered with:', user.email);
-      })
-      .catch(error => alert(error.message))
-  }
 
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
-        navigation.navigate('Home')
+        if (!user.emailVerified) {
+          navigation.navigate('VerifyEmail')
+        } else {
+          console.log("Logged in with", user.email)
+          navigation.navigate("Home")
+        }
       })
       .catch(error => alert(error.message))
   }
@@ -44,6 +39,8 @@ const LoginScreen = () => {
       style={styles.container}
       behavior="padding"
     >
+      <Text style={styles.headerTextContainer}>Welcome to Bulls Vs Bears</Text>
+
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -61,18 +58,28 @@ const LoginScreen = () => {
       </View>
 
       <View style={styles.buttonContainer}>
+        
         <TouchableOpacity
           onPress={handleLogin}
           style={styles.button}
         >
           <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
+        
         <TouchableOpacity
           onPress={() => navigation.navigate("Register")}
           style={[styles.button, styles.buttonOutline]}
         >
           <Text style={styles.buttonOutlineText}>Register</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ResetPassword")}
+          style={[styles.button, styles.buttonOutline]}
+        >
+          <Text style={styles.buttonOutlineText}>Forgot my password?</Text>
+        </TouchableOpacity>
+
       </View>
     </KeyboardAvoidingView>
   )
@@ -81,14 +88,23 @@ const LoginScreen = () => {
 export default LoginScreen
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  headerTextContainer:{
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 40
+  },
+
   inputContainer: {
     width: '80%',
   },
+
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 15,
@@ -96,12 +112,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 5,
   },
+
   buttonContainer: {
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 40,
   },
+
   button: {
     backgroundColor: '#0782F9',
     width: '100%',
@@ -109,17 +127,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
   },
+
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
     borderColor: '#0782F9',
     borderWidth: 2,
   },
+
   buttonText: {
     color: 'white',
     fontWeight: '700',
     fontSize: 16,
   },
+
   buttonOutlineText: {
     color: '#0782F9',
     fontWeight: '700',

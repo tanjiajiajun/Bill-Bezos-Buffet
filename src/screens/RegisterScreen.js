@@ -21,7 +21,6 @@ const RegisterScreen = () => {
         .then(userCredential => {
             const user = userCredential.user;
             userCredential.user.sendEmailVerification();
-            handleStatusMessage(AUTH_SUCCESS);
             auth.signOut();
             alert("Email sent");
             console.log('Registered with:', user.email);

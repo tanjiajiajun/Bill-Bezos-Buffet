@@ -8,7 +8,6 @@ import { AreaChart, YAxis } from 'react-native-svg-charts'
 
 
 function AnimatedStock(props) {
-
     const data = require('../data/AAPL.json')
     const [randomint, setRandomint] = useState(0)
 
@@ -16,41 +15,48 @@ function AnimatedStock(props) {
         setRandomint(Math.floor(Math.random() * (data.length - 300)))
     }, [])
 
+    
     const gameArray = data.slice(randomint, randomint + 300)
-
-    const n = gameArray[0]['Adj Close']
     
-    let xData = []
-    let yData = [
-        n,n,n,n,n,n,n,n,n,n,
-        n,n,n,n,n,n,n,n,n,n,
-        n,n,n,n,n,n,n,n,n,n,
-    ]
-
     const [count, setCount] = useState(0)
-    const [yList, setyList] = useState(yData)
+    const [yList, setyList] = useState([])
     const [start, setStart] = useState(false)
-    
+    const [startButtonDisable, setStartButtonDisable] = useState(false)
+    const [holdChecker, setHoldChecker] = useState(false)
 
 
-    const onpress = () => {
+    const startButtonOnPress = () => {
         setStart(prevStart => !prevStart)
+        setAmount(10000)
+        if (count < 300) {
+            setStartButtonDisable(true)
+        }
     }
-
-    // const textValue = toggle ? 'ON' : 'OFF'
 
     useEffect( ()=> {
         var id;
         var iv;
+        // when game ends
         if (count == 300) {
-            alert('game ended')
+            if (holdChecker == true) {
+                handleLongOnPressOut()
+            }
+            alert(`game ended, you have a ${(Math.round(amount/100))}% return in your investment!`)
+            gameEnd()
         }
+        //check if start button is pressed
         else if (start == false) {
             console.log('havent start')
         }
+
         else if (start == true){
-            var id = setInterval(() => setCount(prevCount => prevCount + 1),100);
-            var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]["Adj Close"]].slice(1)),100)
+            if (yList.length <= 50) {
+                var id = setInterval(() => setCount(prevCount => prevCount + 1),100);
+                var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]["Adj Close"]],100))
+            } else {
+                var id = setInterval(() => setCount(prevCount => prevCount + 1),100);
+                var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]["Adj Close"]].slice(1)),100)
+            }
         }
         //console.log(yList) //debugging purpose
         return () => {
@@ -74,20 +80,38 @@ function AnimatedStock(props) {
     )
 
     useEffect( () => {
-        console.log(`u sold at ${sellingPrice}`)
-        console.log(`profit per share: ${sellingPrice-buyingPrice}`)
-        console.log(`total earnings for the trade: ${(sellingPrice-buyingPrice)*noShares}`)
-        setAmount(prev => prev + (sellingPrice-buyingPrice)*noShares )
+        if (sellingPrice == undefined) {
+            //pass
+            } else {
+            console.log(`u sold at ${sellingPrice}`)
+            console.log(`profit per share: ${sellingPrice-buyingPrice}`)
+            console.log(`total earnings for the trade: ${(sellingPrice-buyingPrice)*noShares}`)
+            setAmount(prev => prev + (sellingPrice-buyingPrice)*noShares )
+            }
+
         }, [sellingPrice]
     )
 
+
+
     const handleLongOnPressIn = () => {
         setBuyingPrice(yList[yList.length-1])
-    }
-    const handleLongOnPressOut = () => {
-        setSellingPrice(yList[yList.length-1])
+        setHoldChecker(true)
     }
 
+    const handleLongOnPressOut = () => {
+        setSellingPrice(yList[yList.length-1])
+        setHoldChecker(false)
+       
+    }
+
+    const gameEnd = () => {
+        setCount(0)
+        setStart(false)
+        setRandomint(Math.floor(Math.random() * (data.length - 300)))
+        setyList([])
+        setStartButtonDisable(false)
+    }
 
 
     const handleShortOnPressIn = () => {
@@ -96,7 +120,13 @@ function AnimatedStock(props) {
     const handleShortOnPressOut = () => {
         console.log(yList[yList.length-1])
     }
-
+    const startButtonText = () => {
+        if (start == false) {
+            return 'Start'
+        } else {
+            return `${(300 - count)/10}s left!`
+        }
+    }
     // For graphing of line
     const Line = ({ line }) => (
         <Path
@@ -107,8 +137,9 @@ function AnimatedStock(props) {
     )
     return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.text}>Account balance: ${amount}</Text>
-        <View style={{ height: 500, flexDirection: 'row-reverse' }}>
+        <Text style={styles.text}>Account balance:</Text>
+        <Text style={styles.text}>${amount}</Text>
+        <View style={{ height: 400, flexDirection: 'row-reverse' }}>
             <YAxis
                 data={yList}
                 contentInset={{ top: 20, bottom: 20 }}
@@ -125,17 +156,21 @@ function AnimatedStock(props) {
             </AreaChart>
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={onpress}>
-            <Text>Start</Text>
+        <TouchableOpacity 
+        style={[start == false ? styles.button : styles.disabledbutton]} 
+        onPress={startButtonOnPress} 
+        disabled={startButtonDisable}>
+            <Text>{startButtonText()}</Text>
         </TouchableOpacity>
 
         <View style = {styles.longshotview}>
-            <TouchableOpacity style={styles.long}
+            <TouchableOpacity style={[start == true ? styles.long : styles.disabledlong]}
             onPressIn={handleLongOnPressIn} 
-            onPressOut={handleLongOnPressOut}>
+            onPressOut={handleLongOnPressOut}
+            disabled={!startButtonDisable}>
                 <Text>Long</Text>
             </TouchableOpacity>
-            <TouchableOpacity style= {styles.short}>
+            <TouchableOpacity style= {[start == true ? styles.short : styles.disabledshort]} disabled={!startButtonDisable}>
                 <Text>Short</Text>
             </TouchableOpacity>
         </View>
@@ -152,7 +187,8 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize:30,
-        color:'white'
+        color:'white',
+        marginTop:5,
 
     },
     button: {
@@ -164,8 +200,19 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         alignSelf: 'center',
-        
       },
+      disabledbutton: {
+        backgroundColor: 'white',
+        width: '60%',
+        padding: 15,
+        margin: 40,
+        marginBottom:10,
+        borderRadius: 10,
+        alignItems: 'center',
+        alignSelf: 'center',
+        opacity: 0.3
+      },      
+    
     longshotview: {
         flexDirection:'row',
         justifyContent:'center'
@@ -178,6 +225,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 10
     },
+    disabledlong: {
+        backgroundColor: '#32CD32',
+        width: '40%',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        margin: 10,
+        opacity: 0.3,
+    },
     short: {
         backgroundColor: '#DC143C',
         width: '40%',
@@ -185,6 +241,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         margin: 10
+    },
+    disabledshort: {
+        backgroundColor: '#DC143C',
+        width: '40%',
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        margin: 10,
+        opacity: 0.3,
     }
     }   
 )

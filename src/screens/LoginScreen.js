@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { auth } from '../components/firebase'
+
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
@@ -39,6 +40,12 @@ const LoginScreen = () => {
       style={styles.container}
       behavior="padding"
     >
+
+      <Image 
+        source={require('../../assets/Bulls-Vs-Bears-logo.png')}
+        style={{ width:300, height:300 }}
+        />
+
       <Text style={styles.headerTextContainer}>Welcome to Bulls Vs Bears</Text>
 
       <View style={styles.inputContainer}>

@@ -42,8 +42,8 @@ const LoginScreen = () => {
     >
 
       <Image 
-        source={require('../../assets/Bulls-Vs-Bears-logo.png')}
-        style={{ width:300, height:300 }}
+        source={require('../../assets/Bulls-Vs-Bears-HomeScreenLogo.png')}
+        style={{ resizeMode:"contain", width:300, height:200 }}
         />
 
       <Text style={styles.headerTextContainer}>Welcome to Bulls Vs Bears</Text>

@@ -1,14 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useCallback, useRef, useState } from 'react';
+import { SafeAreaView ,View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { auth } from '../../firebase';
-
-import Stock from '../components/Stock';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AnimatedStock from '../components/AnimatedStock';
+import BottomSheet from '../components/BottomSheet';
+import { StatusBar } from 'expo-status-bar';
+
 
 const HomeScreen = (props) => {
 
-    const navigation = useNavigation()
+    // const navigation = useNavigation()
 
     const handleSignOut = () => {
         auth
@@ -19,15 +21,15 @@ const HomeScreen = (props) => {
             .catch(e => alert(e.message))
     }
     return (
-        <View>
-            <Text style={styles.headerText}>Welcome back, </Text>
-            <Text style={styles.emailText}>{auth.currentUser?.email}</Text>
-            <AnimatedStock/>
-            <TouchableOpacity style={styles.signoutButton}
-            onPress={handleSignOut}>
-                <Text style={styles.signoutButtonText}>Sign Out</Text>
-            </TouchableOpacity>
-        </View>
+        <GestureHandlerRootView style={{flex:1}}>
+            <SafeAreaView style={styles.container}>
+                <StatusBar style="dark"></StatusBar>
+                <Text style={styles.headerText}>Welcome back, </Text>
+                {/* <Text style={styles.emailText}>{auth.currentUser?.email}</Text> */}
+                <AnimatedStock/>
+                <BottomSheet/>
+            </SafeAreaView>
+        </GestureHandlerRootView>
 
     );
 }
@@ -37,13 +39,12 @@ export default HomeScreen;
 const styles = StyleSheet.create({
     container:{
         flex: 1 ,
-        alignItems: 'center',
-        justifyContent:'center'
+
     },
     headerText:{
-        fontSize: 30,
-        fontWeight: '700',
-        padding: 15,
+        fontSize: 24,
+        fontWeight: '500',
+        padding: 9,
         paddingBottom: 0,
     },
     emailText:{

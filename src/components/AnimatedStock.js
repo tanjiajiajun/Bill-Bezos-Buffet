@@ -23,6 +23,10 @@ function AnimatedStock(props) {
     const [start, setStart] = useState(false)
     const [startButtonDisable, setStartButtonDisable] = useState(false)
     const [holdChecker, setHoldChecker] = useState(false)
+    const [amount, setAmount] = useState(10000)
+    const [buyingPrice, setBuyingPrice] = useState(0)
+    const [sellingPrice, setSellingPrice] = useState(0)
+    const [noShares, setNoShares] = useState(0)
 
 
     const startButtonOnPress = () => {
@@ -37,11 +41,11 @@ function AnimatedStock(props) {
         var id;
         var iv;
         // when game ends
-        if (count == 300) {
+        if (count >= 300) {
             if (holdChecker == true) {
                 handleLongOnPressOut()
             }
-            alert(`game ended, you have a ${(Math.round(amount/100))}% return in your investment!`)
+            alert(`game ended, you have a ${(Math.round((amount-10000)/100))}% return in your investment!`)
             gameEnd()
         }
         //check if start button is pressed
@@ -65,12 +69,6 @@ function AnimatedStock(props) {
             }
 
         }, [yList, start])
-    
-
-    const [amount, setAmount] = useState(10000)
-    const [buyingPrice, setBuyingPrice] = useState(0)
-    const [sellingPrice, setSellingPrice] = useState(0)
-    const [noShares, setNoShares] = useState(0)
 
     useEffect( () => {
         console.log(`u bought at ${buyingPrice}`)
@@ -137,8 +135,9 @@ function AnimatedStock(props) {
     )
     return (
     <SafeAreaView style={styles.container}>
-        <Text style={styles.text}>Account balance:</Text>
-        <Text style={styles.text}>${amount}</Text>
+
+        <Text style={styles.text}>Account balance: ${amount.toFixed(3)}</Text>
+        <View style={styles.line}/>
         <View style={{ height: 400, flexDirection: 'row-reverse' }}>
             <YAxis
                 data={yList}
@@ -155,12 +154,12 @@ function AnimatedStock(props) {
                 <Line/>
             </AreaChart>
         </View>
-
+        <View style={styles.line}/>
         <TouchableOpacity 
         style={[start == false ? styles.button : styles.disabledbutton]} 
         onPress={startButtonOnPress} 
         disabled={startButtonDisable}>
-            <Text>{startButtonText()}</Text>
+            <Text style={styles.buttontext}>{startButtonText()}</Text>
         </TouchableOpacity>
 
         <View style = {styles.longshotview}>
@@ -174,7 +173,6 @@ function AnimatedStock(props) {
                 <Text>Short</Text>
             </TouchableOpacity>
         </View>
-
     </SafeAreaView>
     );
 }
@@ -183,29 +181,30 @@ const styles = StyleSheet.create({
     container: {
         height: '100%',
         width: '100%',
-        backgroundColor:'black'
+        backgroundColor:'#FFFFFF'
     },
     text: {
-        fontSize:30,
-        color:'white',
-        marginTop:5,
-
+        fontSize:24,
+        color:'#011515',
+        paddingTop:5,
+        paddingLeft:9,
+        fontWeight:'500',
     },
     button: {
-        backgroundColor: 'white',
+        backgroundColor: '#011515',
         width: '60%',
         padding: 15,
-        margin: 40,
+        margin: 20,
         marginBottom:10,
         borderRadius: 10,
         alignItems: 'center',
         alignSelf: 'center',
       },
       disabledbutton: {
-        backgroundColor: 'white',
+        backgroundColor: '#011515',
         width: '60%',
         padding: 15,
-        margin: 40,
+        margin: 20,
         marginBottom:10,
         borderRadius: 10,
         alignItems: 'center',
@@ -250,7 +249,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 10,
         opacity: 0.3,
-    }
+    },
+    buttontext: {
+        fontWeight:'700',
+        color: '#FEFEFD'
+    },
+    line: {
+        width: '85%',
+        height: 2,
+        backgroundColor: '#808080',
+        alignSelf: 'center',
+        marginTop: 10
+    },
     }   
 )
 export default AnimatedStock;

@@ -2,8 +2,8 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createStackNavigator } from '@react-navigation/stack';
 
 
 import RegisterScreen from './src/screens/RegisterScreen'
@@ -12,7 +12,7 @@ import HomeScreen from './src/screens/HomeScreen'
 import AnimatedStock from './src/components/AnimatedStock';
 
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 export default function App() {
   return (
     // <NavigationContainer>
@@ -22,6 +22,6 @@ export default function App() {
     //     <Stack.Screen name="Home" component={HomeScreen}/>
     //   </Stack.Navigator>
     // </NavigationContainer> 
-    <AnimatedStock/>
+    <HomeScreen/>
   );
 }

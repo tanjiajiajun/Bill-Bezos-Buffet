@@ -74,6 +74,7 @@ const LoginScreen = () => {
           <Text style={styles.buttonOutlineText}>Register</Text>
         </TouchableOpacity>
       </View>
+
     </KeyboardAvoidingView>
   )
 }

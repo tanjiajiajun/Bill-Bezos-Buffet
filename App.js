@@ -9,19 +9,27 @@ import { createStackNavigator } from '@react-navigation/stack';
 import RegisterScreen from './src/screens/RegisterScreen'
 import LoginScreen from './src/screens/LoginScreen';
 import HomeScreen from './src/screens/HomeScreen'
-import AnimatedStock from './src/components/AnimatedStock';
+import VerifyEmail from './src/screens/VerifyEmail';
+import ResetPassword from './src/screens/ResetPassword';
+import ResetPasswordSplashScreen from './src/screens/ResetPasswordSplashScreen';
 
 
 const Stack = createStackNavigator();
+
 export default function App() {
   return (
-    // <NavigationContainer>
-    //   <Stack.Navigator initialRouteName="Login">
-    //     <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false}}/>
-    //     <Stack.Screen name="Register" component={RegisterScreen}/>
-    //     <Stack.Screen name="Home" component={HomeScreen}/>
-    //   </Stack.Navigator>
-    // </NavigationContainer> 
-    <AnimatedStock/>
+
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="LoginScreen">
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false}}/>
+        <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false}}/>
+        <Stack.Screen name="VerifyEmail" component={VerifyEmail}/>
+        <Stack.Screen name="ResetPassword" component={ResetPassword}/>
+        <Stack.Screen name="ResetPasswordSplashScreen" component={ResetPasswordSplashScreen}/>
+        <Stack.Screen name="Home" component={HomeScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+
+
   );
 }

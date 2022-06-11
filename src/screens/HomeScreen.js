@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useRef, useState } from 'react';
 import { SafeAreaView ,View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { auth } from '../../firebase';
+// import { auth } from '../../firebase';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AnimatedStock from '../components/AnimatedStock';
 import BottomSheet from '../components/BottomSheet';
@@ -10,16 +10,16 @@ import { StatusBar } from 'expo-status-bar';
 
 const HomeScreen = (props) => {
 
-    // const navigation = useNavigation()
+    const navigation = useNavigation()
 
-    const handleSignOut = () => {
-        auth
-            .signOut()
-            .then(() => {
-                navigation.replace('Login')
-            })
-            .catch(e => alert(e.message))
-    }
+    // const handleSignOut = () => {
+    //     auth
+    //         .signOut()
+    //         .then(() => {
+    //             navigation.replace('Login')
+    //         })
+    //         .catch(e => alert(e.message))
+    // }
     return (
         <GestureHandlerRootView style={{flex:1}}>
             <SafeAreaView style={styles.container}>

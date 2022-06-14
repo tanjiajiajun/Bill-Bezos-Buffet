@@ -32,8 +32,9 @@ const styles = StyleSheet.create({
     },
 
     ResetPasswordText: {
-        color:"red",
-        fontSize: 14,
+        color:"#723AC5",
+        fontSize: 18,
+        textAlign: "center"
     },
 });
 

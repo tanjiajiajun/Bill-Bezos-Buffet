@@ -82,9 +82,9 @@ const LoginScreen = () => {
 
         <TouchableOpacity
           onPress={() => navigation.navigate("ResetPassword")}
-          style={[styles.button, styles.buttonOutline]}
+          style={[styles.button]}
         >
-          <Text style={styles.buttonOutlineText}>Forgot my password?</Text>
+          <Text style={styles.buttonText}>Forgot my password?</Text>
         </TouchableOpacity>
 
       </View>
@@ -95,6 +95,7 @@ const LoginScreen = () => {
 export default LoginScreen
 
 const styles = StyleSheet.create({
+
 
   container: {
     flex: 1,
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: '#723AC5',
     width: '100%',
     padding: 15,
     borderRadius: 10,
@@ -138,8 +139,7 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
+    marginBottom: 5,
   },
 
   buttonText: {
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   },
 
   buttonOutlineText: {
-    color: '#0782F9',
+    color: '#723AC5',
     fontWeight: '700',
     fontSize: 16,
   },

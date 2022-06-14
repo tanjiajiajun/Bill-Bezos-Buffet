@@ -59,24 +59,24 @@ const RegisterScreen = () => {
                     style={styles.input}
                     secureTextEntry
                 />
-        </View>
-
-
-        <View style={styles.ButtonContainer}>
+            </View>
+            
             <TouchableOpacity
             onPress={handleSignUp}
             style={styles.signUpButton}
             >
-            <Text style={styles.signUpButtonText}>Register</Text>
+                <Text style={styles.signUpButtonText}>Register</Text>
+            </TouchableOpacity>
+
+        <View style={styles.bottomButtonLogInContainer}>
+            <TouchableOpacity
+            onPress={() => navigation.navigate("Login")}
+            >
+            <Text style={styles.bottomButtonLogInText}>If you already have an account.{"\n"}Log In here</Text>
             </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-            onPress={() => navigation.navigate("Login")}
-            >
-            <Text style={styles.bottomButtonLogInText}>If you already have an account.{"\n"}Log In</Text>
-            </TouchableOpacity>
-        
+
         </KeyboardAvoidingView>
   )
 }
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
 
     headerTextContainer:{
         fontSize: 30,
@@ -109,18 +110,12 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
 
-    buttonContainer: {
-        justifyContent: 'center',
-        paddingHorizontal: 1,
-        width: "60%",
-    },
-
     signUpButton: {
-        backgroundColor: '#0782F9',
-        width: "100%",
-        padding: 10,
+        backgroundColor: '#723AC5',
+        padding: 15,
         borderRadius: 10,
         alignItems: 'center',
+        width:"60%"
     },
 
     signUpButtonText: {
@@ -129,10 +124,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 
+    bottomButtonLogInContainer:{
+        position: 'absolute', //Here is the trick
+        bottom: 50, //Here is the trick
+    },
+
     bottomButtonLogInText: {
         alignItems: 'center',
-        color:"red",
+        color:"#723AC5",
         fontSize: 16,
+        textAlign:"center"
 
     },
 

@@ -15,7 +15,7 @@ const VerifyEmail = () => {
     <TouchableOpacity
             onPress={() => navigation.navigate("Login")}
         >
-            <Text style={styles.verificationText}>Verify Email in your inbox.{"\n"}Then press here to Log In again</Text>
+            <Text style={styles.verificationText}>To continue, please verify your email we sent to your inbox.{"\n"}Then press here to log in again</Text>
         </TouchableOpacity>
 
     </View>

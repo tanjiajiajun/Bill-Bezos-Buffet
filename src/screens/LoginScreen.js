@@ -1,12 +1,17 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, Pressable, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { auth } from '../components/firebase'
+import { useTogglePasswordVisibility } from '../components/useTogglePasswordVisibility';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+
 
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const { passwordVisibility, rightIcon, handlePasswordVisibility } = useTogglePasswordVisibility();
 
   const navigation = useNavigation()
 
@@ -60,9 +65,13 @@ const LoginScreen = () => {
           value={password}
           onChangeText={text => setPassword(text)}
           style={styles.input}
-          secureTextEntry
+          secureTextEntry={passwordVisibility}
         />
+        <TouchableOpacity onPress={handlePasswordVisibility} style={styles.eye}>
+          <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />
+        </TouchableOpacity>
       </View>
+
 
       <View style={styles.buttonContainer}>
         
@@ -119,7 +128,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+    
   },
+
+
+  eye:{
+    position: 'absolute',
+    right: 10,
+    top:55,
+    },
 
   buttonContainer: {
     width: '60%',
@@ -154,3 +171,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 })
+
+

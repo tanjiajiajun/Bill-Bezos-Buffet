@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
-import { Image, Pressable, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { auth } from '../components/firebase'
 import { useTogglePasswordVisibility } from '../components/useTogglePasswordVisibility';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -44,10 +44,11 @@ const LoginScreen = () => {
     <KeyboardAvoidingView
       style={styles.container}
       behavior="padding"
+      backgroundColor="black"
     >
 
       <Image 
-        source={require('../../assets/Bulls-Vs-Bears-HomeScreenLogo.png')}
+        source={require('../../assets/Layer8.png')}
         style={{ resizeMode:"contain", width:300, height:200 }}
         />
 
@@ -115,7 +116,8 @@ const styles = StyleSheet.create({
   headerTextContainer:{
     fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 40
+    marginBottom: 40,
+    color: 'white',
   },
 
   inputContainer: {

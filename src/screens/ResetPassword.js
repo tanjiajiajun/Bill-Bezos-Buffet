@@ -27,6 +27,7 @@ const ResetPassword = () => {
         <KeyboardAvoidingView
         style={styles.container}
         behavior="padding"
+        backgroundColor="black"
         >
             <Text style={styles.headerText}>Forgot Password?</Text>
 
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: 'center',
         marginTop:"25%",
-        color:'black',
+        color:'white',
     },
 
 
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         fontStyle: "italic",
-        color:'black'
+        color:'white'
     },
     
     inputContainer: {

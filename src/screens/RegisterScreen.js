@@ -42,6 +42,7 @@ const RegisterScreen = () => {
         <KeyboardAvoidingView
         style={styles.container}
         behavior="padding"
+        backgroundColor="black"
         >
             <Text style={styles.headerTextContainer}>Create account</Text>
 
@@ -107,6 +108,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 25,
+        color:"white"
     },
 
     inputContainer: {
@@ -126,7 +128,8 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 10,
         alignItems: 'center',
-        width:"60%"
+        width:"60%",
+        marginTop:20
     },
 
     signUpButtonText: {

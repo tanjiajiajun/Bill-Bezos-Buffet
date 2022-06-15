@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, StatusBar } from 'react-native';
 import { auth } from '../components/firebase';
 
 import Stock from '../components/Stock';
@@ -20,16 +20,31 @@ const HomeScreen = (props) => {
             .catch(e => alert(e.message))
     }
     return (
-        <View>
+        <SafeAreaView
+        style={styles.container}
+        >
+          <ScrollView style={styles.scrollView} contentContainerStyle={{paddingBottom: 100}}
+        >
+
+
+            <View
+            style={styles.textContainer}>
             <Text style={styles.headerText}>Welcome back, </Text>
             <Text style={styles.emailText}>{auth.currentUser?.email}</Text>
+            </View>
+
+
             <AnimatedStock/>
-            <TouchableOpacity style={styles.signoutButton}
+
+            <TouchableOpacity
+            style={styles.signoutButton}
             onPress={handleSignOut}>
                 <Text style={styles.signoutButtonText}>Sign Out</Text>
             </TouchableOpacity>
-        </View>
 
+            </ScrollView>
+
+        </SafeAreaView>
     );
 }
 
@@ -37,33 +52,47 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
     container:{
-        flex: 1 ,
-        alignItems: 'center',
-        justifyContent:'center'
+        flex: 1,
+
     },
+    scrollView:{
+        backgroundColor: 'black',
+        paddingBottom: 100
+
+    },
+
+    textContainer:{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent:'center',
+    },
+    
     headerText:{
-        fontSize: 3,
+        fontSize: 20,
         fontWeight: '700',
-        padding: 15,
-        paddingBottom: 0,
+        color:"#723AC5"
     },
     emailText:{
         fontSize: 20,
         fontWeight:'700',
-        paddingLeft: 15,
+        color:"#723AC5"
     },
+
     signoutButton:{
-        margin: 5,
         padding: 5,
-        backgroundColor:'#0782F9',
-        borderRadius:15,
+        backgroundColor:'#723AC5',
+        borderRadius:10,
         width: '60%',
-        alignItems:'center'       
+        alignItems:'center',
+        justifyContent:'center',
+        marginLeft:"20%"  
     },
+
     signoutButtonText:{
         color:'white',
         padding:5,
         fontSize:16,
-        fontWeight:'700'        
+        fontWeight:'700',      
+        
     }
 })

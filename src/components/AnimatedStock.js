@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet} from 'react-native'
+import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, Modal} from 'react-native'
 
-import { Path } from 'react-native-svg'
+import { Path, Line } from 'react-native-svg'
 import { AreaChart, YAxis } from 'react-native-svg-charts'
+import EndModal from './EndModal';
 
 
 
 
-function AnimatedStock(props) {
-    const data = require('../data/AAPL.json')
+
+
+function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) {
+
+    // const data = require('../data/AAPL.json')
+
     const [randomint, setRandomint] = useState(0)
-
     useEffect( () => {
-        setRandomint(Math.floor(Math.random() * (data.length - 300)))
+        setRandomint(Math.floor(Math.random() * (datapointer.length - 300)))
     }, [])
 
-    
-    const gameArray = data.slice(randomint, randomint + 300)
-    
+    const mapper = datapointer.map((i) => Number(i))
+    const gameArray = mapper.slice(randomint, randomint + 300)
+
     const [count, setCount] = useState(0)
     const [yList, setyList] = useState([])
     const [start, setStart] = useState(false)
+    const [end, setEnd] = useState(false)
     const [startButtonDisable, setStartButtonDisable] = useState(false)
     const [holdChecker, setHoldChecker] = useState(false)
     const [amount, setAmount] = useState(10000)
@@ -44,9 +49,10 @@ function AnimatedStock(props) {
         if (count >= 300) {
             if (holdChecker == true) {
                 handleLongOnPressOut()
+            }else if (shortHoldChecker == true) {
+                handleShortOnPressOut()
             }
-            alert(`game ended, you have a ${(Math.round((amount-10000)/100))}% return in your investment!`)
-            gameEnd()
+            showModal()
         }
         //check if start button is pressed
         else if (start == false) {
@@ -56,10 +62,10 @@ function AnimatedStock(props) {
         else if (start == true){
             if (yList.length <= 50) {
                 var id = setInterval(() => setCount(prevCount => prevCount + 1),100);
-                var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]["Adj Close"]],100))
+                var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]],100))
             } else {
                 var id = setInterval(() => setCount(prevCount => prevCount + 1),100);
-                var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]["Adj Close"]].slice(1)),100)
+                var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]].slice(1)),100)
             }
         }
         //console.log(yList) //debugging purpose
@@ -103,20 +109,37 @@ function AnimatedStock(props) {
        
     }
 
-    const gameEnd = () => {
-        setCount(0)
-        setStart(false)
-        setRandomint(Math.floor(Math.random() * (data.length - 300)))
-        setyList([])
-        setStartButtonDisable(false)
+    const showModal = () => {
+        setEnd(true)
     }
 
+
+    const [shortBuyingPrice, setShortBuyingPrice] = useState(0)
+    const [shortSellingPrice, setShortSellingPrice] = useState(0)
+    const [shortHoldChecker, setShortHoldChecker] = useState(false)
+
+    useEffect( () => {
+        console.log(`you have shorted at: ${shortBuyingPrice}`)
+        setNoShares(Math.floor(amount/shortBuyingPrice))
+        console.log(`you have shorted ${noShares} shares`)
+    }, [shortBuyingPrice])
+
+    useEffect( () => {  
+        if (shortSellingPrice == undefined) {
+        }
+        console.log(`you have exited your short position at ${shortSellingPrice}`)
+        console.log(`profit per share: ${shortBuyingPrice-shortSellingPrice}`)
+        console.log(`total profit from the trade: ${(shortBuyingPrice-shortSellingPrice) * noShares}`)
+        setAmount( prev => prev + (shortBuyingPrice-shortSellingPrice) * noShares )
+    }, [shortSellingPrice])
 
     const handleShortOnPressIn = () => {
-        console.log(yList[yList.length-1])
+        setShortHoldChecker(true)
+        setShortBuyingPrice(yList[yList.length-1])
     }
     const handleShortOnPressOut = () => {
-        console.log(yList[yList.length-1])
+        setShortHoldChecker(false)
+        setShortSellingPrice(yList[yList.length-1])
     }
     const startButtonText = () => {
         if (start == false) {
@@ -125,16 +148,56 @@ function AnimatedStock(props) {
             return `${(300 - count)/10}s left!`
         }
     }
+    const sendDataToParnet = () => {
+        setAmount(10000)
+        setEnd(false)
+        setyList([])
+        setCount(0)
+        setStart(false)
+        setRandomint(Math.floor(Math.random() * (datapointer.length - 300)))
+        setStartButtonDisable(false)
+        passbackfn()
+    }
+
+
     // For graphing of line
-    const Line = ({ line }) => (
+    
+    const UpperLine = ({ line }) => (
         <Path
             d={ line }
             stroke={ 'rgba(134, 65, 244)' }
             fill={ 'none' }
         />
     )
+
+    const DottedLine = (({ y, d }) => (
+        <Line
+
+            stroke={ 'grey' }
+            strokeDasharray={ [ 4, 8 ] }
+            strokeWidth={ 2 }
+            x1={ '0' }
+            x2={ '100%' }
+            y1={ y(50) }
+            y2={ y(50) }
+
+            />
+
+    ))
+
+
     return (
     <SafeAreaView style={styles.container}>
+
+        <EndModal 
+        ended={end} 
+        sendDataToParnet={sendDataToParnet} 
+        amnt={amount} 
+        gamearraypointer={yList} 
+        startdate={datepointer[randomint]} 
+        enddate={datepointer[randomint+300]} 
+        ticker={tickerpointer}/>
+
 
         <Text style={styles.text}>Account balance: ${amount.toFixed(3)}</Text>
         <View style={styles.line}/>
@@ -151,7 +214,8 @@ function AnimatedStock(props) {
                 data={yList}
                 contentInset={{ top: 20, bottom: 20 }}
                 svg={{ fill: 'rgba(134, 65, 244, 0.2)' }}>
-                <Line/>
+                <UpperLine/>
+                <DottedLine d={yList[yList.length-1]}/>
             </AreaChart>
         </View>
         <View style={styles.line}/>
@@ -169,8 +233,11 @@ function AnimatedStock(props) {
             disabled={!startButtonDisable}>
                 <Text>Long</Text>
             </TouchableOpacity>
-            <TouchableOpacity style= {[start == true ? styles.short : styles.disabledshort]} disabled={!startButtonDisable}>
-                <Text>Short</Text>
+            <TouchableOpacity style= {[start == true ? styles.short : styles.disabledshort]}
+            onPressIn={handleShortOnPressIn}
+            onPressOut={handleShortOnPressOut}
+            disabled={!startButtonDisable}>
+                <Text>Short </Text>
             </TouchableOpacity>
         </View>
     </SafeAreaView>

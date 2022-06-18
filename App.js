@@ -12,6 +12,8 @@ import HomeScreen from './src/screens/HomeScreen'
 import VerifyEmail from './src/screens/VerifyEmail';
 import ResetPassword from './src/screens/ResetPassword';
 import ResetPasswordSplashScreen from './src/screens/ResetPasswordSplashScreen';
+import StockDataGetter from './src/components/StockDataGetter';
+import AnimatedStock from './src/components/AnimatedStock';
 
 
 const Stack = createStackNavigator();
@@ -26,9 +28,10 @@ export default function App() {
         <Stack.Screen name="VerifyEmail" component={VerifyEmail}/>
         <Stack.Screen name="ResetPassword" component={ResetPassword}/>
         <Stack.Screen name="ResetPasswordSplashScreen" component={ResetPasswordSplashScreen}/>
-        <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
+      
 
 
   );

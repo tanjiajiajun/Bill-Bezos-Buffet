@@ -24,7 +24,7 @@ const BottomSheet = () => {
       translateY.value = event.translationY + context.value.y;
       translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y)
       translateY.value = Math.min(translateY.value, ORIGINAL_VALUE)
-      console.log(translateY.value)
+      // console.log(translateY.value)
     })
     .onEnd(() => {
       if (translateY.value > -40){

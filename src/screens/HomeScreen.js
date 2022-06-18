@@ -1,12 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useRef, useState } from 'react';
-import { SafeAreaView ,View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaView ,View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
 // import { auth } from '../../firebase';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import AnimatedStock from '../components/AnimatedStock';
 import BottomSheet from '../components/BottomSheet';
 import { StatusBar } from 'expo-status-bar';
 
+import { NavigationContainer } from '@react-navigation/native';
+import Tabs from '../navigations/tabs';
+import StockDataGetter from '../components/StockDataGetter';
 
 const HomeScreen = (props) => {
 
@@ -26,7 +28,7 @@ const HomeScreen = (props) => {
                 <StatusBar style="dark"></StatusBar>
                 <Text style={styles.headerText}>Welcome back, </Text>
                 {/* <Text style={styles.emailText}>{auth.currentUser?.email}</Text> */}
-                <AnimatedStock/>
+                <StockDataGetter/>
                 <BottomSheet/>
             </SafeAreaView>
         </GestureHandlerRootView>
@@ -39,6 +41,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
     container:{
         flex: 1 ,
+        backgroundColor: '#FFFFFF'
 
     },
     headerText:{

@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../components/firebase'
-import { useTogglePasswordVisibility } from '../components/useTogglePasswordVisibility';
+import { auth } from '../../components/firebase'
+import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+
 
 
 
@@ -18,7 +19,7 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate("Home")
+        navigation.navigate("mainStack")
       }
     })
     return unsubscribe
@@ -34,7 +35,7 @@ const LoginScreen = () => {
           navigation.navigate('VerifyEmail')
         } else {
           console.log("Logged in with", user.email)
-          navigation.navigate("Home")
+          navigation.navigate("mainStack")
         }
       })
       .catch(error => alert(error.message))
@@ -48,7 +49,7 @@ const LoginScreen = () => {
     >
 
       <Image 
-        source={require('../../assets/Layer8.png')}
+        source={require('../../../assets/Layer8.png')}
         style={{ resizeMode:"contain", width:300, height:200 }}
         />
 

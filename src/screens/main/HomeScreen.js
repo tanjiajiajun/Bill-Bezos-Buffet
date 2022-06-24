@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView, ScrollView, StatusBar } from 'react-native';
-import { auth } from '../components/firebase';
+import { auth } from '../../components/firebase';
 
-import Stock from '../components/Stock';
-import AnimatedStock from '../components/AnimatedStock';
+import Stock from '../../components/Stock';
+import AnimatedStock from '../../components/AnimatedStock';
 
 const HomeScreen = (props) => {
 
@@ -15,7 +15,7 @@ const HomeScreen = (props) => {
             .signOut()
             .then(() => {
                 console.log('User signed out!')
-                navigation.replace('Login')
+                navigation.replace('loginStack')
             })
             .catch(e => alert(e.message))
     }
@@ -68,12 +68,12 @@ const styles = StyleSheet.create({
     },
     
     headerText:{
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: '700',
         color:"#723AC5"
     },
     emailText:{
-        fontSize: 20,
+        fontSize: 18,
         fontWeight:'700',
         color:"#723AC5"
     },

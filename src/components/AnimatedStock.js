@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
         backgroundColor:'black'
     },
     text: {
-        fontSize:30,
+        fontSize:28,
         color:'white'
 
     },

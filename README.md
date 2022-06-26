@@ -14,6 +14,9 @@ Warning: This app is designed with iOS in mind. If possible, run the app on iOS 
 
 ### On Android
 
+1. Download the app: https://expo.dev/artifacts/727ea2f0-8919-43e1-9589-ce8cdb397710 
+2. A .apk file should be downloaded, open it on your local android device to start testing
+
 Orbital (a.k.a., CP2106: Independent Software Development Project) is the NUS School of Computing's 1st year summer self-directed, independent work course.
 
 @tanjiajiajun and @neverdivideby0 Orbital Project is about creating an application called "Bulls vs Bears" that allows the user to simulate their actions in the Finance market at any point in time of company's ticker symbols.

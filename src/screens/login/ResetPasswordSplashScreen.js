@@ -29,11 +29,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: "black"
     },
 
     ResetPasswordText: {
-        color:"red",
-        fontSize: 14,
+        color:"#723AC5",
+        fontSize: 20,
+        textAlign: "center"
     },
 });
 

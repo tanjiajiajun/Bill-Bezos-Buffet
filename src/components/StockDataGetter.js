@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import AnimatedStock from './AnimatedStock'
+import DataFetchingSplash from '../screens/main/DataFetchingSplash'
 
 export default function StockDataGetter() {
   const tickerjson = require('../data/filtered_listing.json')
@@ -57,19 +58,8 @@ export default function StockDataGetter() {
     )
   }else {
     return (
-      <View style={styles.container}><Text style={styles.text}>Loading...</Text></View>
+      <DataFetchingSplash/>
     )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
-  text: {
-    fontSize: 40,
-    fontWeight: '800'
-  }
-})

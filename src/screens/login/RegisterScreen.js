@@ -1,9 +1,12 @@
 import { useNavigation } from '@react-navigation/core'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-import { auth } from '../components/firebase';
+import { auth } from '../../components/firebase';
 import { getAuth, sendEmailVerification } from "firebase/auth";
+
+import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 
@@ -12,6 +15,9 @@ const RegisterScreen = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
+    const { passwordVisibility, rightIcon, handlePasswordVisibility } = useTogglePasswordVisibility();
+
 
     const navigation = useNavigation()
 
@@ -36,6 +42,7 @@ const RegisterScreen = () => {
         <KeyboardAvoidingView
         style={styles.container}
         behavior="padding"
+        backgroundColor="black"
         >
             <Text style={styles.headerTextContainer}>Create account</Text>
 
@@ -57,26 +64,31 @@ const RegisterScreen = () => {
                     value={password}
                     onChangeText={text => setPassword(text)}
                     style={styles.input}
-                    secureTextEntry
+                    secureTextEntry={passwordVisibility}
                 />
-        </View>
 
+                <TouchableOpacity onPress={handlePasswordVisibility} style={styles.eye}>
+                    <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />
+                </TouchableOpacity>
 
-        <View style={styles.ButtonContainer}>
+            </View>
+            
             <TouchableOpacity
             onPress={handleSignUp}
             style={styles.signUpButton}
             >
-            <Text style={styles.signUpButtonText}>Register</Text>
+                <Text style={styles.signUpButtonText}>Register</Text>
+            </TouchableOpacity>
+
+        <View style={styles.bottomButtonLogInContainer}>
+            <TouchableOpacity
+            onPress={() => navigation.navigate("Login")}
+            >
+            <Text style={styles.bottomButtonLogInText}>If you already have an account.{"\n"}Log In here</Text>
             </TouchableOpacity>
         </View>
 
-        <TouchableOpacity
-            onPress={() => navigation.navigate("Login")}
-            >
-            <Text style={styles.bottomButtonLogInText}>If you already have an account.{"\n"}Log In</Text>
-            </TouchableOpacity>
-        
+
         </KeyboardAvoidingView>
   )
 }
@@ -91,10 +103,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
+
     headerTextContainer:{
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 25,
+        color:"white"
     },
 
     inputContainer: {
@@ -109,18 +123,13 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
 
-    buttonContainer: {
-        justifyContent: 'center',
-        paddingHorizontal: 1,
-        width: "60%",
-    },
-
     signUpButton: {
-        backgroundColor: '#0782F9',
-        width: "100%",
-        padding: 10,
+        backgroundColor: '#723AC5',
+        padding: 15,
         borderRadius: 10,
         alignItems: 'center',
+        width:"60%",
+        marginTop:20
     },
 
     signUpButtonText: {
@@ -129,11 +138,23 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 
+    bottomButtonLogInContainer:{
+        position: 'absolute', //Here is the trick
+        bottom: 50, //Here is the trick
+    },
+
     bottomButtonLogInText: {
         alignItems: 'center',
-        color:"red",
+        color:"#723AC5",
         fontSize: 16,
+        textAlign:"center"
 
     },
+
+    eye:{
+        position: 'absolute',
+        right: 10,
+        top:98,
+        },
 
 })

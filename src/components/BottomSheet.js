@@ -11,7 +11,7 @@ const {height: SCREEN_HEIGHT} = Dimensions.get('window')
 const BottomSheet = () => {
 
   const MAX_TRANSLATE_Y =  -SCREEN_HEIGHT + 500
-  const ORIGINAL_VALUE = 144
+  const ORIGINAL_VALUE = 100
 
   const translateY = useSharedValue(ORIGINAL_VALUE)
   const context = useSharedValue({ y: 0 })

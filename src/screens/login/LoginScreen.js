@@ -1,19 +1,25 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useEffect, useState } from 'react'
 import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { auth } from '../components/firebase'
+import { auth } from '../../components/firebase'
+import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+
+
 
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const { passwordVisibility, rightIcon, handlePasswordVisibility } = useTogglePasswordVisibility();
+
   const navigation = useNavigation()
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate("Home")
+        navigation.navigate("mainStack")
       }
     })
     return unsubscribe
@@ -29,7 +35,7 @@ const LoginScreen = () => {
           navigation.navigate('VerifyEmail')
         } else {
           console.log("Logged in with", user.email)
-          navigation.navigate("Home")
+          navigation.navigate("mainStack")
         }
       })
       .catch(error => alert(error.message))
@@ -39,11 +45,12 @@ const LoginScreen = () => {
     <KeyboardAvoidingView
       style={styles.container}
       behavior="padding"
+      backgroundColor="black"
     >
 
       <Image 
-        source={require('../../assets/Bulls-Vs-Bears-logo.png')}
-        style={{ width:300, height:300 }}
+        source={require('../../../assets/Layer8.png')}
+        style={{ resizeMode:"contain", width:300, height:200 }}
         />
 
       <Text style={styles.headerTextContainer}>Welcome to Bulls Vs Bears</Text>
@@ -60,9 +67,13 @@ const LoginScreen = () => {
           value={password}
           onChangeText={text => setPassword(text)}
           style={styles.input}
-          secureTextEntry
+          secureTextEntry={passwordVisibility}
         />
+        <TouchableOpacity onPress={handlePasswordVisibility} style={styles.eye}>
+          <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />
+        </TouchableOpacity>
       </View>
+
 
       <View style={styles.buttonContainer}>
         
@@ -82,9 +93,9 @@ const LoginScreen = () => {
 
         <TouchableOpacity
           onPress={() => navigation.navigate("ResetPassword")}
-          style={[styles.button, styles.buttonOutline]}
+          style={[styles.button]}
         >
-          <Text style={styles.buttonOutlineText}>Forgot my password?</Text>
+          <Text style={styles.buttonText}>Forgot my password?</Text>
         </TouchableOpacity>
 
       </View>
@@ -97,6 +108,7 @@ export default LoginScreen
 
 const styles = StyleSheet.create({
 
+
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -106,7 +118,8 @@ const styles = StyleSheet.create({
   headerTextContainer:{
     fontSize: 30,
     fontWeight: 'bold',
-    marginBottom: 40
+    marginBottom: 40,
+    color: 'white',
   },
 
   inputContainer: {
@@ -119,7 +132,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 5,
+    
   },
+
+
+  eye:{
+    position: 'absolute',
+    right: 10,
+    top:55,
+    },
 
   buttonContainer: {
     width: '60%',
@@ -129,7 +150,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#0782F9',
+    backgroundColor: '#723AC5',
     width: '100%',
     padding: 15,
     borderRadius: 10,
@@ -139,8 +160,7 @@ const styles = StyleSheet.create({
   buttonOutline: {
     backgroundColor: 'white',
     marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
+    marginBottom: 5,
   },
 
   buttonText: {
@@ -150,8 +170,10 @@ const styles = StyleSheet.create({
   },
 
   buttonOutlineText: {
-    color: '#0782F9',
+    color: '#723AC5',
     fontWeight: '700',
     fontSize: 16,
   },
 })
+
+

@@ -178,8 +178,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
             strokeWidth={ 2 }
             x1={ '0' }
             x2={ '100%' }
-            y1={ y(50) }
-            y2={ y(50) }
+            y1={ y(45) }
+            y2={ y(45) }
+            
 
             />
 
@@ -210,7 +211,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
                 formatLabel={(value) => `$${value}`}
             />
             <AreaChart
-                style={{flex: 1}}
+                style={{flex: 1, }}
                 data={yList}
                 contentInset={{ top: 20, bottom: 20 }}
                 svg={{ fill: 'rgba(134, 65, 244, 0.2)' }}>

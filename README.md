@@ -5,9 +5,14 @@
 
 Warning: This app is designed with iOS in mind. If possible, run the app on iOS or iOS simulator
 
-## On iOS
+### On iOS
 
-## On Android
+1. Download the app: https://expo.dev/artifacts/f719141e-9b68-4e81-8a79-0f892d83536c
+2. Click on the .tar.gz file, an app should be generated
+3. Drag the app to an iOS simulator, it should appear as a ordinary app with no logo, labelled bill-bezos-buffet 
+4. Click on the app to start testing!
+
+### On Android
 
 Orbital (a.k.a., CP2106: Independent Software Development Project) is the NUS School of Computing's 1st year summer self-directed, independent work course.
 

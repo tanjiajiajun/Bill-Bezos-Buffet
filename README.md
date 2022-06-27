@@ -9,13 +9,19 @@ https://www.bloomberg.com/features/2015-stock-chart-trading-game/
 
 Tech/Framework used are React Native and Firebase.
 
-## Activity log
-Mission control 1 (Git/Github) - 2hrs 0 min <br />
-Mission control 1 (React Native) - 4hrs 0 min <br />
-Meet the advisor - 20 min <br />
-Creating README file - 1hrs 30 min
+## How to run the application
 
-| Activity | Time clocked |
-| ---- | ---- |
-| Content from cell 1 | Content from cell 2 |
-| Content in the first column | Content in the second column |
+Warning: This app is designed with iOS in mind. If possible, run the app on iOS or iOS simulator
+
+### On iOS
+
+1. Download the app: https://expo.dev/artifacts/f719141e-9b68-4e81-8a79-0f892d83536c
+2. Click on the .tar.gz file in your file explorer, an app should be generated
+3. Drag the app to an iOS simulator if you are on your PC, it should appear as a ordinary app with no logo, labelled bill-bezos-buffet 
+4. Click on the app to start testing!
+
+### On Android
+
+1. Download the app: https://expo.dev/artifacts/727ea2f0-8919-43e1-9589-ce8cdb397710 
+2. A .apk file should be downloaded, open it on your local android device to start testing
+

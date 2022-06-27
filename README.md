@@ -1,5 +1,7 @@
 # Bill-Bezos-Buffet
 
+## Overview
+
 Orbital (a.k.a., CP2106: Independent Software Development Project) is the NUS School of Computing's 1st year summer self-directed, independent work course.
 
 @tanjiajiajun and @neverdivideby0 Orbital Project is about creating an application called "Bulls vs Bears" that allows the user to simulate their actions in the Finance market at any point in time of company's ticker symbols.

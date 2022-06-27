@@ -35,7 +35,8 @@
     "react-navigation-stack": "^2.10.4",
     "react-plotly.js": "^2.5.1",
     "styled-components": "^5.3.5",
-    "react-native-reanimated": "~2.8.0"
+    "react-native-reanimated": "~2.8.0",
+    "expo-updates": "~0.13.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

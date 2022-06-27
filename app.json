@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "bill-bezos-buffet",
-    "slug": "bill-bezos-buffet",
+    "slug": "bulls-vs-bears",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,16 +18,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.chencannot.bullsvsbears"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.chencannot.bullsvsbears"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "owner": "chencannot"
   }
 }

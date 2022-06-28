@@ -19,7 +19,7 @@ Warning: This app is designed with iOS in mind. If possible, run the app on iOS 
 
 1. Download the app: https://expo.dev/artifacts/f719141e-9b68-4e81-8a79-0f892d83536c
 2. Click on the .tar.gz file in your file explorer, an app should be generated
-3. Drag the app to an iOS simulator if you are on your PC, it should appear as a ordinary app with no logo, labelled bill-bezos-buffet 
+3. Drag the app to an iOS simulator if you are on your mac, it should appear as a ordinary app with no logo, labelled bill-bezos-buffet 
 4. Click on the app to start testing!
 
 ### On Android

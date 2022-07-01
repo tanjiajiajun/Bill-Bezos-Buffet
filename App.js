@@ -18,6 +18,8 @@ import mainStack from './src/screens/mainStack';
 
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import LeaderboardScreen from './src/screens/main/LeaderboardScreen';
+
 
 
 
@@ -40,5 +42,6 @@ export default function App() {
       </Stack.Navigator>
 
     </NavigationContainer>
+
   );
 }

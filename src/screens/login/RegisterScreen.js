@@ -9,7 +9,8 @@ import { useTogglePasswordVisibility } from '../../components/useTogglePasswordV
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
-
+import { doc, setDoc, addDoc, collection, updateDoc } from 'firebase/firestore' 
+import { db } from '../../components/firebase'
 
 const RegisterScreen = () => {
     const [name, setName] = useState("")
@@ -28,7 +29,6 @@ const RegisterScreen = () => {
             const user = userCredential.user;
             userCredential.user.sendEmailVerification();
             auth.signOut();
-            alert("Email sent");
             console.log('Registered with:', user.email);
             navigation.navigate("VerifyEmail")
 

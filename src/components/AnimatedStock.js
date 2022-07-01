@@ -7,8 +7,7 @@ import EndModal from './EndModal';
 
 
 import { auth } from './firebase'
-import { doc, setDoc, addDoc, collection, updateDoc } from 'firebase/firestore' 
-import { db } from './firebase'
+
 
 
 

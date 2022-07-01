@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 
-import { auth } from '../../components/firebase';
+import { auth, createUserDocument } from '../../components/firebase';
 import { getAuth, sendEmailVerification } from "firebase/auth";
 
 import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility';
@@ -10,7 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 import { doc, setDoc, addDoc, collection, updateDoc } from 'firebase/firestore' 
-import { db } from '../../components/firebase'
+
 
 const RegisterScreen = () => {
     const [name, setName] = useState("")
@@ -22,20 +22,41 @@ const RegisterScreen = () => {
 
     const navigation = useNavigation()
 
+    // const creds123 = (userCredential) => {
+    //     const user1 = userCredential.user;
+    //     userCredential.user1.sendEmailVerification();
+    //     auth.signOut();
+    //     console.log('Registered with:', user1.email);
+    //     navigation.navigate("VerifyEmail")
+    // }
+    // const handleSignUp = async () => {
+    //     try {
+    //         const { user } = await auth.createUserWithEmailAndPassword(email,password)
+    //         await createUserDocument(user, {name})
+    //         await creds123(userCredential)
+    
+            
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+
+
+    // }
     const handleSignUp = () => {
-        auth
-        .createUserWithEmailAndPassword(email,password)
+        auth.createUserWithEmailAndPassword(email,password)
         .then(userCredential => {
+            createUserDocument(userCredential.user, {name})
             const user = userCredential.user;
             userCredential.user.sendEmailVerification();
             auth.signOut();
+            alert("Email sent");
             console.log('Registered with:', user.email);
             navigation.navigate("VerifyEmail")
+
 
         })
         .catch(error => alert(error.message))
     }
-
 
 
     return (

@@ -1,8 +1,7 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyBEd3yG8hljm0SI4uWMy4F--yXOlf-AhPQ",
@@ -22,11 +21,35 @@ if (firebase.apps.length === 0) {
 } else {
   app = firebase.app()
 }
-// const app = initializeApp(firebaseConfig)  
-const db = getFirestore(app)
 
 const auth = firebase.auth() 
+const firestore = firebase.firestore()
 
+export const createUserDocument = async(user, additionalData) => {
+  if (!user) return;
 
-export { db, auth }
+  const userRef = firestore.doc(`users/${user.uid}`)
+  const snapshot = await userRef.get()
+
+  if (!snapshot.exists) {
+    const { email } = user;
+    const { name } = additionalData;
+
+    try {
+      userRef.set({
+        name: name,
+        email: email,
+        createdAt: new Date(),
+        scores: [],
+        highscore: 0
+      })
+    } catch (err) {
+      console.log(err)
+    }
+
+    
+  }
+}
+ 
+export { firestore, auth }
 

@@ -8,7 +8,6 @@ import WavyHeader from '../../components/WavyHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// import { BadgeIcon } from '@mui/icons-material';
 
 function SettingsScreen() {
   const navigation = useNavigation()
@@ -27,9 +26,12 @@ function SettingsScreen() {
         <WavyHeader
         customStyles={styles.svgCurve}
         customHeight={330}
-        customTop={240}
+        customTop={249}
         customBgColor="#D3F33D"
-        customWavePattern="M0,320L80,314.7C160,309,320,299,480,266.7C640,235,800,181,960,181.3C1120,181,1280,235,1360,261.3L1440,288L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
+        customWavePattern="M0,320L80,314.7C160,309,320,299,480,266.7C640,
+                          235,800,181,960,181.3C1120,181,1280,235,1360,261.3L1440,
+                          288L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0
+                          ,160,0,80,0L0,0Z"
       />
         <View style={styles.profileHeader}>
           <Text style={styles.headerText}>Profile</Text>
@@ -46,39 +48,45 @@ function SettingsScreen() {
           <View style={styles.innerContainer}>
 
             <TouchableOpacity style={styles.innerComponent}>
-              <MaterialIcons style={{marginHorizontal:15, marginVertical:7}} name='insert-photo' size={45} />
-              <Text>Update Profile Picture</Text>
+              <MaterialIcons style={{marginHorizontal:15, marginVertical:7}} name='photo-library' size={45} />
+              <Text style={styles.settingsText}>Update Profile Picture</Text>
+              <MaterialIcons style={{position: 'absolute', marginLeft:310}} name='arrow-forward-ios' size={25} />
             </TouchableOpacity>
 
           
             <TouchableOpacity style={styles.innerComponent}>
               <MaterialCommunityIcons style={{marginHorizontal:15, marginVertical:7}} name="rename-box" size={45} />
-              <Text>Change Username</Text>
+              <Text style={styles.settingsText}>Change Username</Text>
+              <MaterialIcons style={{position: 'absolute', marginLeft:310}} name='arrow-forward-ios' size={25} />
             </TouchableOpacity>
 
 
             <TouchableOpacity style={styles.innerComponent}>
               <MaterialIcons style={{marginHorizontal:15, marginVertical:7}} name='lock-outline' size={45} />
-              <Text>Change Password</Text>
+              <Text style={styles.settingsText}>Change Password</Text>
+              <MaterialIcons style={{position: 'absolute', marginLeft:310}} name='arrow-forward-ios' size={25} />
             </TouchableOpacity>
 
 
             <TouchableOpacity style={styles.innerComponent}>
               <MaterialCommunityIcons style={{marginHorizontal:15, marginVertical:7}} name="theme-light-dark" size={45} />
-              <Text>Change Theme</Text>
+              <Text style={styles.settingsText}>Change Theme</Text>
+              <MaterialIcons style={{position: 'absolute', marginLeft:310}} name='arrow-forward-ios' size={25} />
             </TouchableOpacity>
 
 
             <TouchableOpacity style={styles.innerComponent}>
               <MaterialCommunityIcons style={{marginHorizontal:15, marginVertical:7}} name="google-analytics" size={45} />
-              <Text>Check Play history</Text>
+              <Text style={styles.settingsText}>Check Play history</Text>
+              <MaterialIcons style={{position: 'absolute', marginLeft:310}} name='arrow-forward-ios' size={25} />
             </TouchableOpacity>
 
 
 
             <TouchableOpacity style={styles.innerComponent} onPress={handleSignOut}>
               <MaterialCommunityIcons style={{marginHorizontal:15, marginVertical:7}} name="logout" size={45} />
-              <Text>Log Out</Text>
+              <Text style={styles.settingsText}>Log Out</Text>
+              <MaterialIcons style={{position: 'absolute', marginLeft:310}} name='arrow-forward-ios' size={25} />
             </TouchableOpacity>
 
 
@@ -142,6 +150,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems:'center',
   },
+  settingsText: {
+    fontSize: 17,
+    fontWeight: '500'
+  }
 
 })
 

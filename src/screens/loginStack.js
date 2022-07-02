@@ -12,9 +12,7 @@ import VerifyEmail from './login/VerifyEmail';
 import ResetPassword from './login/ResetPassword';
 import ResetPasswordSplashScreen from './login/ResetPasswordSplashScreen';
 
-import HomeScreen from './main/HomeScreen';
 
-import mainStack from './mainStack';
 
 
 
@@ -24,9 +22,9 @@ const Stack = createStackNavigator();
 const LoginStackNavigator = () => {
 
     return (
-        <Stack.Navigator initialRouteName="LoginScreen" screenOptions={{gestureEnabled: false}} >
+        <Stack.Navigator initialRouteName="LoginScreen">
 
-            <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false, gestureEnabled: false,}}/>
+            <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
 
             <Stack.Screen name="Register" component={RegisterScreen} options={
                 {title: "Register",

@@ -6,9 +6,7 @@ import { datab } from './firebase';
 
 
 export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker }) {
-    
-    const [modalOpen, setModalOpen] = useState(true)
-    
+        
     return (
     <Modal
         visible={ended}
@@ -22,9 +20,7 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
                     <Text style={styles.exposetext}>The stock that you have just traded is {ticker},</Text>
                     <Text style={styles.exposetext}>from {startdate} to {enddate}</Text>
                     <View style={styles.wrapper}>
-                        <TouchableOpacity
-                        onPress={ended => setModalOpen(false)}>
-                        
+                        <TouchableOpacity>                        
                             <Text style={styles.modalbuttontext}>Deep Analysis</Text>
                         </TouchableOpacity>
                         <TouchableOpacity>

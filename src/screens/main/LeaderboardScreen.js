@@ -1,12 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient'
 
 import WavyHeader from '../../components/WavyHeader';
 import LeaderComponent from '../../components/LeaderComponent';
 
-
-import { LinearGradient } from 'expo-linear-gradient'
 
 function LeaderboardScreen() {
     return (
@@ -50,13 +48,18 @@ function LeaderboardScreen() {
           <View style={styles.line}></View>
         </View>
 
-
-        <LeaderComponent/>
-        <LeaderComponent/>
-        <LeaderComponent/>
-        <LeaderComponent/>
-        <LeaderComponent/>
-        <LeaderComponent/>
+        <ScrollView contentContainerStyle={{paddingBottom: 350}}>
+          <LeaderComponent/>
+          <LeaderComponent/>
+          <LeaderComponent/>
+          <LeaderComponent/>
+          <LeaderComponent/>
+          <LeaderComponent/>
+          <LeaderComponent/>
+          <LeaderComponent/>
+          <LeaderComponent/>
+          <LeaderComponent/>
+        </ScrollView>
 
       </View>
 

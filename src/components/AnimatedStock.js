@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, Modal} from 'react-native'
+import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, TextInput} from 'react-native'
 
 import { Path, Line } from 'react-native-svg'
 import { AreaChart, YAxis } from 'react-native-svg-charts'
 import EndModal from './EndModal';
 
 
+import { auth } from './firebase'
+
 
 
 
 
 function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) {
-
+    
+    //database functions
+    const create = () => {
+        setDoc(doc(db, "users", auth.currentUser?.email),{
+            highscore: ((amount-10000)/100).toFixed(1)
+        })
+    }
+    // fake data to use while API is not connected (obselete)
     // const data = require('../data/AAPL.json')
 
     const [randomint, setRandomint] = useState(0)
@@ -149,6 +158,8 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         }
     }
     const sendDataToParnet = () => {
+        create()
+
         setAmount(10000)
         setEnd(false)
         setyList([])
@@ -157,6 +168,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         setRandomint(Math.floor(Math.random() * (datapointer.length - 300)))
         setStartButtonDisable(false)
         passbackfn()
+        
     }
 
 
@@ -241,6 +253,8 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
                 <Text>Short </Text>
             </TouchableOpacity>
         </View>
+
+
     </SafeAreaView>
     );
 }

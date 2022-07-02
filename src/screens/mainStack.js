@@ -32,6 +32,7 @@ const BottomTabNavigator = () => {
 
         <Tab.Screen name="LeaderboardScreen" component={LeaderboardScreen} options={{ 
             tabBarLabel: 'leaderboard',
+            headerShown: false,
             gestureEnabled: false,
             tabBarIcon: ({ color }) => (
             <MaterialIcons name="leaderboard" color={color} size={26} />
@@ -42,6 +43,7 @@ const BottomTabNavigator = () => {
         <Tab.Screen name="SettingsScreen" component={SettingsScreen} options={{ 
             tabBarLabel: 'Settings',
             gestureEnabled: false,
+            headerShown: false,
             tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="account" color={color} size={26} />
           ),

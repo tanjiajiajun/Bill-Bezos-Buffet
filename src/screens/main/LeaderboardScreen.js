@@ -1,16 +1,141 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
+
+import WavyHeader from '../../components/WavyHeader';
+import LeaderComponent from '../../components/LeaderComponent';
 
 
-
+import { LinearGradient } from 'expo-linear-gradient'
 
 function LeaderboardScreen() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Leaderboard here!</Text>
+      <View style={styles.container}>
+        <WavyHeader
+        customStyles={styles.svgCurve}
+        customHeight={160}
+        customTop={130}
+        customBgColor="#5000ca"
+        customWavePattern="M0,96L48,112C96,128,192,160,288,
+        186.7C384,213,480,235,576,213.3C672,192,768,128,864,
+        128C960,128,1056,192,1152,208C1248,224,1344,192,1392,
+        176L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,
+        0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,
+        0,96,0,48,0L0,0Z"
+      />
+        <View style={styles.headerContainer}>
+          <Text style={styles.headerText}>Leaderboard</Text>
+        </View>
+        <LinearGradient 
+          colors={['#220056', '#5000ca']} 
+          start={{x:0, y:0}}
+          end={{x:1, y:1}}
+          style={styles.yourStanding}>
+          <View style={styles.yourRank}>
+            <Text style={styles.yourStandingText}>RANK</Text>
+            <Text style={styles.yourStandingText}>64</Text>
+          </View>
+          <View style={styles.profPic}></View>
+          <View style={styles.yourAvgReturns}>
+            <Text style={styles.yourStandingText}>AVG. RETURNS:</Text>
+            <Text style={styles.yourStandingText}>36.12%</Text>
+          </View>
+        </LinearGradient>
+
+        <View style={styles.leaderboard}>
+          <View style={styles.buttons}>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>Weekly Top</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>All-Time Average</Text></TouchableOpacity>
+          </View>
+          <View style={styles.line}></View>
+        </View>
+
+
+        <LeaderComponent/>
+        <LeaderComponent/>
+        <LeaderComponent/>
+        <LeaderComponent/>
+        <LeaderComponent/>
+        <LeaderComponent/>
+
       </View>
+
     );
   }
 
 
   export default LeaderboardScreen;
+
+  const styles = StyleSheet.create({
+    svgCurve: {
+      position: 'absolute',
+      width: Dimensions.get('window').width
+    },
+    headerText: {
+      color:'white',
+      fontSize: 30,
+      fontWeight: '700',
+      textAlign: 'center',
+      marginTop: 55
+    },
+    buttons:{
+      flex: 1,
+      flexDirection:'row',
+      justifyContent: 'center',
+      border:1,
+      height: 50,
+    }, 
+    yourStanding: {
+      width: '80%',
+      height: 106, 
+      backgroundColor: '#220056',
+      alignSelf: 'center',
+      borderRadius: 15,
+      marginTop: 60,
+      flexDirection: 'row',
+      alignItems:'center',
+    },
+    yourStandingText: {
+      fontWeight: '600',
+      fontSize: 15,
+      color: 'white',
+    },
+    leaderboard: {
+      width: '100%',
+      height: 50,
+      backgroundColor: 'white',
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      marginTop: 50
+    },
+    button: {
+      marginHorizontal:25,
+      paddingVertical: 10,
+    },
+    buttontext: {
+      fontSize: 20,
+      fontWeight: '700',
+      alignSelf: 'center',
+    },
+    line: {
+      height: 1,
+      width: '100%',
+      backgroundColor:'black'
+    }, 
+    profPic: {
+      height: 60,
+      width: 60,
+      backgroundColor: '#F2F2F2',
+      borderRadius: 400
+    }, 
+    yourRank: {
+      alignItems: 'center',
+      marginHorizontal: 25
+    },
+    yourAvgReturns: {
+      marginHorizontal: 20,
+      alignItems:'center'
+    }
+
+
+  })

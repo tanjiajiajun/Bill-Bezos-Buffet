@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native'
+import { Dimensions, StyleSheet, Text, View, TextInput, TouchableOpacity, Platform} from 'react-native'
 import React, { useEffect } from 'react'
 
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'

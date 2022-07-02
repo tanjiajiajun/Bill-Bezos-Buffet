@@ -1,8 +1,13 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
 import React from 'react'
 
+import { getDatabase, ref, set } from "firebase/database";
+import { datab } from './firebase';
+
+
 export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker }) {
-  return (
+    
+    return (
     <Modal
         visible={ended}
         transparent

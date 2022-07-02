@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useState} from 'react'
 
 import { getDatabase, ref, set } from "firebase/database";
 import { datab } from './firebase';
 
 
 export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker }) {
+    
+    const [modalOpen, setModalOpen] = useState(true)
     
     return (
     <Modal
@@ -20,7 +22,9 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
                     <Text style={styles.exposetext}>The stock that you have just traded is {ticker},</Text>
                     <Text style={styles.exposetext}>from {startdate} to {enddate}</Text>
                     <View style={styles.wrapper}>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                        onPress={ended => setModalOpen(false)}>
+                        
                             <Text style={styles.modalbuttontext}>Deep Analysis</Text>
                         </TouchableOpacity>
                         <TouchableOpacity>

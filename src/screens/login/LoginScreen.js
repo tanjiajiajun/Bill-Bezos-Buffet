@@ -19,7 +19,7 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate("mainStack")
+        navigation.replace("mainStack")
       }
     })
     return unsubscribe
@@ -35,7 +35,7 @@ const LoginScreen = () => {
           navigation.navigate('VerifyEmail')
         } else {
           console.log("Logged in with", user.email)
-          navigation.navigate("mainStack")
+          navigation.replace("mainStack")
         }
       })
       .catch(error => alert(error.message))

@@ -38,7 +38,7 @@ function SettingsScreen() {
         </View>
         <View style={styles.profPic}></View>
         <View>
-          <Text style={styles.nameText}>Doogy Doge</Text>
+          <Text style={styles.nameText}>Jia Jun Doge</Text>
           <Text style={styles.subTexts}>Win Rate: </Text>
           <Text style={styles.subTexts}>Average Returns: </Text>
         </View>

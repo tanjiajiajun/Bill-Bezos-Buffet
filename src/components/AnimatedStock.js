@@ -158,7 +158,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         }
     }
     const sendDataToParnet = () => {
-        create()
 
         setAmount(10000)
         setEnd(false)
@@ -177,7 +176,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const UpperLine = ({ line }) => (
         <Path
             d={ line }
-            stroke={ 'rgba(134, 65, 244)' }
+            stroke={ '#ed3072' }
             fill={ 'none' }
         />
     )
@@ -190,8 +189,8 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
             strokeWidth={ 2 }
             x1={ '0' }
             x2={ '100%' }
-            y1={ y(45) }
-            y2={ y(45) }
+            y1={ y(gameArray[0]) }
+            y2={ y(gameArray[0]) }
             
 
             />
@@ -213,7 +212,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
 
 
         <Text style={styles.text}>Account balance: ${amount.toFixed(3)}</Text>
-        <View style={styles.line}/>
         <View style={{ height: 400, flexDirection: 'row-reverse' }}>
             <YAxis
                 data={yList}
@@ -226,7 +224,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
                 style={{flex: 1, }}
                 data={yList}
                 contentInset={{ top: 20, bottom: 20 }}
-                svg={{ fill: 'rgba(134, 65, 244, 0.2)' }}>
+                svg={{ fill: 'rgb(237,48,114, 0.2)' }}>
                 <UpperLine/>
                 <DottedLine d={yList[yList.length-1]}/>
             </AreaChart>
@@ -263,7 +261,7 @@ const styles = StyleSheet.create({
     container: {
         height: '100%',
         width: '100%',
-        backgroundColor:'#FFFFFF'
+        backgroundColor:'rgba(0,0,0,0)'
     },
     text: {
         fontSize:24,

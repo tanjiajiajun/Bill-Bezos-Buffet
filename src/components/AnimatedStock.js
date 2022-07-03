@@ -5,12 +5,9 @@ import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, TextInput} from 
 import { Path, Line } from 'react-native-svg'
 import { AreaChart, YAxis } from 'react-native-svg-charts'
 import EndModal from './EndModal';
-
+import deepAnalysis, {overview} from './deepAnalysis'; 
 
 import { auth } from './firebase'
-
-
-
 
 
 function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) {
@@ -218,7 +215,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         passbackfn()
     }
 
-
     // For graphing of line
     
     const UpperLine = ({ line }) => (
@@ -256,7 +252,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         gamearraypointer={yList} 
         startdate={datepointer[randomint]} 
         enddate={datepointer[randomint+300]} 
-        ticker={tickerpointer}/>
+        ticker={tickerpointer}
+        overview={overview}
+        />
 
 
         <Text style={styles.text}>Account balance: ${amount.toFixed(3)}</Text>

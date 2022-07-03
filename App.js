@@ -1,27 +1,12 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-
-import RegisterScreen from './src/screens/login/RegisterScreen'
-import LoginScreen from './src/screens/login/LoginScreen';
-import HomeScreen from './src/screens/main/HomeScreen'
-import VerifyEmail from './src/screens/login/VerifyEmail';
-import ResetPassword from './src/screens/login/ResetPassword';
-import ResetPasswordSplashScreen from './src/screens/login/ResetPasswordSplashScreen';
-
 import loginStack from './src/screens/loginStack';
 import mainStack from './src/screens/mainStack';
 
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import LeaderboardScreen from './src/screens/main/LeaderboardScreen';
-
-
-
 
 const Stack = createStackNavigator();
 
@@ -31,7 +16,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   
   return (
-    <NavigationContainer>
+    <NavigationContainer screenOptions={{gestureEnabled: false}}>
 
       <Stack.Navigator>
 

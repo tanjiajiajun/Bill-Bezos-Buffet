@@ -5,7 +5,7 @@ import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, TextInput} from 
 import { Path, Line } from 'react-native-svg'
 import { AreaChart, YAxis } from 'react-native-svg-charts'
 import EndModal from './EndModal';
-import deepAnalysis, {overview} from './deepAnalysis'; 
+
 
 import { auth } from './firebase'
 
@@ -253,7 +253,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         startdate={datepointer[randomint]} 
         enddate={datepointer[randomint+300]} 
         ticker={tickerpointer}
-        overview={overview}
         />
 
 

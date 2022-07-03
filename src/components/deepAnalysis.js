@@ -1,21 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
+import React from 'react'
 
-import EndModal from './EndModal';
-
-import {gameArray} from './AnimatedStock';
-
-
-function deepAnalysis() {
-    
-    const [end, setEnd] = useState(true)
+export default function DeepAnalysis({ showDeep , exitDeepAnalysis}) {
 
 
-    const overview = () => {
-        setEnd(false)
+  return (
+    <Modal visible={showDeep} transparent>
+        <View style={styles.center}>
+            <View style={styles.modal}>
+                <Text>This is your deep analysis page</Text>
+                <TouchableOpacity onPress={exitDeepAnalysis}>
+                    <Text>Exit</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    </Modal>
 
-    }
+  )
 }
 
-
-
-export default deepAnalysis;
+const styles = StyleSheet.create({
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#00000099'
+    },
+    modal: {
+        width: 300,
+        height: 400,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 15,
+    
+    },
+})

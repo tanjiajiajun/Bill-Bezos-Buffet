@@ -1,3 +1,4 @@
+import { set } from 'firebase/database';
 import React, { useState, useEffect } from 'react';
 import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, TextInput} from 'react-native'
 
@@ -42,6 +43,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const [sellingPrice, setSellingPrice] = useState(0)
     const [noShares, setNoShares] = useState(0)
 
+    const [startX, setStartX] = useState(50)
+    const [startY, setStartY] = useState(0)
+    const [endY, setEndY] = useState(0)
 
     const startButtonOnPress = () => {
         setStart(prevStart => !prevStart)
@@ -70,20 +74,63 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
 
         else if (start == true){
             if (yList.length <= 50) {
-                var id = setInterval(() => setCount(prevCount => prevCount + 1),100);
-                var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]],100))
+                if (holdChecker == true) {
+                    var id = setInterval(() => setCount(prevCount => prevCount + 1),100)
+                    var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]],100))
+                    var hf = setInterval(() => {
+                        setStartX(prevX => prevX - 1)
+                        setEndY(gameArray[count])
+                    }, 100)
+
+                } else {
+                    var id = setInterval(() => setCount(prevCount => prevCount + 1),100)
+                    var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]],100))
+
+                }
+
+
+
             } else {
-                var id = setInterval(() => setCount(prevCount => prevCount + 1),100);
-                var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]].slice(1)),100)
+                if (holdChecker == true) {
+                    var id = setInterval(() => setCount(prevCount => prevCount + 1),100)
+                    var iv = setInterval(() => {
+                        setyList(prevyList => [...prevyList, gameArray[count]].slice(1))
+                        // setStartX(prevX => prevX - 1)
+                    },100)
+
+                } else {
+                    var id = setInterval(() => setCount(prevCount => prevCount + 1),100)
+                    var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]].slice(1)),100)
+
+                }
+                    
+                    
             }
         }
         //console.log(yList) //debugging purpose
         return () => {
             clearInterval(id)
             clearInterval(iv)
+            clearInterval(hf)
             }
 
         }, [yList, start])
+    
+    // useEffect( ()=> {
+    //     var hf;
+
+    //     if (holdChecker==true){
+    //         var hf = setInterval(() => {
+    //             console.log(count)
+    //             setStartX(prevX => prevX - 1)
+    //             setEndY(gameArray[count])
+    //         }, 100)
+    //     }
+        
+    //     return () => {
+    //         clearInterval(hf)
+    //     }
+    // }, [holdChecker])
 
     useEffect( () => {
         console.log(`u bought at ${buyingPrice}`)
@@ -109,13 +156,16 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
 
     const handleLongOnPressIn = () => {
         setBuyingPrice(yList[yList.length-1])
+        setStartY(yList[yList.length-1])
         setHoldChecker(true)
     }
 
     const handleLongOnPressOut = () => {
         setSellingPrice(yList[yList.length-1])
         setHoldChecker(false)
-       
+        setStartY(0)
+        setEndY(0)
+        setStartX(50)
     }
 
     const showModal = () => {
@@ -158,7 +208,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         }
     }
     const sendDataToParnet = () => {
-
         setAmount(10000)
         setEnd(false)
         setyList([])
@@ -167,7 +216,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         setRandomint(Math.floor(Math.random() * (datapointer.length - 300)))
         setStartButtonDisable(false)
         passbackfn()
-        
     }
 
 
@@ -181,16 +229,16 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         />
     )
 
-    const DottedLine = (({ y, d }) => (
+    const DottedLine = (({ x, y }) => (
         <Line
 
             stroke={ 'grey' }
             strokeDasharray={ [ 4, 8 ] }
             strokeWidth={ 2 }
-            x1={ '0' }
-            x2={ '100%' }
-            y1={ y(gameArray[0]) }
-            y2={ y(gameArray[0]) }
+            x1={ x(startX) }
+            x2={ x(50) }
+            y1={ y(startY) }
+            y2={ y(endY) }
             
 
             />
@@ -216,7 +264,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
             <YAxis
                 data={yList}
                 contentInset={{ top: 20, bottom: 20 }}
-                svg={{ fill: 'grey', fontSize: 10,}}
+                svg={{ fill: 'black', fontSize: 10,}}
                 numberOfTicks={10}
                 formatLabel={(value) => `$${value}`}
             />
@@ -248,7 +296,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
             onPressIn={handleShortOnPressIn}
             onPressOut={handleShortOnPressOut}
             disabled={!startButtonDisable}>
-                <Text>Short </Text>
+                <Text> Short </Text>
             </TouchableOpacity>
         </View>
 

@@ -40,3 +40,17 @@ const styles = StyleSheet.create({
 });
 
 export default VerifyEmail;
+
+// if (yList.length <= 50) {
+//     if (holdChecker == true) {
+//         var id = setInterval(() => setCount(prevCount => prevCount + 1),100)
+//         var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]],100))
+//         var hf = setInterval(() => {
+//             setStartX(prevX => prevX - 1)
+//             setEndY(gameArray[count])
+//         })
+//     } else {
+//         var id = setInterval(() => setCount(prevCount => prevCount + 1),100)
+//         var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]],100))
+//     }
+// }

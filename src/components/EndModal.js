@@ -5,9 +5,9 @@ import { getDatabase, ref, set } from "firebase/database";
 import { datab } from './firebase';
 
 
-export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker, overview }) {
-        
-    return (
+
+export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker }) {
+    return(
     <Modal
         visible={ended}
         transparent
@@ -20,8 +20,7 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
                     <Text style={styles.exposetext}>The stock that you have just traded is {ticker},</Text>
                     <Text style={styles.exposetext}>from {startdate} to {enddate}</Text>
                     <View style={styles.wrapper}>
-                        <TouchableOpacity
-                        onPress={overview}>                        
+                        <TouchableOpacity>                        
                             <Text style={styles.modalbuttontext}>Deep Analysis</Text>
                         </TouchableOpacity>
                         <TouchableOpacity>
@@ -35,7 +34,8 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
                 </View>
             </View>
         </Modal>
-  )
+    )
+
 }
 
 const styles = StyleSheet.create({

@@ -4,7 +4,6 @@ import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, TextInput} from 
 import { Path, Line } from 'react-native-svg'
 import { AreaChart, YAxis } from 'react-native-svg-charts'
 import EndModal from './EndModal';
-import deepAnalysis, {overview} from './deepAnalysis'; 
 
 import { auth } from './firebase'
 
@@ -43,7 +42,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const startButtonOnPress = () => {
         setStart(prevStart => !prevStart)
         setAmount(10000)
-        if (count < 300) {
+        if (count < 30) {
             setStartButtonDisable(true)
         }
     }
@@ -52,7 +51,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         var id;
         var iv;
         // when game ends
-        if (count >= 300) {
+        if (count >= 30) {
             if (holdChecker == true) {
                 handleLongOnPressOut()
             }else if (shortHoldChecker == true) {
@@ -205,7 +204,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         startdate={datepointer[randomint]} 
         enddate={datepointer[randomint+300]} 
         ticker={tickerpointer}
-        overview={overview}
         />
 
 

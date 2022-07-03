@@ -8,6 +8,7 @@ import { getAuth, sendEmailVerification } from "firebase/auth";
 import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
+import VerifyEmail from './VerifyEmail';
 
 import { doc, setDoc, addDoc, collection, updateDoc } from 'firebase/firestore' 
 
@@ -42,20 +43,30 @@ const RegisterScreen = () => {
 
 
     // }
+
+    function validate_password(password) {
+        let check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+        if (password.match(check)) {
+           console.log("Your password is strong.");
+        } else {
+          console.log("Meh, not so much.");
+        }
+      }
+
     const handleSignUp = () => {
         auth.createUserWithEmailAndPassword(email,password)
         .then(userCredential => {
+            navigation.navigate('VerifyEmail')
             createUserDocument(userCredential.user, {name})
             const user = userCredential.user;
             userCredential.user.sendEmailVerification();
             auth.signOut();
             alert("Email sent");
+
             console.log('Registered with:', user.email);
-            navigation.navigate("VerifyEmail")
-
-
         })
         .catch(error => alert(error.message))
+
     }
 
 
@@ -160,8 +171,8 @@ const styles = StyleSheet.create({
     },
 
     bottomButtonLogInContainer:{
-        position: 'absolute', //Here is the trick
-        bottom: 50, //Here is the trick
+        position: 'absolute',
+        bottom: 50, 
     },
 
     bottomButtonLogInText: {

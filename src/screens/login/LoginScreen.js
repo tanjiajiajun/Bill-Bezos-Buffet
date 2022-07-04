@@ -55,7 +55,7 @@ const LoginScreen = () => {
 
       <Image 
         source={require('../../../assets/Layer8.png')}
-        style={{ resizeMode:"contain", width:300, height:200 }}
+        style={{ resizeMode:"contain", width:300, height:200,      backgroundColor:"black" }}
         />
 
       <Text style={styles.headerTextContainer}>Welcome to Bulls Vs Bears</Text>
@@ -121,11 +121,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+
   headerTextContainer:{
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 40,
     color: 'white',
+    backgroundColor:"black"
   },
 
   inputContainer: {

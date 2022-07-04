@@ -7,8 +7,8 @@ import { getAuth, sendEmailVerification } from "firebase/auth";
 
 import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { AnimatedBackground } from './AnimatedBackground'
 
-import VerifyEmail from './VerifyEmail';
 
 import { doc, setDoc, addDoc, collection, updateDoc } from 'firebase/firestore' 
 
@@ -76,6 +76,9 @@ const RegisterScreen = () => {
         behavior="padding"
         backgroundColor="black"
         >
+
+        <AnimatedBackground/>
+
             <Text style={styles.headerTextContainer}>Create account</Text>
 
             <View style={styles.inputContainer}>
@@ -140,7 +143,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 25,
-        color:"white"
+        color:"white",
+        backgroundColor:"black"
     },
 
     inputContainer: {
@@ -172,14 +176,15 @@ const styles = StyleSheet.create({
 
     bottomButtonLogInContainer:{
         position: 'absolute',
-        bottom: 50, 
+        bottom: 100, 
     },
 
     bottomButtonLogInText: {
         alignItems: 'center',
-        color:"#723AC5",
+        color:"#8352cc",
         fontSize: 16,
-        textAlign:"center"
+        textAlign:"center",
+        fontWeight: "bold"
 
     },
 

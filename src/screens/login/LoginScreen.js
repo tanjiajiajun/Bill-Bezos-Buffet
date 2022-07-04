@@ -4,6 +4,7 @@ import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpac
 import { auth } from '../../components/firebase'
 import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { AnimatedBackground } from './AnimatedBackground'
 
 
 
@@ -40,12 +41,17 @@ const LoginScreen = () => {
       .catch(error => alert(error.message))
   }
 
+
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior="padding"
       backgroundColor="black"
     >
+
+    <AnimatedBackground/>
+
 
       <Image 
         source={require('../../../assets/Layer8.png')}
@@ -99,6 +105,7 @@ const LoginScreen = () => {
 
       </View>
 
+    
     </KeyboardAvoidingView>
   )
 }

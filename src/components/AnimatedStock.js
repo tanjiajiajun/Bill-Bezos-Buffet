@@ -1,4 +1,4 @@
-import { set } from 'firebase/database';
+import { collection, setDoc, addDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import React, { useState, useEffect, useRef } from 'react';
 import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, TextInput} from 'react-native'
 
@@ -7,21 +7,47 @@ import { AreaChart, YAxis } from 'react-native-svg-charts'
 import EndModal from './EndModal';
 
 
-import { auth } from './firebase'
+import { auth, firestore  } from './firebase'
 
 
 function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) {
-    
     //database functions
-    const create = () => {
-        setDoc(doc(db, "users", auth.currentUser?.email),{
-            highscore: ((amount-10000)/100).toFixed(1)
+    const update = () => {
+        const docRef = firestore.collection('users').doc(auth.currentUser.uid)
+        const isBelowScore = currentval => currentval < ((amount-10000)/100).toFixed(2)
+        docRef.get().then((doc) => {
+            const userRef = firestore.collection('users').doc(auth.currentUser.uid)
+            if (doc.data()['scores'].every(isBelowScore)){
+                return userRef.update({
+                    highscore: ((amount-10000)/100).toFixed(2),
+                    scores: arrayUnion(((amount-10000)/100).toFixed(2))
+                }).then(() => {
+                    console.log('data saved')
+                }).catch((error) => {
+                    console.log(error)
+                })
+            }
+            else {
+                return userRef.update({
+                    scores: arrayUnion(((amount-10000)/100).toFixed(2))
+                }).then(() => {
+                    console.log('data saved')
+                }).catch((error) => {
+                    console.log(error)
+                })
+
+            }
         })
+
     }
     // fake data to use while API is not connected (obselete)
     // const data = require('../data/AAPL.json')
 
-    const split = function(a){
+    // functions that add fake data (mid pt of every 2 pts of gamearray) 
+    // to increase no. of data points 
+
+
+    const split = function (a) {
         for(let i=0;i<a.length-1;i++){
             let b = (a[i] + a[i+1]) / 2
             a.splice(i+1,0,b)
@@ -84,7 +110,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
 
         else if (start == true){
             if (yList.length <= 50) {
-                if (holdChecker == true) {
+                if (holdChecker == true || shortHoldChecker == true)  {
                     var id = setInterval(() => setCount(prevCount => prevCount + 1),50)
                     var iv = setInterval(() => {
                         setyList(prevyList => [...prevyList, gameArray[count]],50)
@@ -100,7 +126,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
 
 
             } else {
-                if (holdChecker == true) {
+                if (holdChecker == true || shortHoldChecker == true) {
                     var id = setInterval(() => setCount(prevCount => prevCount + 1),50)
                     var iv = setInterval(() => {
                         setyList(prevyList => [...prevyList, gameArray[count]].slice(1))
@@ -189,10 +215,14 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const handleShortOnPressIn = () => {
         setShortHoldChecker(true)
         setShortBuyingPrice(yList[yList.length-1])
+        startY.current = yList[yList.length-1]
     }
     const handleShortOnPressOut = () => {
         setShortHoldChecker(false)
         setShortSellingPrice(yList[yList.length-1])
+        startY.current = 0
+        endY.current = 0
+        startX.current = 50
     }
     const startButtonText = () => {
         if (start == false) {
@@ -210,6 +240,8 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         setRandomint(Math.floor(Math.random() * (datapointer.length - 300)))
         setStartButtonDisable(false)
         passbackfn()
+
+        update()
     }
 
     // For graphing of line
@@ -244,18 +276,18 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
             />
     ))
 
-    const Decorator = ({ x, y, data }) => {
-        return data.map((value, index) => (
-            <Circle
-                key={ index }
-                cx={ x(index) }
-                cy={ y(value) }
-                r={ 4 }
-                stroke={ 'rgb(134, 65, 244)' }
-                fill={ 'white' }
-            />
-        ))
-    }
+    // const Decorator = ({ x, y, data }) => {
+    //     return data.map((value, index) => (
+    //         <Circle
+    //             key={ index }
+    //             cx={ x(index) }
+    //             cy={ y(value) }
+    //             r={ 4 }
+    //             stroke={ 'rgb(134, 65, 244)' }
+    //             fill={ 'white' }
+    //         />
+    //     ))
+    // }
 
 
     return (
@@ -289,7 +321,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
                 svg={{ fill: 'url(#gradient)'}}>
                 <Gradient/>
                 <UpperLine/>
-                <Decorator/>
+                {/* <Decorator/> */}
                 <DottedLine d={yList[yList.length-1]}/>
             </AreaChart>
         </View>

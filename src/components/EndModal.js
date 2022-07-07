@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
 import React, {useState} from 'react'
 
- import DeepAnalysis from './DeepAnalysis'
+import DeepAnalysis from './DeepAnalysis'
 
-export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker, overview }) {
+export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker }) {
 
     const [showDeep, setShowDeep] = useState(false)
 

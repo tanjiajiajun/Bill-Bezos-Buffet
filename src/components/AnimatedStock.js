@@ -1,4 +1,4 @@
-import { collection, setDoc, addDoc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { arrayUnion } from 'firebase/firestore';
 import React, { useState, useEffect, useRef } from 'react';
 import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, TextInput} from 'react-native'
 
@@ -19,8 +19,8 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
             const userRef = firestore.collection('users').doc(auth.currentUser.uid)
             if (doc.data()['scores'].every(isBelowScore)){
                 return userRef.update({
-                    highscore: ((amount-10000)/100).toFixed(2),
-                    scores: arrayUnion(((amount-10000)/100).toFixed(2))
+                    highscore: parseFloat(((amount-10000)/100).toFixed(2)),
+                    scores: arrayUnion(parseFloat(((amount-10000)/100).toFixed(2)))
                 }).then(() => {
                     console.log('data saved')
                 }).catch((error) => {
@@ -29,7 +29,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
             }
             else {
                 return userRef.update({
-                    scores: arrayUnion(((amount-10000)/100).toFixed(2))
+                    scores: arrayUnion(parseFloat(((amount-10000)/100).toFixed(2)))
                 }).then(() => {
                     console.log('data saved')
                 }).catch((error) => {

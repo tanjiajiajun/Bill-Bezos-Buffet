@@ -12,6 +12,10 @@ import { auth, firestore  } from './firebase'
 
 function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) {
     //database functions
+    const read = () => {
+
+    }
+
     const update = () => {
         const docRef = firestore.collection('users').doc(auth.currentUser.uid)
         const isBelowScore = currentval => currentval < ((amount-10000)/100).toFixed(2)
@@ -228,7 +232,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         if (start == false) {
             return 'Start'
         } else {
-            return `${(300 - count)/10}s left!`
+            return `${((600 - count)/20).toFixed(1)}s left!`
         }
     }
     const sendDataToParnet = () => {

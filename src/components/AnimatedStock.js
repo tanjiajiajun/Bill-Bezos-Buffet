@@ -6,8 +6,12 @@ import { Defs, LinearGradient, Stop, Line, Circle, Path } from 'react-native-svg
 import { AreaChart, YAxis } from 'react-native-svg-charts'
 import EndModal from './EndModal';
 
+<<<<<<< HEAD
 
 import { auth, firestore  } from './firebase'
+=======
+import { auth } from './firebase'
+>>>>>>> bryans-branch
 
 
 function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) {
@@ -66,6 +70,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const gameArray2 = mapper.slice(randomint, randomint + 300)
     const gameArray = split(gameArray2)
     // console.log(gameArray.length)
+
+
+    const dataa = Array.from(datapointer)
 
 
     const [count, setCount] = useState(0)
@@ -241,7 +248,13 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         setStartButtonDisable(false)
         passbackfn()
 
+<<<<<<< HEAD
         update()
+=======
+        console.log(dataa)
+
+
+>>>>>>> bryans-branch
     }
 
     // For graphing of line

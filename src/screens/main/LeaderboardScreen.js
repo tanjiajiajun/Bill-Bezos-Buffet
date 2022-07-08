@@ -1,4 +1,4 @@
-import React , { useState, useEffect } from 'react';
+import React , { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 
@@ -7,30 +7,47 @@ import LeaderComponent from '../../components/LeaderComponent';
 
 import { onSnapshot, collection, query, orderBy } from 'firebase/firestore';
 import { auth, firestore  } from '../../components/firebase'
+
+
 function LeaderboardScreen() {
 
-  const [ leaderboardData, setLeaderboardData ] = useState([])
+
+  const [leaderboardData, setLeaderboardData] = useState([])
+  const [rank, setRank] = useState('')
+  const [avgreturns, setAvgreturns] = useState('')
+  const userData = useRef([])
+
   // console.log(leaderboardData)
+
   useEffect(() => {
+    const userRef = firestore.collection('users').doc(auth.currentUser.uid)
+    userRef.get()
+    .then((doc) => {
+      setAvgreturns(doc.data()['avgreturns'])
+      userData.current=doc.data()['highscore']
+    })
+    .catch(error=>{
+      console.log(error)
+    })
+
     const collectionRef = collection(firestore, 'users')
     const q = query(collectionRef, orderBy("highscore", "desc"))
 
     const unsub = onSnapshot(q, (snapshot) => {
       setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
+      setRank(leaderboardData.findIndex(x => x['highscore'] == userData.current))
     })
     return unsub
   }
   , [])
   
-  
-
     return (
       <View style={styles.container}>
         <WavyHeader
         customStyles={styles.svgCurve}
         customHeight={160}
         customTop={130}
-        customBgColor="#5000ca"
+        customBgColor="#ec296d"
         customWavePattern="M0,96L48,112C96,128,192,160,288,
         186.7C384,213,480,235,576,213.3C672,192,768,128,864,
         128C960,128,1056,192,1152,208C1248,224,1344,192,1392,
@@ -42,18 +59,18 @@ function LeaderboardScreen() {
           <Text style={styles.headerText}>Leaderboard</Text>
         </View>
         <LinearGradient 
-          colors={['#220056', '#5000ca']} 
+          colors={['#840b55','#ec296d']} 
           start={{x:0, y:0}}
           end={{x:1, y:1}}
           style={styles.yourStanding}>
           <View style={styles.yourRank}>
             <Text style={styles.yourStandingText}>RANK</Text>
-            <Text style={styles.yourStandingText}>64</Text>
+            <Text style={styles.yourStandingText}>{rank}</Text>
           </View>
           <View style={styles.profPic}></View>
           <View style={styles.yourAvgReturns}>
             <Text style={styles.yourStandingText}>AVG. RETURNS:</Text>
-            <Text style={styles.yourStandingText}>36.12%</Text>
+            <Text style={styles.yourStandingText}>{avgreturns}%</Text>
           </View>
         </LinearGradient>
 

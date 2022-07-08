@@ -7,6 +7,7 @@ import { getAuth, sendEmailVerification } from "firebase/auth";
 
 import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { AnimatedBackground } from './AnimatedBackground'
 
 
 import { doc, setDoc, addDoc, collection, updateDoc } from 'firebase/firestore' 
@@ -42,20 +43,30 @@ const RegisterScreen = () => {
 
 
     // }
+
+    function validate_password(password) {
+        let check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
+        if (password.match(check)) {
+           console.log("Your password is strong.");
+        } else {
+          console.log("Meh, not so much.");
+        }
+      }
+
     const handleSignUp = () => {
         auth.createUserWithEmailAndPassword(email,password)
         .then(userCredential => {
+            navigation.navigate('VerifyEmail')
             createUserDocument(userCredential.user, {name})
             const user = userCredential.user;
             userCredential.user.sendEmailVerification();
             auth.signOut();
             alert("Email sent");
+
             console.log('Registered with:', user.email);
-            navigation.navigate("VerifyEmail")
-
-
         })
         .catch(error => alert(error.message))
+
     }
 
 
@@ -65,6 +76,9 @@ const RegisterScreen = () => {
         behavior="padding"
         backgroundColor="black"
         >
+
+        <AnimatedBackground/>
+
             <Text style={styles.headerTextContainer}>Create account</Text>
 
             <View style={styles.inputContainer}>
@@ -129,7 +143,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginBottom: 25,
-        color:"white"
+        color:"white",
+        backgroundColor:"black"
     },
 
     inputContainer: {
@@ -160,15 +175,16 @@ const styles = StyleSheet.create({
     },
 
     bottomButtonLogInContainer:{
-        position: 'absolute', //Here is the trick
-        bottom: 50, //Here is the trick
+        position: 'absolute',
+        bottom: 100, 
     },
 
     bottomButtonLogInText: {
         alignItems: 'center',
-        color:"#723AC5",
+        color:"#8352cc",
         fontSize: 16,
-        textAlign:"center"
+        textAlign:"center",
+        fontWeight: "bold"
 
     },
 

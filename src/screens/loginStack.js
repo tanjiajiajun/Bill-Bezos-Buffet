@@ -1,5 +1,4 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,11 +10,6 @@ import LoginScreen from './login/LoginScreen';
 import VerifyEmail from './login/VerifyEmail';
 import ResetPassword from './login/ResetPassword';
 import ResetPasswordSplashScreen from './login/ResetPasswordSplashScreen';
-
-
-
-
-
 
 const Stack = createStackNavigator();
 
@@ -30,7 +24,7 @@ const LoginStackNavigator = () => {
                 {title: "Register",
                 headerTintColor: 'white',
                 headerStyle: {
-                backgroundColor:"white"
+                backgroundColor:"black"
                 }
                 }}/>
                 

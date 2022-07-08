@@ -6,6 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import loginStack from './src/screens/loginStack';
 import mainStack from './src/screens/mainStack';
 
+import { AnimatedBackground } from './src/screens/login/AnimatedBackground';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Stack = createStackNavigator();
@@ -19,6 +21,7 @@ export default function App() {
     <NavigationContainer screenOptions={{gestureEnabled: false}}>
 
       <Stack.Navigator>
+      
 
         <Stack.Screen name="loginStack" component={loginStack} options={{headerShown: false}}/>
         

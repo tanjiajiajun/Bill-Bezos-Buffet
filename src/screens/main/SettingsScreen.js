@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text , StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
-import { auth } from '../../components/firebase';
+
 import { useNavigation } from '@react-navigation/native';
 
 import WavyHeader from '../../components/WavyHeader';
@@ -8,9 +8,27 @@ import WavyHeader from '../../components/WavyHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import { auth, firestore } from '../../components/firebase';
 
 function SettingsScreen() {
   const navigation = useNavigation()
+
+  const [name, setName] = useState('')
+  const [avgreturns, setAvgreturns] = useState('')
+  const [highscore, setHighscore] = useState('')
+    useEffect(()=> {
+        const docRef = firestore.collection('users').doc(auth.currentUser.uid)
+        docRef.get()
+        .then((doc)=>{
+            setName(doc.data()['name'])
+            setAvgreturns(doc.data()['avgreturns'])
+            setHighscore(doc.data()['highscore'])
+  
+        }).catch((err)=>{
+            console.log(err)
+        })  
+
+    },[])
 
   const handleSignOut = () => {
     auth
@@ -38,9 +56,9 @@ function SettingsScreen() {
         </View>
         <View style={styles.profPic}></View>
         <View>
-          <Text style={styles.nameText}>Jia Jun Doge</Text>
-          <Text style={styles.subTexts}>Win Rate: </Text>
-          <Text style={styles.subTexts}>Average Returns: </Text>
+          <Text style={styles.nameText}>{name}</Text>
+          <Text style={styles.subTexts}>All-time highscore: {highscore}%</Text>
+          <Text style={styles.subTexts}>Average Returns: {avgreturns}%</Text>
         </View>
 
         <View style={styles.settingsContainer}>

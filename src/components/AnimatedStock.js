@@ -28,6 +28,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const mapper = datapointer.map((i) => Number(i))
     const gameArray = mapper.slice(randomint, randomint + 300)
 
+    const dataa = Array.from(datapointer)
+
+
     const [count, setCount] = useState(0)
     const [yList, setyList] = useState([])
     const [start, setStart] = useState(false)
@@ -212,6 +215,10 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         setRandomint(Math.floor(Math.random() * (datapointer.length - 300)))
         setStartButtonDisable(false)
         passbackfn()
+
+        console.log(dataa)
+
+
     }
 
     // For graphing of line

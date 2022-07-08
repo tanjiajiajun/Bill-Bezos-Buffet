@@ -46,6 +46,10 @@ export default function StockDataGetter() {
                 setData(stockChartYValuesFunction.reverse())
               }  
             )
+
+            return () => {
+              
+            }
     }, [ticker])
     
 

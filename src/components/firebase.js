@@ -41,7 +41,8 @@ export const createUserDocument = async(user, additionalData) => {
         email: email,
         createdAt: new Date(),
         scores: [],
-        highscore: 0
+        highscore: 0,
+        profpic: ''
       })
     } catch (err) {
       console.log(err)
@@ -51,5 +52,5 @@ export const createUserDocument = async(user, additionalData) => {
   }
 }
  
-export { firestore, auth }
+export { firestore , auth }
 

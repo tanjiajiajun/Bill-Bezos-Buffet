@@ -71,7 +71,7 @@ function LeaderboardScreen() {
             data={leaderboardData}
             renderItem={({ item }) => (
               <LeaderComponent 
-                index={leaderboardData.indexOf(item)}
+                index={leaderboardData.findIndex(x => x==item)}
                 name={item['name']}
                 highscore={item['highscore']}
                 />

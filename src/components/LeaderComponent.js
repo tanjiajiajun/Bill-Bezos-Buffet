@@ -1,39 +1,21 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { auth, firestore } from './firebase'
 
-
-export default function LeaderComponent({name, highscore, rank}) {
+export default function LeaderComponent({name, highscore, index}) {
     return (
     <View style={styles.container}>
         <View style={styles.rankNumber}>
-            <Text style={styles.texts}>{rank}</Text>
+            <Text style={styles.texts}>{index}</Text>
         </View>
         <View style={styles.profPic}></View>
         <View style={styles.nameContainer}>
             <Text style={styles.texts}>{name}</Text>
         </View>
         <View style={styles.returnsContainer}>
-            <Text style={styles.texts}>{highscore}%</Text>
+            <Text style={styles.percentages}>{highscore}%</Text>
         </View>
     </View>
-
-    // <View>
-    //     {leaderboarddata.map((value, index) => {
-    //         <View style={styles.container}>
-    //             <View style={styles.rankNumber}>
-    //                 <Text style={styles.texts}>1</Text>
-    //             </View>
-    //             <View style={styles.profPic}></View>
-    //             <View style={styles.nameContainer}>
-    //                 <Text style={styles.texts}>{value.name}</Text>
-    //             </View>
-    //             <View style={styles.returnsContainer}>
-    //                 <Text style={styles.texts}>50.11%</Text>
-    //             </View>
-    //         </View>
-
-    //     })}
-    // </View>
 
   )
 }
@@ -44,7 +26,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         backgroundColor: 'white',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     profPic: {
         height: 60,
@@ -56,14 +38,21 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '500',
     },
+    percentages: {
+        marginLeft: 50,
+        fontSize: 16,
+        fontWeight: '500',
+    },
     rankNumber: {
         marginHorizontal: 20
     },
     nameContainer: {
-        marginHorizontal: 30
+        marginHorizontal: 125,
+        position:'absolute'
     },
     returnsContainer: {
-        marginHorizontal: 17
+        marginHorizontal: 225,
+        position:'absolute'
     }
 
 })

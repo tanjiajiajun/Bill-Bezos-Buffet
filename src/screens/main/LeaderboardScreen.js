@@ -1,12 +1,29 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
+import React , { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 
 import WavyHeader from '../../components/WavyHeader';
 import LeaderComponent from '../../components/LeaderComponent';
 
-
+import { onSnapshot, collection, query, orderBy } from 'firebase/firestore';
+import { auth, firestore  } from '../../components/firebase'
 function LeaderboardScreen() {
+
+  const [ leaderboardData, setLeaderboardData ] = useState([])
+  // console.log(leaderboardData)
+  useEffect(() => {
+    const collectionRef = collection(firestore, 'users')
+    const q = query(collectionRef, orderBy("highscore", "desc"))
+
+    const unsub = onSnapshot(q, (snapshot) => {
+      setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
+    })
+    return unsub
+  }
+  , [])
+  
+  
+
     return (
       <View style={styles.container}>
         <WavyHeader
@@ -48,21 +65,23 @@ function LeaderboardScreen() {
           <View style={styles.line}></View>
         </View>
 
-        <ScrollView contentContainerStyle={{paddingBottom: 350}}>
-          <LeaderComponent/>
-          <LeaderComponent/>
-          <LeaderComponent/>
-          <LeaderComponent/>
-          <LeaderComponent/>
-          <LeaderComponent/>
-          <LeaderComponent/>
-          <LeaderComponent/>
-          <LeaderComponent/>
-          <LeaderComponent/>
-        </ScrollView>
+
+          <FlatList
+            keyExtractor={(item) => leaderboardData.indexOf(item)}
+            data={leaderboardData}
+            renderItem={({ item }) => (
+              <LeaderComponent 
+                index={leaderboardData.indexOf(item)}
+                name={item['name']}
+                highscore={item['highscore']}
+                />
+
+            )}>
+
+          </FlatList>
+
 
       </View>
-
     );
   }
 

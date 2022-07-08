@@ -2,20 +2,39 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 
-export default function LeaderComponent() {
-  return (
+export default function LeaderComponent({name, highscore, rank}) {
+    return (
     <View style={styles.container}>
         <View style={styles.rankNumber}>
-            <Text style={styles.texts}>1</Text>
+            <Text style={styles.texts}>{rank}</Text>
         </View>
         <View style={styles.profPic}></View>
         <View style={styles.nameContainer}>
-            <Text style={styles.texts}>Stephen Curry</Text>
+            <Text style={styles.texts}>{name}</Text>
         </View>
         <View style={styles.returnsContainer}>
-            <Text style={styles.texts}>50.11%</Text>
+            <Text style={styles.texts}>{highscore}%</Text>
         </View>
     </View>
+
+    // <View>
+    //     {leaderboarddata.map((value, index) => {
+    //         <View style={styles.container}>
+    //             <View style={styles.rankNumber}>
+    //                 <Text style={styles.texts}>1</Text>
+    //             </View>
+    //             <View style={styles.profPic}></View>
+    //             <View style={styles.nameContainer}>
+    //                 <Text style={styles.texts}>{value.name}</Text>
+    //             </View>
+    //             <View style={styles.returnsContainer}>
+    //                 <Text style={styles.texts}>50.11%</Text>
+    //             </View>
+    //         </View>
+
+    //     })}
+    // </View>
+
   )
 }
 

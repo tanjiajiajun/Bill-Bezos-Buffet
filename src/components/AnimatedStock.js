@@ -6,8 +6,8 @@ import { Defs, LinearGradient, Stop, Line, Circle, Path } from 'react-native-svg
 import { AreaChart, YAxis } from 'react-native-svg-charts'
 import EndModal from './EndModal';
 
-
 import { auth, firestore  } from './firebase'
+
 
 
 function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) {
@@ -241,7 +241,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         setStartButtonDisable(false)
         passbackfn()
 
-        update()
     }
 
     // For graphing of line

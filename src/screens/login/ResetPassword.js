@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { AnimatedBackground } from './AnimatedBackground'
+
 
 
 const ResetPassword = () => {
@@ -29,6 +31,9 @@ const ResetPassword = () => {
         behavior="padding"
         backgroundColor="black"
         >
+
+    <AnimatedBackground/>
+
             <Text style={styles.headerText}>Forgot Password?</Text>
 
             <Text style={styles.secondHeaderTextContainer}>Please enter your name and email to reset your password</Text>
@@ -83,13 +88,16 @@ const styles = StyleSheet.create({
     secondHeaderTextContainer:{
         fontSize: 16,
         textAlign: 'center',
-        fontStyle: "italic",
-        color:'white'
+        color:'white',
+        marginTop:10,
+        backgroundColor:"black"
+
     },
     
     inputContainer: {
         flex:1,
-        width: "80%"
+        width: "80%",
+        marginTop:10
     },
 
     input: {

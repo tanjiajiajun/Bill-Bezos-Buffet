@@ -49,7 +49,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const startButtonOnPress = () => {
         setStart(prevStart => !prevStart)
         setAmount(10000)
-        if (count < 30) {
+        if (count < 300) {
             setStartButtonDisable(true)
         }
     }
@@ -58,7 +58,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         var id;
         var iv;
         // when game ends
-        if (count >= 30) {
+        if (count >= 300) {
             if (holdChecker == true) {
                 handleLongOnPressOut()
             }else if (shortHoldChecker == true) {

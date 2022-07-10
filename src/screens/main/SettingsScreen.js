@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text , StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
+import React, {useState} from 'react';
+import { View, Text , StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
 import { auth } from '../../components/firebase';
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,8 +8,16 @@ import WavyHeader from '../../components/WavyHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+//import * as ImagePicker from "react-native-image-picker"
+
+import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
+
 
 function SettingsScreen() {
+
+  const [image, setImage] = useState(null);
+
+
   const navigation = useNavigation()
 
   const handleSignOut = () => {
@@ -21,6 +29,80 @@ function SettingsScreen() {
         })
         .catch(e => alert(e.message))
 }
+
+const pickImage = async () => { //expo-image-picker
+  // No permissions request is necessary for launching the image library
+  let result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.All,
+    allowsEditing: true,
+    aspect: [4, 3],
+    quality: 1,
+  });
+
+  console.log(result);
+
+  if (!result.cancelled) {
+    setImage(result.uri);
+  }
+};
+
+const changeProfilePic = (type) => { //react-native-image-picker
+  ImagePicker.launchImageLibrary(    {mediaType: type,
+    maxWidth: 300,
+    maxHeight: 550,
+    quality: 1,}, (response) => {
+    console.log('Response = ', response);
+    
+    if (response.didCancel) {
+      alert('User cancelled camera picker');
+      return;
+    } else if (response.errorCode == 'camera_unavailable') {
+      alert('Camera not available on device');
+      return;
+    } else if (response.errorCode == 'permission') {
+      alert('Permission not satisfied');
+      return;
+    } else if (response.errorCode == 'others') {
+      alert(response.errorMessage);
+      return;
+    } else {
+  
+      // You can also display the image using data:
+      const source = { uri: response.uri };  
+      console.log(response)
+      setImageUri(response)
+      setData(response)
+   }
+   });
+   };
+
+   const openCamera = () => { //react-native-image-picker
+    let options = {
+      mediaType: type,
+      maxWidth: 300,
+      maxHeight: 550,
+      quality: 1,
+    };
+  
+    launchCamera(options, (response) => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+    
+        // You can also display the image using data:
+        const source = { uri: response.uri };    
+        console.log(response)
+        setImageUri(response)
+     }
+     });
+     };
+
+
     return (
       <View style={styles.container}>
         <WavyHeader
@@ -36,7 +118,7 @@ function SettingsScreen() {
         <View style={styles.profileHeader}>
           <Text style={styles.headerText}>Profile</Text>
         </View>
-        <View style={styles.profPic}></View>
+        <Image source={{uri: image}} style={styles.profPic}/>
         <View>
           <Text style={styles.nameText}>Jia Jun Doge</Text>
           <Text style={styles.subTexts}>Win Rate: </Text>
@@ -47,7 +129,7 @@ function SettingsScreen() {
           <Text style={styles.settingsHeader}>General Settings</Text>
           <View style={styles.innerContainer}>
 
-            <TouchableOpacity style={styles.innerComponent}>
+            <TouchableOpacity style={styles.innerComponent} onPress={pickImage}>
               <MaterialIcons style={{marginHorizontal:15, marginVertical:7}} name='photo-library' size={45} />
               <Text style={styles.settingsText}>Update Profile Picture</Text>
               <MaterialIcons style={{position: 'absolute', marginLeft:310}} name='arrow-forward-ios' size={25} />

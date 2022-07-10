@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import React, {useState} from 'react';
-import { View, Text , StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
-import { auth } from '../../components/firebase';
-=======
 import React, { useState, useEffect } from 'react';
-import { View, Text , StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
+import { View, Text , StyleSheet, TouchableOpacity, Dimensions, Image} from 'react-native';
 
->>>>>>> origin/main
 import { useNavigation } from '@react-navigation/native';
 
 import WavyHeader from '../../components/WavyHeader';
@@ -14,14 +8,11 @@ import WavyHeader from '../../components/WavyHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-<<<<<<< HEAD
 //import * as ImagePicker from "react-native-image-picker"
 
 import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
 
-=======
 import { auth, firestore } from '../../components/firebase';
->>>>>>> origin/main
 
 function SettingsScreen() {
 

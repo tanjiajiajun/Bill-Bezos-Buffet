@@ -12,26 +12,50 @@ import { auth, firestore  } from './firebase'
 
 function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) {
     //database functions
+
+    const updateAvg = (arr, incData) => {
+        const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+        if (arr.length == 0){
+            return incData
+        }else {
+            return parseFloat(average([...arr, incData]).toFixed(2))
+        }
+    }
+
     const update = () => {
+        const lj = +parseFloat((amount-10000)/100).toFixed(2)
+        console.log(lj)
         const docRef = firestore.collection('users').doc(auth.currentUser.uid)
-        const isBelowScore = currentval => currentval < ((amount-10000)/100).toFixed(2)
+        const isBelowScore = currentval => currentval < lj
         docRef.get().then((doc) => {
             const userRef = firestore.collection('users').doc(auth.currentUser.uid)
             if (doc.data()['scores'].every(isBelowScore)){
                 return userRef.update({
-                    highscore: parseFloat(((amount-10000)/100).toFixed(2)),
-                    scores: arrayUnion(parseFloat(((amount-10000)/100).toFixed(2)))
+                    highscore: lj,
+                    scores: arrayUnion(lj),
                 }).then(() => {
+                    return userRef.update({
+                        avgreturns: updateAvg(doc.data()['scores'],
+                        lj)
+                    })
+                
+                }).then(()=> {
                     console.log('data saved')
-                }).catch((error) => {
+                })
+                .catch((error) => {
                     console.log(error)
                 })
             }
             else {
                 return userRef.update({
-                    scores: arrayUnion(parseFloat(((amount-10000)/100).toFixed(2)))
+                    scores: arrayUnion(lj),
                 }).then(() => {
-                    console.log('data saved')
+                    return userRef.update({
+                        avgreturns: updateAvg(doc.data()['scores'],
+                        lj)
+                    }).then(()=> {
+                        console.log('data saved')
+                    })
                 }).catch((error) => {
                     console.log(error)
                 })
@@ -228,7 +252,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         if (start == false) {
             return 'Start'
         } else {
-            return `${(300 - count)/10}s left!`
+            return `${((600 - count)/20).toFixed(1)}s left!`
         }
     }
     const sendDataToParnet = () => {
@@ -240,7 +264,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         setRandomint(Math.floor(Math.random() * (datapointer.length - 300)))
         setStartButtonDisable(false)
         passbackfn()
-
+        update()
     }
 
     // For graphing of line
@@ -258,7 +282,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const UpperLine = ({ line }) => (
         <Path
             d={ line }
-            stroke={ '#ed3072' }
+            stroke={ '#5000ca' }
             fill={ 'none' }
         />
     )

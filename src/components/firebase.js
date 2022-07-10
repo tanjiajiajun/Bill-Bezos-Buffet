@@ -42,6 +42,7 @@ export const createUserDocument = async(user, additionalData) => {
         createdAt: new Date(),
         scores: [],
         highscore: 0,
+        avgreturns: 0 ,
         profpic: ''
       })
     } catch (err) {

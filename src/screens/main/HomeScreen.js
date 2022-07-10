@@ -1,16 +1,30 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { View, Text,  StyleSheet, ScrollView, Dimensions } from 'react-native';
-import { auth } from '../../components/firebase';
+import { auth, firestore } from '../../components/firebase';
 
 import StockDataGetter from '../../components/StockDataGetter';
 import BottomSheet from '../../components/BottomSheet';
 import { LinearGradient } from 'expo-linear-gradient'
 import Svg, { Path } from 'react-native-svg'
 
+
 const HomeScreen = (props) => {
 
     const navigation = useNavigation()
+    const [name, setName] = useState('')
+
+    useEffect(()=> {
+        const docRef = firestore.collection('users').doc(auth.currentUser.uid)
+        docRef.get()
+        .then((doc)=>{
+            setName(doc.data()['name'])
+        }).catch((err)=>{
+            console.log(err)
+        })  
+
+    },[])
+
 
     return (
         <View style={styles.container}>
@@ -23,7 +37,7 @@ const HomeScreen = (props) => {
                         style={styles.topNavy}
                         >
                         <Path 
-                            fill='#ed3072' 
+                            fill='#5000ca' 
                             d="M0,192L34.3,170.7C68.6,149,137,107,206,122.7C274.3,
                             139,343,213,411,213.3C480,213,549,139,617,106.7C685.7,75,754,85,
                             823,117.3C891.4,149,960,203,1029,202.7C1097.1,203,1166,149,1234,
@@ -39,12 +53,12 @@ const HomeScreen = (props) => {
 
 
             <LinearGradient 
-            colors={['#840b55','#ec296d']} 
+            colors={['#220056', '#5000ca']} 
             start={{x:0, y: 0.1}}
             end={{x:1, y:1}}
             style={styles.textContainer}>
                 <Text style={styles.headerText}>Welcome back,</Text>
-                <Text style={styles.emailText}>Doge Jia Jun</Text>
+                <Text style={styles.emailText}>{name}</Text>
             </LinearGradient>
 
 
@@ -70,7 +84,7 @@ const styles = StyleSheet.create({
         top: 0,
     },
     box: {
-        backgroundColor: '#ed3072',
+        backgroundColor: '#5000ca',
         height: 40
     },
     svgCurve: {

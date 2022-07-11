@@ -12,30 +12,41 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
 
+
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 import { auth, firestore } from '../../components/firebase';
 
 function SettingsScreen() {
 
-  const [image, setImage] = useState(null);
-
+  const [image, setImage] = useState('');
+  const [imageURL, setURL] = useState('');
 
   const navigation = useNavigation()
 
   const [name, setName] = useState('')
   const [avgreturns, setAvgreturns] = useState('')
   const [highscore, setHighscore] = useState('')
+  
     useEffect(()=> {
+
         const docRef = firestore.collection('users').doc(auth.currentUser.uid)
         docRef.get()
         .then((doc)=>{
             setName(doc.data()['name'])
             setAvgreturns(doc.data()['avgreturns'])
             setHighscore(doc.data()['highscore'])
-  
-        }).catch((err)=>{
+            setImage(doc.data()['profpic'])
+          }).catch((err)=>{
             console.log(err)
         })  
 
+          const storage = getStorage(); //the storage itself
+          const reference = ref(storage, `profilepics/${image.name}`); //how the image will be addressed inside the storage
+          getDownloadURL(reference).then((x) => {
+          setURL(x);
+          console.log("url file from firebase", imageURL);
+            })
     },[])
 
   const handleSignOut = () => {
@@ -61,64 +72,25 @@ const pickImage = async () => { //expo-image-picker
 
   if (!result.cancelled) {
     setImage(result.uri);
-  }
-};
+    console.log("uri file from machine", image)
+    const storage = getStorage();
+    const imageRef = ref(storage, `profilepics/${result.uri.name}`);
 
-const changeProfilePic = (type) => { //react-native-image-picker
-  ImagePicker.launchImageLibrary(    {mediaType: type,
-    maxWidth: 300,
-    maxHeight: 550,
-    quality: 1,}, (response) => {
-    console.log('Response = ', response);
-    
-    if (response.didCancel) {
-      alert('User cancelled camera picker');
-      return;
-    } else if (response.errorCode == 'camera_unavailable') {
-      alert('Camera not available on device');
-      return;
-    } else if (response.errorCode == 'permission') {
-      alert('Permission not satisfied');
-      return;
-    } else if (response.errorCode == 'others') {
-      alert(response.errorMessage);
-      return;
-    } else {
-  
-      // You can also display the image using data:
-      const source = { uri: response.uri };  
-      console.log(response)
-      setImageUri(response)
-      setData(response)
-   }
-   });
-   };
+    const img = await fetch(result.uri);
+    const bytes = await img.blob();
 
-   const openCamera = () => { //react-native-image-picker
-    let options = {
-      mediaType: type,
-      maxWidth: 300,
-      maxHeight: 550,
-      quality: 1,
+    await uploadBytes(imageRef,bytes).then(() => {
+      alert("Image Uploaded")
+      console.log("Image Uploaded");
+      getDownloadURL(imageRef).then((x) => {
+        setURL(x);
+      })
+    });
+    (error) => {
+      alert(error);
     };
-  
-    launchCamera(options, (response) => {
-      console.log('Response = ', response);
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-    
-        // You can also display the image using data:
-        const source = { uri: response.uri };    
-        console.log(response)
-        setImageUri(response)
-     }
-     });
-     };
+  }
+}
 
 
     return (
@@ -136,7 +108,7 @@ const changeProfilePic = (type) => { //react-native-image-picker
         <View style={styles.profileHeader}>
           <Text style={styles.headerText}>Profile</Text>
         </View>
-        <Image source={{uri: image}} style={styles.profPic}/>
+        <Image source={{uri : imageURL}} style={styles.profPic}/>
         <View>
           <Text style={styles.nameText}>{name}</Text>
           <Text style={styles.subTexts}>All-time highscore: {highscore}%</Text>

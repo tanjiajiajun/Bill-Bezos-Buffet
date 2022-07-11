@@ -1,5 +1,5 @@
 import React , { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { Image, View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
 
 import WavyHeader from '../../components/WavyHeader';
@@ -7,6 +7,7 @@ import LeaderComponent from '../../components/LeaderComponent';
 
 import { onSnapshot, collection, query, orderBy } from 'firebase/firestore';
 import { auth, firestore  } from '../../components/firebase'
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
 function LeaderboardScreen() {
@@ -43,6 +44,7 @@ function LeaderboardScreen() {
   
     return (
       <View style={styles.container}>
+
         <WavyHeader
         customStyles={styles.svgCurve}
         customHeight={160}
@@ -55,9 +57,11 @@ function LeaderboardScreen() {
         0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,
         0,96,0,48,0L0,0Z"
       />
-        <View style={styles.headerContainer}>
+
+        <View>
           <Text style={styles.headerText}>Leaderboard</Text>
         </View>
+
         <LinearGradient 
           colors={['#840b55','#ec296d']} 
           start={{x:0, y:0}}
@@ -67,7 +71,8 @@ function LeaderboardScreen() {
             <Text style={styles.yourStandingText}>RANK</Text>
             <Text style={styles.yourStandingText}>{rank}</Text>
           </View>
-          <View style={styles.profPic}></View>
+          <View style={styles.profPic}>
+          </View>
           <View style={styles.yourAvgReturns}>
             <Text style={styles.yourStandingText}>AVG. RETURNS:</Text>
             <Text style={styles.yourStandingText}>{avgreturns}%</Text>
@@ -79,22 +84,20 @@ function LeaderboardScreen() {
             <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>Weekly Top</Text></TouchableOpacity>
             <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>All-Time Average</Text></TouchableOpacity>
           </View>
-          <View style={styles.line}></View>
         </View>
 
+        <View style={styles.line}></View>
 
-          <FlatList
-            keyExtractor={(item) => leaderboardData.indexOf(item)}
-            data={leaderboardData}
-            renderItem={({ item }) => (
-              <LeaderComponent 
-                index={leaderboardData.findIndex(x => x==item)}
-                name={item['name']}
-                highscore={item['highscore']}
-                />
-
+        <FlatList
+          keyExtractor={(item) => leaderboardData.indexOf(item)}
+          data={leaderboardData}
+          renderItem={({ item }) => (
+            <LeaderComponent 
+              index={leaderboardData.findIndex(x => x==item)}
+              name={item['name']}
+              highscore={item['highscore']}
+              />
             )}>
-
           </FlatList>
 
 
@@ -106,10 +109,16 @@ function LeaderboardScreen() {
   export default LeaderboardScreen;
 
   const styles = StyleSheet.create({
+
+    container: {
+      flex: 1,
+    },
+
     svgCurve: {
       position: 'absolute',
       width: Dimensions.get('window').width
     },
+
     headerText: {
       color:'white',
       fontSize: 30,
@@ -117,13 +126,7 @@ function LeaderboardScreen() {
       textAlign: 'center',
       marginTop: 55
     },
-    buttons:{
-      flex: 1,
-      flexDirection:'row',
-      justifyContent: 'center',
-      border:1,
-      height: 50,
-    }, 
+
     yourStanding: {
       width: '80%',
       height: 106, 
@@ -133,48 +136,67 @@ function LeaderboardScreen() {
       marginTop: 60,
       flexDirection: 'row',
       alignItems:'center',
+      
     },
     yourStandingText: {
       fontWeight: '600',
       fontSize: 15,
       color: 'white',
     },
+
+    yourRank: {
+      alignItems: 'center',
+      marginHorizontal: 25,
+    },
+
+    profPic: {
+      height: 60,
+      width: 60,
+      backgroundColor: '#F2F2F2',
+      borderRadius: 400,
+
+    }, 
+
+    yourAvgReturns: {
+      marginHorizontal: 20,
+      alignItems:'center'
+    },
+
+    buttons:{
+      flexDirection:'row',
+      justifyContent: 'center',
+      border:1,
+      height: 50,
+      
+    }, 
+
     leaderboard: {
       width: '100%',
       height: 50,
       backgroundColor: 'white',
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
-      marginTop: 50
+      marginTop: 50,
     },
+
     button: {
       marginHorizontal:25,
       paddingVertical: 10,
     },
+
     buttontext: {
       fontSize: 20,
       fontWeight: '700',
       alignSelf: 'center',
     },
+
     line: {
       height: 1,
       width: '100%',
-      backgroundColor:'black'
+      backgroundColor:'black',
+
     }, 
-    profPic: {
-      height: 60,
-      width: 60,
-      backgroundColor: '#F2F2F2',
-      borderRadius: 400
-    }, 
-    yourRank: {
-      alignItems: 'center',
-      marginHorizontal: 25
-    },
-    yourAvgReturns: {
-      marginHorizontal: 20,
-      alignItems:'center'
-    }
+
 
 
   })

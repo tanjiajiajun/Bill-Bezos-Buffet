@@ -1,6 +1,6 @@
 import React, {useMemo, useState, useEffect} from 'react';
 import { TouchableWithoutFeedback, Image, StyleSheet, Dimensions, View } from 'react-native';
-import Animated, { Easing, stopClock } from 'react-native-reanimated';
+import Animated, { EasingNode, stopClock } from 'react-native-reanimated';
 
 
 const imageSize = {
@@ -40,7 +40,7 @@ const {
     const config = {
         duration: 5000,
         toValue: 1,
-        easing: Easing.inOut(Easing.linear),
+        easing: EasingNode.inOut(EasingNode.linear),
     };
 
     return block([

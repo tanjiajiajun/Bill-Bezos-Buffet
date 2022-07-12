@@ -19,8 +19,8 @@ const ResetPassword = () => {
         sendPasswordResetEmail(auth, email)
         .then(() => {
             navigation.navigate("ResetPasswordSplashScreen")
-        // Password reset email sent!
-        // ..
+            alert("Reset password email sent");
+            console.log("Reset password email sent to", email)
         })
         .catch(error => alert(error.message))
     }

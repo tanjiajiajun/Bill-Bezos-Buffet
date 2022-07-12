@@ -41,8 +41,8 @@ function SettingsScreen() {
             console.log(err)
         })  
 
-          const storage = getStorage(); //the storage itself
-          const reference = ref(storage, `profilepics/${image.name}`); //how the image will be addressed inside the storage
+          const storage = getStorage();
+          const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
           getDownloadURL(reference).then((x) => {
           setURL(x);
           console.log("url file from firebase", imageURL);
@@ -65,18 +65,21 @@ const pickImage = async () => { //expo-image-picker
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
     aspect: [4, 3],
-    quality: 1,
+    quality: 0.1,
   });
 
   console.log(result);
 
   if (!result.cancelled) {
-    setImage(result.uri);
-    console.log("uri file from machine", image)
-    const storage = getStorage();
-    const imageRef = ref(storage, `profilepics/${result.uri.name}`);
+    const uri = result.uri;
+    //let uploadUri =
+    //Platform.OS === 'ios' ? uri.replace('file:///', '') : uri;
+    setImage(uri);
+    console.log("uri file from machine", image) //supposed to always show the uri of the image but somehow sometimes it doesnt work and it shows undefined, so i try not to use Image and i use result.uri
+    const storage = getStorage();  //the storage itself
+    const imageRef = ref(storage, `profilepics/${auth.currentUser.uid}`);  //how the image will be addressed inside the storage. Idk why the file is saved as 'undefined'
 
-    const img = await fetch(result.uri);
+    const img = await fetch(uri);
     const bytes = await img.blob();
 
     await uploadBytes(imageRef,bytes).then(() => {

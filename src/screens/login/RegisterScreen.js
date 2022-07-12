@@ -44,14 +44,6 @@ const RegisterScreen = () => {
 
     // }
 
-    function validate_password(password) {
-        let check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
-        if (password.match(check)) {
-           console.log("Your password is strong.");
-        } else {
-          console.log("Meh, not so much.");
-        }
-      }
 
     const handleSignUp = () => {
         auth.createUserWithEmailAndPassword(email,password)

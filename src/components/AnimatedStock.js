@@ -320,7 +320,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         ended={end} 
         sendDataToParnet={sendDataToParnet} 
         amnt={amount} 
-        gamearraypointer={gameArray} 
+        gamearraypointer={gameArray2} 
         startdate={datepointer[randomint]} 
         enddate={datepointer[randomint+300]} 
         ticker={tickerpointer}

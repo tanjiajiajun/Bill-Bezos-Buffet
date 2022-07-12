@@ -49,7 +49,7 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
 
     } else {
         return (
-            <DeepAnalysis showDeep={showDeep} exitDeepAnalysis={exitDeepAnalysis}/>
+            <DeepAnalysis showDeep={showDeep} gameArrayDataPoints={gamearraypointer} exitDeepAnalysis={exitDeepAnalysis}/>
         )
     }
 }

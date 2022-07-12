@@ -12,7 +12,6 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 function LeaderboardScreen() {
 
-  const [image, setImage] = useState('');
   const [imageURL, setURL] = useState('');
 
   const [leaderboardData, setLeaderboardData] = useState([])
@@ -36,18 +35,14 @@ function LeaderboardScreen() {
     const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
     getDownloadURL(reference).then((x) => {
     setURL(x);
-    console.log("url file from firebase", imageURL);
     })
 
     const collectionRef = collection(firestore, 'users')
     const q = query(collectionRef, orderBy("highscore", "desc"))
-
     const unsub = onSnapshot(q, (snapshot) => {
       setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
       setRank(leaderboardData.findIndex(x => x['highscore'] == userData.current))
-    })
-
-
+    }) //arranging in highscore
     return unsub
   }
   , [])
@@ -105,6 +100,7 @@ function LeaderboardScreen() {
               index={leaderboardData.findIndex(x => x==item)}
               name={item['name']}
               highscore={item['highscore']}
+              imageURL={item['profpic']}
               />
             )}>
           </FlatList>

@@ -4,18 +4,7 @@ import { auth, firestore } from './firebase'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
-export default function LeaderComponent({name, highscore, index}) {
-
-    const [imageURL, setURL] = useState('');
-
-
-    useEffect(() => {
-        const storage = getStorage();
-        const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
-        getDownloadURL(reference).then((x) => {
-        setURL(x);
-        })
-    });
+export default function LeaderComponent({name, highscore, index, imageURL}) {
 
     return (
     <View style={styles.container}>

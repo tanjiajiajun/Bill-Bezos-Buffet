@@ -55,7 +55,7 @@ const LoginScreen = () => {
 
       <Image 
         source={require('../../../assets/Layer8.png')}
-        style={{ resizeMode:"contain", width:300, height:200,      backgroundColor:"black" }}
+        style={{ resizeMode:"contain", width:300, height:200, backgroundColor:"black", }}
         />
 
       <Text style={styles.headerTextContainer}>Welcome to Bulls Vs Bears</Text>

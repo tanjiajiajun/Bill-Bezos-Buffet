@@ -1,6 +1,8 @@
 import React from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
+import { AnimatedBackground } from './AnimatedBackground'
+
 
 
 const VerifyEmail = () => {
@@ -9,13 +11,22 @@ const VerifyEmail = () => {
 
     return(
     <View
-        style={styles.container}
-        >
-    
-    <TouchableOpacity
-            onPress={() => navigation.navigate("Login")}
-        >
-            <Text style={styles.verificationText}>To continue, please verify your email we sent to your inbox.{"\n"}Then press here to log in again</Text>
+        style={styles.container}>
+
+        <AnimatedBackground/>
+
+        <TouchableOpacity
+            onPress={() => navigation.navigate("Login")}>
+
+            <View style={styles.textContainer}>
+
+                <Text style={styles.verificationText}>
+                    To continue, please verify your email we sent to your inbox.{"\n"}
+                    Then press here to log in again
+                </Text>
+
+            </View>
+
         </TouchableOpacity>
 
     </View>
@@ -32,10 +43,20 @@ const styles = StyleSheet.create({
         backgroundColor:"black"
     },
 
+    textContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor:"black",
+        borderRadius: 100,
+
+    },
+
     verificationText: {
         color:"#723AC5",
         fontSize: 20,
         textAlign: "center",
+
+        
     },
 });
 

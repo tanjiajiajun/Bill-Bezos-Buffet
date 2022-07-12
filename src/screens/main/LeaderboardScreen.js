@@ -12,13 +12,14 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 function LeaderboardScreen() {
 
+  const [image, setImage] = useState('');
+  const [imageURL, setURL] = useState('');
 
   const [leaderboardData, setLeaderboardData] = useState([])
   const [rank, setRank] = useState('')
   const [avgreturns, setAvgreturns] = useState('')
   const userData = useRef([])
 
-  // console.log(leaderboardData)
 
   useEffect(() => {
     const userRef = firestore.collection('users').doc(auth.currentUser.uid)
@@ -31,6 +32,13 @@ function LeaderboardScreen() {
       console.log(error)
     })
 
+    const storage = getStorage();
+    const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
+    getDownloadURL(reference).then((x) => {
+    setURL(x);
+    console.log("url file from firebase", imageURL);
+    })
+
     const collectionRef = collection(firestore, 'users')
     const q = query(collectionRef, orderBy("highscore", "desc"))
 
@@ -38,6 +46,8 @@ function LeaderboardScreen() {
       setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
       setRank(leaderboardData.findIndex(x => x['highscore'] == userData.current))
     })
+
+
     return unsub
   }
   , [])
@@ -71,8 +81,7 @@ function LeaderboardScreen() {
             <Text style={styles.yourStandingText}>RANK</Text>
             <Text style={styles.yourStandingText}>{rank}</Text>
           </View>
-          <View style={styles.profPic}>
-          </View>
+          <Image source={{uri : imageURL}} style={styles.profPic}/>
           <View style={styles.yourAvgReturns}>
             <Text style={styles.yourStandingText}>AVG. RETURNS:</Text>
             <Text style={styles.yourStandingText}>{avgreturns}%</Text>

@@ -23,26 +23,6 @@ const RegisterScreen = () => {
 
     const navigation = useNavigation()
 
-    // const creds123 = (userCredential) => {
-    //     const user1 = userCredential.user;
-    //     userCredential.user1.sendEmailVerification();
-    //     auth.signOut();
-    //     console.log('Registered with:', user1.email);
-    //     navigation.navigate("VerifyEmail")
-    // }
-    // const handleSignUp = async () => {
-    //     try {
-    //         const { user } = await auth.createUserWithEmailAndPassword(email,password)
-    //         await createUserDocument(user, {name})
-    //         await creds123(userCredential)
-    
-            
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-
-
-    // }
 
 
     const handleSignUp = () => {
@@ -53,7 +33,7 @@ const RegisterScreen = () => {
             const user = userCredential.user;
             userCredential.user.sendEmailVerification();
             auth.signOut();
-            alert("Email sent");
+            alert("Email Sent! You may need to check junk mail for the email");
 
             console.log('Registered with:', user.email);
         })
@@ -69,7 +49,7 @@ const RegisterScreen = () => {
         backgroundColor="black"
         >
 
-        <AnimatedBackground/>
+            <AnimatedBackground/>
 
             <Text style={styles.headerTextContainer}>Create account</Text>
 
@@ -147,7 +127,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingHorizontal: 15,
         paddingVertical: 10,
-        borderRadius: 10,
+        borderRadius: 100,
         marginTop: 5,
     },
 

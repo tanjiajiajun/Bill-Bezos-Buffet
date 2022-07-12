@@ -30,23 +30,23 @@ function SettingsScreen() {
   
     useEffect(()=> {
 
-        const docRef = firestore.collection('users').doc(auth.currentUser.uid)
-        docRef.get()
-        .then((doc)=>{
-            setName(doc.data()['name'])
-            setAvgreturns(doc.data()['avgreturns'])
-            setHighscore(doc.data()['highscore'])
-            setImage(doc.data()['profpic'])
-          }).catch((err)=>{
-            console.log(err)
-        })  
+      const storage = getStorage();
+      const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
+      getDownloadURL(reference).then((x) => {
+      setURL(x);
+      console.log("url file from firebase", imageURL);
+      })
 
-          const storage = getStorage();
-          const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
-          getDownloadURL(reference).then((x) => {
-          setURL(x);
-          console.log("url file from firebase", imageURL);
-            })
+      const docRef = firestore.collection('users').doc(auth.currentUser.uid)
+      docRef.get()
+      .then((doc)=>{
+        setName(doc.data()['name'])
+        setAvgreturns(doc.data()['avgreturns'])
+        setHighscore(doc.data()['highscore'])
+        setImage(doc.data()['profpic'])
+        }).catch((err)=>{
+          console.log(err)
+        })  
     },[])
 
   const handleSignOut = () => {
@@ -88,6 +88,11 @@ const pickImage = async () => { //expo-image-picker
       getDownloadURL(imageRef).then((x) => {
         setURL(x);
       })
+    });
+
+    const docRef = firestore.collection('users').doc(auth.currentUser.uid)
+    docRef.update({
+      profpic: imageURL
     });
     (error) => {
       alert(error);

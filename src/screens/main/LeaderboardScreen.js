@@ -12,7 +12,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 function LeaderboardScreen() {
 
-  const [imageURL, setURL] = useState('');
+  const [imageURL, setURL] = useState(''); //not sure if need to call reload to to refresh the current user but i think the profile pic should always be updated when navigating to this screen
 
   const [leaderboardData, setLeaderboardData] = useState([])
   const [rank, setRank] = useState('')

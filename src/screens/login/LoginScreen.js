@@ -4,7 +4,6 @@ import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpac
 import { auth } from '../../components/firebase'
 import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { AnimatedBackground } from './AnimatedBackground'
 
 
 
@@ -20,6 +19,7 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
+        navigation.navigate("mainStack")
       }
     })
     return unsubscribe
@@ -35,13 +35,11 @@ const LoginScreen = () => {
           navigation.navigate('VerifyEmail')
         } else {
           console.log("Logged in with", user.email)
-          navigation.replace("mainStack")
+          navigation.navigate("mainStack")
         }
       })
       .catch(error => alert(error.message))
   }
-
-
 
   return (
     <KeyboardAvoidingView
@@ -50,12 +48,9 @@ const LoginScreen = () => {
       backgroundColor="black"
     >
 
-    <AnimatedBackground/>
-
-
       <Image 
         source={require('../../../assets/Layer8.png')}
-        style={{ resizeMode:"contain", width:300, height:200,      backgroundColor:"black" }}
+        style={{ resizeMode:"contain", width:300, height:200 }}
         />
 
       <Text style={styles.headerTextContainer}>Welcome to Bulls Vs Bears</Text>
@@ -105,7 +100,6 @@ const LoginScreen = () => {
 
       </View>
 
-    
     </KeyboardAvoidingView>
   )
 }
@@ -121,13 +115,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-
   headerTextContainer:{
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 40,
     color: 'white',
-    backgroundColor:"black"
   },
 
   inputContainer: {
@@ -142,8 +134,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     
   },
-
-
   eye:{
     position: 'absolute',
     right: 10,

@@ -15,31 +15,54 @@ function LeaderboardScreen() {
   const [leaderboardData, setLeaderboardData] = useState([])
   const [rank, setRank] = useState('')
   const [avgreturns, setAvgreturns] = useState('')
-  const userData = useRef([])
+  const userData = useRef(0)
 
   // console.log(leaderboardData)
 
   useEffect(() => {
-    const userRef = firestore.collection('users').doc(auth.currentUser.uid)
-    userRef.get()
-    .then((doc) => {
-      setAvgreturns(doc.data()['avgreturns'])
-      userData.current=doc.data()['highscore']
-    })
-    .catch(error=>{
-      console.log(error)
-    })
 
     const collectionRef = collection(firestore, 'users')
     const q = query(collectionRef, orderBy("highscore", "desc"))
 
     const unsub = onSnapshot(q, (snapshot) => {
       setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
-      setRank(leaderboardData.findIndex(x => x['highscore'] == userData.current))
+
     })
+    const userRef = firestore.collection('users').doc(auth.currentUser.uid)
+    userRef.get()
+    .then((doc) => {
+      setAvgreturns(doc.data()['avgreturns'])
+      userData.current=doc.data()['highscore']
+    })
+    .then(() => {
+      console.log(leaderboardData.findIndex(x => x['highscore'] === userData.current))
+    })
+    .catch(error=>{
+      console.log(error)
+    })
+
+    
     return unsub
   }
   , [])
+
+  // useEffect(() => {
+  //   if (leaderboardData.length==0){
+  //     console.log('wtf')
+  //   }else {
+  //   const userRef = firestore.collection('users').doc(auth.currentUser.uid)
+  //   userRef.get()
+  //   .then((doc) => {
+  //     setAvgreturns(doc.data()['avgreturns'])
+  //     userData.current=doc.data()['highscore']
+  //   })
+  //   .then(() => {
+  //     console.log(leaderboardData.findIndex(x => x['highscore'] === userData.current))
+  //   })
+  //   .catch(error=>{
+  //     console.log(error)
+  //   })}
+  // }, [])
   
     return (
       <View style={styles.container}>

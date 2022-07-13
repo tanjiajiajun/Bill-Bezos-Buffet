@@ -7,6 +7,7 @@ import { AreaChart, YAxis } from 'react-native-svg-charts'
 import EndModal from './EndModal';
 
 import { auth, firestore  } from './firebase'
+import * as shape from 'd3-shape'
 
 
 
@@ -17,8 +18,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
         if (arr.length == 0){
             return incData
-        }else {
-            return parseFloat(average([...arr, incData]).toFixed(2))
+        }
+        else {
+            return +parseFloat(average([...arr, incData])).toFixed(2)
         }
     }
 
@@ -53,9 +55,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
                     return userRef.update({
                         avgreturns: updateAvg(doc.data()['scores'],
                         lj)
-                    }).then(()=> {
-                        console.log('data saved')
                     })
+                }).then(() => {
+                    console.log('data saved2')
                 }).catch((error) => {
                     console.log(error)
                 })
@@ -341,6 +343,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
                 style={{flex: 1, }}
                 data={yList}
                 contentInset={{ top: 20, bottom: 20 }}
+                curve={shape.curveNatural}
                 svg={{ fill: 'url(#gradient)'}}>
                 <Gradient/>
                 <UpperLine/>

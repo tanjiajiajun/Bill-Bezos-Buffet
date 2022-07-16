@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Modal, TouchableOpacity, Share } from 'react-native'
 import React, {useState} from 'react'
 
 import DeepAnalysis from './DeepAnalysis'
@@ -6,16 +6,33 @@ import DeepAnalysis from './DeepAnalysis'
 export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker }) {
 
     const [showDeep, setShowDeep] = useState(false)
-
     const deepAnalysisButton = () => {
         setShowDeep(true)
     }
     const exitDeepAnalysis = () => {
         setShowDeep(false)
         sendDataToParnet()
-
     }
-    
+
+    const onShare = async () => {
+        try {
+          const result = await Share.share({
+            message:
+              'My Highscore in Bulls VS Bears is 100%! Check it out!',
+          });
+          if (result.action === Share.sharedAction) {
+            if (result.activityType) {
+              // shared with activity type of result.activityType
+            } else {
+              // shared
+            }
+          } else if (result.action === Share.dismissedAction) {
+            // dismissed
+          }
+        } catch (error) {
+          alert(error.message);
+        }}
+
     if (showDeep == false) {
         return (
             <Modal
@@ -34,7 +51,8 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
                                 onPress={deepAnalysisButton}>                        
                                     <Text style={styles.modalbuttontext}>Deep Analysis</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity>
+                                <TouchableOpacity
+                                onPress={onShare}>
                                     <Text style={styles.modalbuttontext}>Share</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity 

@@ -24,7 +24,10 @@ const HomeScreen = (props) => {
         })  
 
     },[])
-
+ 
+    const [fees, setFees] = useState(0)
+    const [stopLoss, setStopLoss] = useState(0)
+    const [takeProfit, setTakeProfit] = useState(0)
 
     return (
         <View style={styles.container}>
@@ -62,8 +65,8 @@ const HomeScreen = (props) => {
             </LinearGradient>
 
 
-            <StockDataGetter/>
-            <BottomSheet/>
+            <StockDataGetter fees={fees} stopLoss={stopLoss} takeProfit={takeProfit}/>
+            <BottomSheet setFees={setFees} setStopLoss={setStopLoss} setTakeProfit={setTakeProfit}/>
 
             </View>
 

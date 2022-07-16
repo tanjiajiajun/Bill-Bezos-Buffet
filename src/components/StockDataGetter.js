@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import AnimatedStock from './AnimatedStock'
 import DataFetchingSplash from '../screens/main/DataFetchingSplash'
 
-export default function StockDataGetter() {
+export default function StockDataGetter({fees, stopLoss, takeProfit}) {
   const tickerjson = require('../data/filtered_listing.json')
 
   const [date, setDate] = useState([])
@@ -57,7 +57,14 @@ export default function StockDataGetter() {
   if (data.length > 0) {
     return (
       <View>
-        <AnimatedStock datapointer={data} datepointer={date} tickerpointer={ticker} passbackfn={passback}/>
+        <AnimatedStock 
+          datapointer={data} 
+          datepointer={date} 
+          tickerpointer={ticker} 
+          passbackfn={passback}
+          fees={fees}
+          stopLoss={stopLoss}
+          takeProfit={takeProfit}/>
       </View>
     )
   }else {

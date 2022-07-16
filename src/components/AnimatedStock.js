@@ -11,9 +11,9 @@ import * as shape from 'd3-shape'
 
 
 
-function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) {
+function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, fees, stopLoss, takeProfit}) {
     //database functions
-
+    
     const updateAvg = (arr, incData) => {
         const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
         if (arr.length == 0){
@@ -71,8 +71,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
 
     // functions that add fake data (mid pt of every 2 pts of gamearray) 
     // to increase no. of data points 
-
-
     const split = function (a) {
         for(let i=0;i<a.length-1;i++){
             let b = (a[i] + a[i+1]) / 2
@@ -91,7 +89,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const mapper = datapointer.map((i) => Number(i))
     const gameArray2 = mapper.slice(randomint, randomint + 300)
     const gameArray = split(gameArray2)
-    // console.log(gameArray.length)
+    
 
 
     const [count, setCount] = useState(0)
@@ -108,6 +106,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     const startX = useRef(50)
     const startY = useRef(0)
     const endY = useRef(0)
+
+    const automatedPressoutTimes = useRef(false)
+    const automatedShortPressoutTimes = useRef(false)
 
     const startButtonOnPress = () => {
         setStart(prevStart => !prevStart)
@@ -135,8 +136,19 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         }
 
         else if (start == true){
-            if (yList.length <= 50) {
-                if (holdChecker == true || shortHoldChecker == true)  {
+            if (yList.length <= 50) { // if the entire array has not been populated yet
+                if (holdChecker == true)  {
+                    var id = setInterval(() => setCount(prevCount => prevCount + 1),50)
+                    var iv = setInterval(() => {
+                        setyList(prevyList => [...prevyList, gameArray[count]],50)
+                        startX.current = startX.current -1
+                        endY.current = gameArray[count]
+                    },50)
+                    if (yList[50] >= buyingPrice*(1+takeProfit/100)) {
+                        automatedHandleLongOnPressOut()
+                    }
+
+                } else if (shortHoldChecker == true) {
                     var id = setInterval(() => setCount(prevCount => prevCount + 1),50)
                     var iv = setInterval(() => {
                         setyList(prevyList => [...prevyList, gameArray[count]],50)
@@ -151,8 +163,8 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
 
 
 
-            } else {
-                if (holdChecker == true || shortHoldChecker == true) {
+            } else { // when the entire array has been populated
+                if (holdChecker == true) {
                     var id = setInterval(() => setCount(prevCount => prevCount + 1),50)
                     var iv = setInterval(() => {
                         setyList(prevyList => [...prevyList, gameArray[count]].slice(1))
@@ -160,7 +172,27 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
                         endY.current = gameArray[count]
                     },50)
 
-                } else {
+                    if (yList[50] >= buyingPrice*(1+takeProfit/100) && takeProfit != 0 || // take profit if share price is x% above buying price
+                        yList[50] <= buyingPrice*(1-stopLoss/100) && stopLoss != 0) {     // sell your holdings if share price is x% below buying price
+                        automatedHandleLongOnPressOut()
+                    }
+
+        
+                } else if (shortHoldChecker==true) {
+                    var id = setInterval(() => setCount(prevCount => prevCount + 1),50)
+                    var iv = setInterval(() => {
+                        setyList(prevyList => [...prevyList, gameArray[count]].slice(1))
+                        startX.current = startX.current - 1
+                        endY.current = gameArray[count]
+                    },50)
+
+                    if (yList[50] <= shortBuyingPrice*(1-takeProfit/100) && takeProfit != 0 || 
+                        yList[50] >= shortBuyingPrice*(1+stopLoss/100) && stopLoss != 0) {
+                            automatedHandleShortOnPressOut()
+                        }
+                }
+
+                 else {
                     var id = setInterval(() => setCount(prevCount => prevCount + 1),50)
                     var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]].slice(1)),50)
 
@@ -176,12 +208,14 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
                     }
 
         }, [yList, start])
+        // console.log(automatedPressoutTimes.current)
 
-
+    // LONGING
     useEffect( () => {
         console.log(`u bought at ${buyingPrice}`)
         setNoShares(Math.floor(amount/buyingPrice))
         console.log(`u bought ${Math.floor(amount/buyingPrice)} shares`)
+        console.log(`u have incurred a trading fee of ${Math.max(fees/100,0)*Math.floor(amount/buyingPrice)*buyingPrice}`)
         }, [buyingPrice]
     )
 
@@ -191,14 +225,12 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
             } else {
             console.log(`u sold at ${sellingPrice}`)
             console.log(`profit per share: ${sellingPrice-buyingPrice}`)
-            console.log(`total earnings for the trade: ${(sellingPrice-buyingPrice)*noShares}`)
-            setAmount(prev => prev + (sellingPrice-buyingPrice)*noShares )
+            console.log(`total earnings for the trade: ${(sellingPrice-buyingPrice)*noShares - Math.max(fees/100,0)*Math.floor(amount/buyingPrice)*buyingPrice}`)
+            setAmount(prev => prev + (sellingPrice-buyingPrice)*noShares - Math.max(fees/100,0)*Math.floor(amount/buyingPrice)*buyingPrice)
             }
 
         }, [sellingPrice]
     )
-
-
 
     const handleLongOnPressIn = () => {
         setBuyingPrice(yList[yList.length-1])
@@ -207,6 +239,19 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
     }
 
     const handleLongOnPressOut = () => {
+        if (automatedPressoutTimes.current == false) {
+            setSellingPrice(yList[yList.length-1])
+            setHoldChecker(false)
+            startY.current = 0
+            endY.current = 0
+            startX.current = 50
+         } else {
+            automatedPressoutTimes.current = false
+         }  
+
+    }
+    const automatedHandleLongOnPressOut = () => {
+        automatedPressoutTimes.current = true
         setSellingPrice(yList[yList.length-1])
         setHoldChecker(false)
         startY.current = 0
@@ -218,7 +263,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         setEnd(true)
     }
 
-
+    // Shorting
     const [shortBuyingPrice, setShortBuyingPrice] = useState(0)
     const [shortSellingPrice, setShortSellingPrice] = useState(0)
     const [shortHoldChecker, setShortHoldChecker] = useState(false)
@@ -227,6 +272,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         console.log(`you have shorted at: ${shortBuyingPrice}`)
         setNoShares(Math.floor(amount/shortBuyingPrice))
         console.log(`you have shorted ${noShares} shares`)
+        console.log(`u have incurred a trading fee of ${Math.max(fees/100,0)*Math.floor(amount/shortBuyingPrice)*shortBuyingPrice}`)
     }, [shortBuyingPrice])
 
     useEffect( () => {  
@@ -234,8 +280,8 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         }
         console.log(`you have exited your short position at ${shortSellingPrice}`)
         console.log(`profit per share: ${shortBuyingPrice-shortSellingPrice}`)
-        console.log(`total profit from the trade: ${(shortBuyingPrice-shortSellingPrice) * noShares}`)
-        setAmount( prev => prev + (shortBuyingPrice-shortSellingPrice) * noShares )
+        console.log(`total profit from the trade: ${(shortBuyingPrice-shortSellingPrice) * noShares - Math.max(fees/100,0)*Math.floor(amount/shortBuyingPrice)*shortBuyingPrice}`)
+        setAmount( prev => prev + (shortBuyingPrice-shortSellingPrice) * noShares - Math.max(fees/100,0)*Math.floor(amount/shortBuyingPrice)*shortBuyingPrice)
     }, [shortSellingPrice])
 
     const handleShortOnPressIn = () => {
@@ -244,11 +290,23 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
         startY.current = yList[yList.length-1]
     }
     const handleShortOnPressOut = () => {
+        if (automatedPressoutTimes.current == false) {
+            setShortHoldChecker(false)
+            setShortSellingPrice(yList[yList.length-1])
+            startY.current = 0
+            endY.current = 0
+            startX.current = 50
+        } else {
+            automatedPressoutTimes.current = false
+        }
+    }
+    const automatedHandleShortOnPressOut = () => {
         setShortHoldChecker(false)
         setShortSellingPrice(yList[yList.length-1])
         startY.current = 0
         endY.current = 0
         startX.current = 50
+        automatedPressoutTimes.current = true
     }
     const startButtonText = () => {
         if (start == false) {
@@ -374,8 +432,6 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn}) 
                 <Text> Short </Text>
             </TouchableOpacity>
         </View>
-
-
     </SafeAreaView>
     );
 }

@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
 import React , {useState} from 'react'
-import { AreaChart, Grid } from 'react-native-svg-charts'
+import { AreaChart, Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
-import { Circle, G, Line, Rect, Path} from 'react-native-svg'
+import { Circle, G, Line, Rect, Path } from 'react-native-svg'
 
 export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDataPoints}) {
 
 
     //data points from AnimatedStock. Have to pass as property in function DeepAnalysis and subsequently in EndModal
     const data = gameArrayDataPoints
+    const dummyDateData=[ 50, 10, 40, 95, 85 ]
 
     const max = Math.max.apply(Math, data);
     const indexOfMaxPoint = data.indexOf(max);
@@ -19,9 +20,10 @@ export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDat
     const minMaxdata = [min,max];
     const minMaxIndexdata = [indexOfMinPoint,indexOfMaxPoint];
 
-    const [num, setNum] = useState('');
+    const axesSvg = { fontSize: 10, fill: 'grey' };
+    const verticalContentInset = { top: 10, bottom: 10 }
     
-    const Decorator = ({ x, y, minMaxdata, minMaxIndexdata, fullData }) => {
+    const Decorator = ({ x, y, minMaxIndexdata, fullData }) => {
 
         console.log(minMaxIndexdata)
         return minMaxIndexdata.map((value, index) => (
@@ -37,7 +39,7 @@ export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDat
         }
 
     
-
+//find a way to display the horizontal x axis with date of max and min if possible
 
 
 
@@ -55,6 +57,8 @@ export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDat
 
                 <Text style={styles.returnstext}>This is how the stock performed</Text>
                 
+
+
                 <AreaChart
                 style={{ height: 300 }}
                 data={data}
@@ -65,11 +69,17 @@ export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDat
                 <Grid/>
                 <Line/>
                 <Decorator
-                    minMaxdata={minMaxdata}
                     fullData={data}
                     minMaxIndexdata={minMaxIndexdata}
                 />
             </AreaChart>
+
+            <XAxis
+                    data={dummyDateData}
+                    style={styles.xAxisContainer}
+                    contentInset={verticalContentInset}
+                    svg={axesSvg}
+                />
 
                 <View style={styles.wrapper}>
                     <TouchableOpacity onPress={exitDeepAnalysis}>
@@ -93,7 +103,7 @@ const styles = StyleSheet.create({
     },
     modal: {
         animationType:"slide",
-        width: 400,
+        width: 385,
         height: 400,
         backgroundColor: '#FFFFFF',
         borderRadius: 15,
@@ -111,9 +121,12 @@ const styles = StyleSheet.create({
     wrapper: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 0
     },
 
+    xAxisContainer: {
+
+    },
+    
     modalbuttontext: {
         margin: 50,
         fontSize: 14,

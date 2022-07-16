@@ -35,7 +35,7 @@ const LoginScreen = () => {
           navigation.navigate('VerifyEmail')
         } else {
           console.log("Logged in with", user.email)
-          navigation.replace("mainStack")
+          navigation.replace("MainStack")
         }
       })
       .catch(error => alert(error.message))

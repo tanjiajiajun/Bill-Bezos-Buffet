@@ -9,13 +9,12 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //import * as ImagePicker from "react-native-image-picker"
-
 import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
-
 
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 import { auth, firestore } from '../../components/firebase';
+
 
 function SettingsScreen() {
 
@@ -134,7 +133,8 @@ const pickImage = async () => { //expo-image-picker
             </TouchableOpacity>
 
           
-            <TouchableOpacity style={styles.innerComponent}>
+            <TouchableOpacity style={styles.innerComponent} onPress={() => navigation.navigate("ChangeUsernamePage")
+}>
               <MaterialCommunityIcons style={{marginHorizontal:15, marginVertical:7}} name="rename-box" size={45} />
               <Text style={styles.settingsText}>Change Username</Text>
               <MaterialIcons style={{position: 'absolute', marginLeft:310}} name='arrow-forward-ios' size={25} />

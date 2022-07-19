@@ -24,7 +24,10 @@ const LoginStackNavigator = () => {
                 {title: "Register",
                 headerTintColor: 'white',
                 headerStyle: {
-                backgroundColor:"black"
+                backgroundColor:"black",
+                elevation: 0,
+                shadowOpacity: 0,
+                borderBottomWidth: 0,
                 }
                 }}/>
                 
@@ -32,7 +35,10 @@ const LoginStackNavigator = () => {
                 {title: "Verify Email",
                 headerTintColor: 'white',
                 headerStyle: {
-                backgroundColor:"black"
+                backgroundColor:"black",
+                elevation: 0,
+                shadowOpacity: 0,
+                borderBottomWidth: 0,
                 }
                 }}/>
                 
@@ -40,7 +46,10 @@ const LoginStackNavigator = () => {
                 {title: "Reset Password",
                 headerTintColor: 'white',
                 headerStyle: {
-                backgroundColor:"black"
+                backgroundColor:"black",
+                elevation: 0,
+                shadowOpacity: 0,
+                borderBottomWidth: 0,
                 }
                 }}/>
 

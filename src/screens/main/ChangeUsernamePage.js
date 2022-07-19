@@ -8,11 +8,8 @@ import { auth, firestore } from '../../components/firebase';
 const ChangeUsernamePage= () => {
 
     const navigation = useNavigation()
-
     const [username, setUsername] = useState('')
-
     const [modalVisible, setModalVisible] = useState(false);
-
 
 
     const changeUsername = () => {
@@ -23,9 +20,7 @@ const ChangeUsernamePage= () => {
         (error) => {
           alert(error);
         };
-
         setModalVisible(true)
-  
       }
     
       const confirmLiao = () =>{
@@ -33,40 +28,49 @@ const ChangeUsernamePage= () => {
         navigation.navigate("SettingsScreen")
       }
 
+      const exitFromModal = () => {
+        setModalVisible(!modalVisible)
+      }
+
     return(
-    <View
-        style={styles.container}>
-
-
-
-
-        <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure you want to change your Username?</Text>
-            <TouchableOpacity
-              style={[styles.button1, styles.buttonClose]}
-              onPress={confirmLiao}
+        <View
+            style={styles.container}>
+            <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
             >
-              <Text style={styles.textStyle}>Yes!</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                    <Text style={styles.modalTitleText}> Change your Username to "{username}" </Text>
+                    <Text style={styles.modalText}> Are you sure? </Text>
+
+                    <TouchableOpacity
+                    style={styles.buttonYes}
+                    onPress={confirmLiao}
+                    >
+                    <Text style={styles.textStyle}> Yes! </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                    style={styles.buttonNo}
+                    onPress={exitFromModal}
+                    >
+                        <Text style={styles.textStyle2}> No! </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </Modal>
-
-
-
 
         <Text style={styles.headerTextContainer}>
         Change username
+        </Text>
+
+        <Text style={styles.headerTextContainer2}>
+        Don't like your Username?
+        {`\n`}
+        {`\n`}
+        Enter your new Username
         </Text>
 
         <View style={styles.inputContainer}>
@@ -75,23 +79,22 @@ const ChangeUsernamePage= () => {
                 value={username}
                 onChangeText={text => setUsername(text)}
                 style={styles.input}
+                autoCapitalize={"none"}
             />
         </View>
 
-
         <TouchableOpacity
-                onPress={changeUsername}
-                style={styles.button}>
+        onPress={changeUsername}
+        style={styles.button}>
 
-                <Text style={styles.ChangeUsernameText}>
-                Confirm
-                </Text>
+            <Text style={styles.ChangeUsernameText}>
+            Change my Name!
+            </Text>
         </TouchableOpacity>
 
     </View>
     )
 }
-
 
 const styles = StyleSheet.create({
 
@@ -110,8 +113,17 @@ const styles = StyleSheet.create({
         backgroundColor:"black"
     },
 
+    headerTextContainer2:{
+        fontSize: 16,
+        fontWeight: 'bold',
+        color:"white",
+        marginBottom: 25,
+        backgroundColor:"black"
+    },
+
     inputContainer: {
         width: '80%',
+        marginBottom: 25,
     },
 
     input: {
@@ -156,22 +168,46 @@ const styles = StyleSheet.create({
           height: 2
         },
     },
+
     textStyle: {
         color: "white",
         fontWeight: "bold",
         textAlign: "center"
       },
+      modalTitleText: {
+        marginBottom: 10,
+        textAlign: "center",
+        fontWeight: "500",
+        fontSize: 20,
+      },
       modalText: {
-        marginBottom: 15,
-        textAlign: "center"
+        marginBottom: 10,
+        textAlign: "center",
+        fontWeight: "500",
+        fontSize: 16,
       },
-      buttonOpen: {
-        backgroundColor: "#F194FF",
-      },
-      buttonClose: {
+      buttonYes: {
         backgroundColor: "#41BE43",
-        borderRadius: 10,
+        padding: 10,
+        borderRadius: 100,
+        width: '80%',
+        marginTop: 5,
+        marginBottom: 5,
+        
       },
+      buttonNo: {
+        backgroundColor: "transparent",
+        padding: 10,
+        borderRadius: 10,
+        marginTop: 5,
+        marginBottom: 5,
+    },
+
+    textStyle2: {
+        color: '#BE4341',
+        fontWeight: '700',
+        fontSize: 16,
+    }
 
 });
 

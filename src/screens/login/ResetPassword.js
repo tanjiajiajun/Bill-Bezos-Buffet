@@ -44,6 +44,7 @@ const ResetPassword = () => {
                     value={name}
                     onChangeText={text => setName(text)}
                     style={styles.input}
+                    autoCapitalize={"none"}
                     />
 
                     <TextInput
@@ -51,6 +52,7 @@ const ResetPassword = () => {
                     value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}
+                    autoCapitalize={"none"}
                     />
 
                 </View>

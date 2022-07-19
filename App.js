@@ -7,14 +7,7 @@ import LoginStack from './src/screens/LoginStack';
 import MainStack from './src/screens/MainStack';
 import SettingsStack from './src/screens/SettingsStack';
 
-import { AnimatedBackground } from './src/screens/login/AnimatedBackground';
-
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
 const Stack = createStackNavigator();
-
-const Tab = createBottomTabNavigator();
-
 
 export default function App() {
   

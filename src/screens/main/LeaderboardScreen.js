@@ -1,10 +1,8 @@
 import React , { useState, useEffect, useRef } from 'react';
 import { Image, View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient'
-
 import WavyHeader from '../../components/WavyHeader';
 import LeaderComponent from '../../components/LeaderComponent';
-
 import { onSnapshot, collection, query, orderBy } from 'firebase/firestore';
 import { auth, firestore  } from '../../components/firebase'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -12,8 +10,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 function LeaderboardScreen() {
 
-  const [imageURL, setURL] = useState(''); //not sure if need to call reload to to refresh the current user but i think the profile pic should always be updated when navigating to this screen
-
+  const [imageURL, setURL] = useState('');
   const [leaderboardData, setLeaderboardData] = useState([])
   const [rank, setRank] = useState('')
   const [avgreturns, setAvgreturns] = useState('')
@@ -30,13 +27,11 @@ function LeaderboardScreen() {
     .catch(error=>{
       console.log(error)
     })
-
     const storage = getStorage();
     const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
     getDownloadURL(reference).then((x) => {
     setURL(x);
     })
-
     const collectionRef = collection(firestore, 'users')
     const q = query(collectionRef, orderBy("highscore", "desc"))
     const unsub = onSnapshot(q, (snapshot) => {
@@ -61,7 +56,7 @@ function LeaderboardScreen() {
         176L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,
         0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,
         0,96,0,48,0L0,0Z"
-      />
+        />
 
         <View>
           <Text style={styles.headerText}>Leaderboard</Text>
@@ -104,7 +99,6 @@ function LeaderboardScreen() {
               />
             )}>
           </FlatList>
-
 
       </View>
     );

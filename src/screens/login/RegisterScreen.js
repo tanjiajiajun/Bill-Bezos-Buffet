@@ -59,12 +59,14 @@ const RegisterScreen = () => {
                     value={name}
                     onChangeText={text => setName(text)}
                     style={styles.input}
+                    autoCapitalize={"none"}
                 />
                 <TextInput
                     placeholder="Email"
                     value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}
+                    autoCapitalize={"none"}
                 />
                 <TextInput
                     placeholder="Password"
@@ -72,6 +74,7 @@ const RegisterScreen = () => {
                     onChangeText={text => setPassword(text)}
                     style={styles.input}
                     secureTextEntry={passwordVisibility}
+                    autoCapitalize={"none"}
                 />
 
                 <TouchableOpacity onPress={handlePasswordVisibility} style={styles.eye}>

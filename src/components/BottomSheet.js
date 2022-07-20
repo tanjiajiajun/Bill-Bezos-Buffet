@@ -8,7 +8,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-na
 
 const {height: SCREEN_HEIGHT} = Dimensions.get('window')
 
-export default function BottomSheet({setFees, setStopLoss, setTakeProfit}) {
+export default function BottomSheet({setFees, setStopLoss, setTakeProfit, D20, D50, D200, showD20, showD50, showD200}) {
 
   const MAX_TRANSLATE_Y =  -SCREEN_HEIGHT + 500
   const ORIGINAL_VALUE = Platform.OS === 'ios' ? 150 : 180
@@ -86,9 +86,9 @@ export default function BottomSheet({setFees, setStopLoss, setTakeProfit}) {
 
           <View style={styles.innercomponent}>
             <Text style={styles.componenttext}>Show Moving Averages</Text>
-            <TouchableOpacity style={styles.touchables}><Text>20D</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.touchables}><Text>50D</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.touchables}><Text>200D</Text></TouchableOpacity>
+            <TouchableOpacity style={D20 ? styles.selected20 : styles.touchables} onPress={showD20}><Text>20D</Text></TouchableOpacity>
+            <TouchableOpacity style={D50 ? styles.selected50 : styles.touchables} onPress={showD50}><Text>50D</Text></TouchableOpacity>
+            <TouchableOpacity style={D200 ? styles.selected200 : styles.touchables} onPress={showD200}><Text>200D</Text></TouchableOpacity>
           </View>
           
 
@@ -177,7 +177,42 @@ const styles = StyleSheet.create({
     margin: 6,
     alignItems: 'center',
     justifyContent: 'center',
-
+  },
+  selectedtouchables: {
+    backgroundColor: 'yellow',
+    width: 40,
+    height: 30,
+    borderRadius: 5,
+    margin: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  selected20: {
+    backgroundColor: '#7BB662',
+    width: 40,
+    height: 30,
+    borderRadius: 5,
+    margin: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  selected50: {
+    backgroundColor: '#FBB149',
+    width: 40,
+    height: 30,
+    borderRadius: 5,
+    margin: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  }, 
+  selected200: {
+    backgroundColor: '#F58024',
+    width: 40,
+    height: 30,
+    borderRadius: 5,
+    margin: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 
 })

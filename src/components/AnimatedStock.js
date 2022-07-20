@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {View, Text, TouchableOpacity, SafeAreaView, StyleSheet, TextInput} from 'react-native'
 
 import { Defs, LinearGradient, Stop, Line, Circle, Path } from 'react-native-svg'
-import { AreaChart, YAxis } from 'react-native-svg-charts'
+import { AreaChart, YAxis, LineChart } from 'react-native-svg-charts'
 import EndModal from './EndModal';
 
 import { auth, firestore  } from './firebase'
@@ -11,7 +11,7 @@ import * as shape from 'd3-shape'
 
 
 
-function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, fees, stopLoss, takeProfit}) {
+function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, fees, stopLoss, takeProfit, MA20, MA50, MA200, D20, D50, D200}) {
     //database functions
     
     const updateAvg = (arr, incData) => {
@@ -82,16 +82,23 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
      }
 
     const [randomint, setRandomint] = useState(0)
+    const [gameArray, setGameArray] = useState([])
+    const [ma20Array, setMA20Array] = useState([])
+    const [ma50Array, setMA50Array] = useState([])
+    const [ma200Array, setMA200Array] = useState([])
+
     useEffect( () => {
         setRandomint(Math.floor(Math.random() * (datapointer.length - 300)))
     }, [])
 
-    const mapper = datapointer.map((i) => Number(i))
-    const gameArray2 = mapper.slice(randomint, randomint + 300)
-    const gameArray = split(gameArray2)
+    useEffect( () => {
+        setGameArray(split(datapointer.slice(randomint, randomint + 300)))      
+        setMA20Array(split(MA20.slice(randomint, randomint+300)))
+        setMA50Array(split(MA50.slice(randomint, randomint+300)))
+        setMA200Array(split(MA200.slice(randomint, randomint+300)))
+        
+    }, [randomint])
     
-
-
     const [count, setCount] = useState(0)
     const [yList, setyList] = useState([])
     const [start, setStart] = useState(false)
@@ -103,12 +110,15 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
     const [sellingPrice, setSellingPrice] = useState(0)
     const [noShares, setNoShares] = useState(0)
 
+
     const startX = useRef(50)
     const startY = useRef(0)
     const endY = useRef(0)
-
     const automatedPressoutTimes = useRef(false)
-    const automatedShortPressoutTimes = useRef(false)
+
+    const yList2 = useRef([])
+    const yList3 = useRef([])
+    const yList4 = useRef([])
 
     const startButtonOnPress = () => {
         setStart(prevStart => !prevStart)
@@ -143,6 +153,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
                         setyList(prevyList => [...prevyList, gameArray[count]],50)
                         startX.current = startX.current -1
                         endY.current = gameArray[count]
+                        yList2.current = [...yList2.current, ma20Array[count]]
+                        yList3.current = [...yList3.current, ma50Array[count]]
+                        yList4.current = [...yList4.current, ma200Array[count]]
                     },50)
                     if (yList[50] >= buyingPrice*(1+takeProfit/100)) {
                         automatedHandleLongOnPressOut()
@@ -154,11 +167,20 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
                         setyList(prevyList => [...prevyList, gameArray[count]],50)
                         startX.current = startX.current -1
                         endY.current = gameArray[count]
+                        yList2.current = [...yList2.current, ma20Array[count]]
+                        yList3.current = [...yList3.current, ma50Array[count]]
+                        yList4.current = [...yList4.current, ma200Array[count]]
                     },50)
 
                 } else {
                     var id = setInterval(() => setCount(prevCount => prevCount + 1),50)
-                    var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]],50))
+                    // var iv = setInterval(() => {yList2.current = [...yList2.current, gameArray[count]]}, 50)
+                    var iv = setInterval(() => {
+                        setyList(prevyList => [...prevyList, gameArray[count]])
+                        yList2.current = [...yList2.current, ma20Array[count]]
+                        yList3.current = [...yList3.current, ma50Array[count]]
+                        yList4.current = [...yList4.current, ma200Array[count]]
+                    }, 50)
                 }
 
 
@@ -170,6 +192,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
                         setyList(prevyList => [...prevyList, gameArray[count]].slice(1))
                         startX.current = startX.current - 1
                         endY.current = gameArray[count]
+                        yList2.current = [...yList2.current, ma20Array[count]].slice(1)
+                        yList3.current = [...yList3.current, ma50Array[count]].slice(1)
+                        yList4.current = [...yList4.current, ma200Array[count]].slice(1)
                     },50)
 
                     if (yList[50] >= buyingPrice*(1+takeProfit/100) && takeProfit != 0 || // take profit if share price is x% above buying price
@@ -184,6 +209,9 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
                         setyList(prevyList => [...prevyList, gameArray[count]].slice(1))
                         startX.current = startX.current - 1
                         endY.current = gameArray[count]
+                        yList2.current = [...yList2.current, ma20Array[count]].slice(1)
+                        yList3.current = [...yList3.current, ma50Array[count]].slice(1)
+                        yList4.current = [...yList4.current, ma200Array[count]].slice(1)
                     },50)
 
                     if (yList[50] <= shortBuyingPrice*(1-takeProfit/100) && takeProfit != 0 || 
@@ -194,7 +222,13 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
 
                  else {
                     var id = setInterval(() => setCount(prevCount => prevCount + 1),50)
-                    var iv = setInterval(() => setyList(prevyList => [...prevyList, gameArray[count]].slice(1)),50)
+                    // var iv = setInterval(() => {yList2.current = [...yList2, gameArray[count]].slice(1)}, 50)
+                    var iv = setInterval(() => {setyList(prevyList => [...prevyList, gameArray[count]].slice(1))
+                        yList2.current = [...yList2.current, ma20Array[count]].slice(1)
+                        yList3.current = [...yList3.current, ma50Array[count]].slice(1)
+                        yList4.current = [...yList4.current, ma200Array[count]].slice(1)
+                    },50)
+                        
 
                 }
                     
@@ -328,7 +362,22 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
     }
 
     // For graphing of line
-
+    const color = useRef('#FFFFFF')
+    const MAfunction = () => {
+        if (D20==true) {
+            color.current = '#7BB662'
+            return yList2.current
+        }
+        else if (D50==true) {
+            color.current = '#FBB149'
+            return yList3.current
+        }
+        else if (D200==true) {  
+            color.current='#F58024'
+            return yList4.current
+        }
+        else {return [undefined]}
+    }
 
     const Gradient = () => (
         <Defs key={ 'defs' }>
@@ -350,14 +399,16 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
     const DottedLine = (({ x, y }) => (
         <Line
             stroke={ 'grey' }
-            strokeDasharray={ [ 4, 8 ] }
-            strokeWidth={ 2 }
+            strokeDasharray={ [ 6, 8 ] }
+            strokeWidth={ 3 }
             x1={ x(startX.current) }
             x2={ x(50) }
             y1={ y(startY.current) }
             y2={ y(endY.current) }
             />
     ))
+
+
 
     // const Decorator = ({ x, y, data }) => {
     //     return data.map((value, index) => (
@@ -408,6 +459,13 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
                 {/* <Decorator/> */}
                 <DottedLine d={yList[yList.length-1]}/>
             </AreaChart>
+            <LineChart
+                data={ MAfunction() }
+                contentInset={ { top: 20, bottom: 20 } }
+                style={StyleSheet.absoluteFill}
+                svg={{stroke: color.current, strokeWidth: 2}}>
+
+            </LineChart>
         </View>
 
         <View style={styles.line}/>

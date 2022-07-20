@@ -19,8 +19,8 @@ const ResetPassword = () => {
         sendPasswordResetEmail(auth, email)
         .then(() => {
             navigation.navigate("ResetPasswordSplashScreen")
-        // Password reset email sent!
-        // ..
+            alert("Reset password email sent! You may need to check junk mail for the email");
+            console.log("Reset password email sent to", email)
         })
         .catch(error => alert(error.message))
     }
@@ -29,38 +29,44 @@ const ResetPassword = () => {
         <KeyboardAvoidingView
         style={styles.container}
         behavior="padding"
-        backgroundColor="black"
-        >
+        backgroundColor="black">
 
-    <AnimatedBackground/>
+            <AnimatedBackground/>
 
             <Text style={styles.headerText}>Forgot Password?</Text>
 
             <Text style={styles.secondHeaderTextContainer}>Please enter your name and email to reset your password</Text>
 
                 <View style={styles.inputContainer}>
+
                     <TextInput
                     placeholder="Name"
                     value={name}
                     onChangeText={text => setName(text)}
                     style={styles.input}
+                    autoCapitalize={"none"}
                     />
+
                     <TextInput
                     placeholder="Email"
                     value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}
+                    autoCapitalize={"none"}
                     />
+
                 </View>
 
             <TouchableOpacity
                 onPress={handleResetPassword}
-                style={styles.button}
-                >
-                <Text style={styles.ResetPasswordText}>Confirm</Text>
+                style={styles.button}>
+
+                <Text style={styles.ResetPasswordText}>
+                Confirm
+                </Text>
+
             </TouchableOpacity>
 
-        
         </KeyboardAvoidingView>
   )
 }

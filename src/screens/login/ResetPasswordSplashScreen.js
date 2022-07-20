@@ -1,6 +1,8 @@
 import React from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
+import { AnimatedBackground } from './AnimatedBackground'
+
 
 
 const ResetPasswordSplashScreen= () => {
@@ -9,14 +11,24 @@ const ResetPasswordSplashScreen= () => {
 
     return(
     <View
-        style={styles.container}
-        >
-    
-    <TouchableOpacity
-            onPress={() => navigation.navigate("Login")}
-        >
-            <Text style={styles.ResetPasswordText}>Reset password email sent!{"\n"}Press here to Log In again</Text>
+        style={styles.container}>
+
+        <AnimatedBackground/>
+
+        <View style={styles.textContainer}>
+
+        <TouchableOpacity
+            onPress={() => navigation.navigate("Login")}>
+
+            <Text style={styles.ResetPasswordText}>
+            Reset password email sent!{"\n"}
+            Press here to Log In again{"\n"}
+            Check Junk Email if you cant find the email
+            </Text>
+
         </TouchableOpacity>
+
+        </View>
 
     </View>
     )
@@ -30,6 +42,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: "black"
+    },
+
+    textContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor:"black",
+        borderRadius: 100,
+
     },
 
     ResetPasswordText: {

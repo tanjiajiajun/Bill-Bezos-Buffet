@@ -12,9 +12,7 @@ import { AnimatedBackground } from './AnimatedBackground'
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const { passwordVisibility, rightIcon, handlePasswordVisibility } = useTogglePasswordVisibility();
-
   const navigation = useNavigation()
 
   useEffect(() => {
@@ -35,13 +33,11 @@ const LoginScreen = () => {
           navigation.navigate('VerifyEmail')
         } else {
           console.log("Logged in with", user.email)
-          navigation.replace("mainStack")
+          navigation.replace("MainStack")
         }
       })
       .catch(error => alert(error.message))
   }
-
-
 
   return (
     <KeyboardAvoidingView
@@ -52,10 +48,9 @@ const LoginScreen = () => {
 
     <AnimatedBackground/>
 
-
       <Image 
-        source={require('../../../assets/Layer8.png')}
-        style={{ resizeMode:"contain", width:300, height:200,      backgroundColor:"black" }}
+        source={require('../../../assets/Bulls-Vs-Bears-HomeScreenLogo.png')}
+        style={{ resizeMode:"contain", width:300, height:200, backgroundColor:"black", }}
         />
 
       <Text style={styles.headerTextContainer}>Welcome to Bulls Vs Bears</Text>
@@ -66,6 +61,7 @@ const LoginScreen = () => {
           value={email}
           onChangeText={text => setEmail(text)}
           style={styles.input}
+          autoCapitalize={"none"}
         />
         <TextInput
           placeholder="Password"
@@ -73,6 +69,7 @@ const LoginScreen = () => {
           onChangeText={text => setPassword(text)}
           style={styles.input}
           secureTextEntry={passwordVisibility}
+          autoCapitalize={"none"}
         />
         <TouchableOpacity onPress={handlePasswordVisibility} style={styles.eye}>
           <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />

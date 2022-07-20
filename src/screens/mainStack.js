@@ -3,7 +3,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import HomeScreen from './main/HomeScreen'
-import SettingsScreen from './main/SettingsScreen'
+import SettingsStack from './SettingsStack'
 import LeaderboardScreen from './main/LeaderboardScreen'
 
 
@@ -35,7 +35,7 @@ const BottomTabNavigator = () => {
         }}
          />
 
-        <Tab.Screen name="SettingsScreen" component={SettingsScreen} options={{ 
+        <Tab.Screen name="SettingsStack" component={SettingsStack} options={{ 
             tabBarLabel: 'Settings',
             gestureEnabled: false,
             headerShown: false,

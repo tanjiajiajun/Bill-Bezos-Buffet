@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
 import React, {useState} from 'react'
-
 import DeepAnalysis from './DeepAnalysis'
+
 
 export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker }) {
 
@@ -12,9 +12,8 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
     }
     const exitDeepAnalysis = () => {
         setShowDeep(false)
-        sendDataToParnet()
-
     }
+
     
     if (showDeep == false) {
         return (
@@ -49,7 +48,8 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
 
     } else {
         return (
-            <DeepAnalysis showDeep={showDeep} exitDeepAnalysis={exitDeepAnalysis}/>
+            <DeepAnalysis showDeep={showDeep} gameArrayDataPoints={gamearraypointer} exitDeepAnalysis={exitDeepAnalysis}
+            />
         )
     }
 }

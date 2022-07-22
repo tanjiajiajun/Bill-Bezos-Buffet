@@ -9,6 +9,8 @@ import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { auth, firestore } from '../../components/firebase';
 import { doc, collection, onSnapshot } from "firebase/firestore";
+import { openInbox, openComposer } from "react-native-email-link";
+
 
 
 function SettingsScreen() {
@@ -41,9 +43,8 @@ function SettingsScreen() {
 
 
         const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
-          setName(doc.data()["name"]) //how to navigate to name field?
+          setName(doc.data()["name"])
           console.log("Current data: ", doc.data()["name"]);
-
         })
         return unsub
     
@@ -57,6 +58,14 @@ function SettingsScreen() {
             navigation.replace('LoginStack')
         })
         .catch(e => alert(e.message))
+  }
+
+  const feedBackPage = () => {
+    openComposer({
+      to: "bryanjielong@gmail.com",
+      subject: "I have a question",
+      body: "Hi, can you help me with...",
+    });
   }
 
 const pickImage = async () => { //expo-image-picker
@@ -152,9 +161,9 @@ const pickImage = async () => { //expo-image-picker
             </TouchableOpacity>
 
 
-            <TouchableOpacity style={styles.innerComponent}>
-              <MaterialCommunityIcons style={{marginHorizontal:15, marginVertical:7}} name="google-analytics" size={45} />
-              <Text style={styles.settingsText}>Check Play history</Text>
+            <TouchableOpacity style={styles.innerComponent} onPress={feedBackPage}>
+              <MaterialCommunityIcons style={{marginHorizontal:15, marginVertical:7}} name="alert-circle-outline" size={45} />
+              <Text style={styles.settingsText}>Contact Us</Text>
               <MaterialIcons style={{position: 'absolute', marginLeft:310}} name='arrow-forward-ios' size={25} />
             </TouchableOpacity>
 

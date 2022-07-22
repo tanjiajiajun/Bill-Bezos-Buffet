@@ -28,6 +28,13 @@ function LeaderboardScreen() {
       setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
 
     })
+  
+    
+    return unsub
+  }
+  , [])
+
+  useEffect(() => {
     const userRef = firestore.collection('users').doc(auth.currentUser.uid)
     userRef.get()
     .then((doc) => {
@@ -35,17 +42,13 @@ function LeaderboardScreen() {
       userData.current=doc.data()['highscore']
     })
     .then(() => {
-      console.log(leaderboardData.findIndex(x => x['highscore'] === userData.current))
+      let x = 1 + leaderboardData.findIndex(x => x['highscore'] === userData.current)
+      setRank(x)
     })
     .catch(error=>{
       console.log(error)
     })
-
-    
-    return unsub
-  }
-  , [])
-
+  }, [leaderboardData])
   // useEffect(() => {
   //   if (leaderboardData.length==0){
   //     console.log('wtf')

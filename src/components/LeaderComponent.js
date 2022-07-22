@@ -6,7 +6,7 @@ export default function LeaderComponent({name, highscore, index}) {
     return (
     <View style={styles.container}>
         <View style={styles.rankNumber}>
-            <Text style={styles.texts}>{index}</Text>
+            <Text style={styles.texts}>{index + 1}</Text>
         </View>
         <View style={styles.profPic}></View>
         <View style={styles.nameContainer}>

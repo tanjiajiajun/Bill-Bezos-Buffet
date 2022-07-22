@@ -8,6 +8,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { auth, firestore } from '../../components/firebase';
+import { doc, collection, onSnapshot } from "firebase/firestore";
+
 
 function SettingsScreen() {
 
@@ -34,8 +36,18 @@ function SettingsScreen() {
         setImage(doc.data()['profpic'])
         }).catch((err)=>{
           console.log(err)
-        })  
-    },[])
+        })
+
+
+
+        const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
+          setName(doc.data()["name"]) //how to navigate to name field?
+          console.log("Current data: ", doc.data()["name"]);
+
+        })
+        return unsub
+    
+      },[])
 
   const handleSignOut = () => {
     auth
@@ -53,7 +65,7 @@ const pickImage = async () => { //expo-image-picker
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
     aspect: [4, 3],
-    quality: 0.1,
+    quality: 0.5,
   });
 
   console.log(result);

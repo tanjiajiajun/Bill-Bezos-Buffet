@@ -13,19 +13,17 @@ const ChangeUsernamePage= () => {
 
 
     const changeUsername = () => {
+        setModalVisible(!modalVisible)
+      }
+    
+      const confirmLiao = () =>{
         const docRef = firestore.collection('users').doc(auth.currentUser.uid)
         docRef.update({
           name: username
         });
         (error) => {
           alert(error);
-        };
-        setModalVisible(true)
-      }
-    
-      const confirmLiao = () =>{
-        setModalVisible(!modalVisible)
-        navigation.navigate("SettingsScreen")
+        };        navigation.navigate("SettingsScreen")
       }
 
       const exitFromModal = () => {

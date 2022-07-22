@@ -4,6 +4,7 @@ import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpac
 import { auth } from '../../components/firebase'
 import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { AnimatedBackground } from './AnimatedBackground'
 
 
 

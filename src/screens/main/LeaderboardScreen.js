@@ -19,13 +19,7 @@ function LeaderboardScreen() {
 
   useEffect(() => {
 
-    const collectionRef = collection(firestore, 'users')
-    const q = query(collectionRef, orderBy("highscore", "desc"))
 
-    const unsub = onSnapshot(q, (snapshot) => {
-      setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
-
-    })
     const userRef = firestore.collection('users').doc(auth.currentUser.uid)
     userRef.get()
     .then((doc) => {

@@ -64,7 +64,7 @@ function SettingsScreen() {
     openComposer({
       to: "bryanjielong@gmail.com",
       subject: "I have a question",
-      body: "Hi, can you help me with...",
+      body: "Hi, I would like to feedback on...",
     });
   }
 

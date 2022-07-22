@@ -11,7 +11,6 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
     }
     const exitDeepAnalysis = () => {
         setShowDeep(false)
-        sendDataToParnet()
     }
 
     const onShare = async () => {

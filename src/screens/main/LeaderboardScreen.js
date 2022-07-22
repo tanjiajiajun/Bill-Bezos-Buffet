@@ -14,19 +14,25 @@ function LeaderboardScreen() {
   const [leaderboardData, setLeaderboardData] = useState([])
   const [rank, setRank] = useState('')
   const [avgreturns, setAvgreturns] = useState('')
-  const userData = useRef([])
+  const userData = useRef(0)
 
 
   useEffect(() => {
+
+
     const userRef = firestore.collection('users').doc(auth.currentUser.uid)
     userRef.get()
     .then((doc) => {
       setAvgreturns(doc.data()['avgreturns'])
       userData.current=doc.data()['highscore']
     })
+    .then(() => {
+      console.log(leaderboardData.findIndex(x => x['highscore'] === userData.current))
+    })
     .catch(error=>{
       console.log(error)
     })
+
     const storage = getStorage();
     const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
     getDownloadURL(reference).then((x) => {
@@ -41,6 +47,24 @@ function LeaderboardScreen() {
     return unsub
   }
   , [])
+
+  // useEffect(() => {
+  //   if (leaderboardData.length==0){
+  //     console.log('wtf')
+  //   }else {
+  //   const userRef = firestore.collection('users').doc(auth.currentUser.uid)
+  //   userRef.get()
+  //   .then((doc) => {
+  //     setAvgreturns(doc.data()['avgreturns'])
+  //     userData.current=doc.data()['highscore']
+  //   })
+  //   .then(() => {
+  //     console.log(leaderboardData.findIndex(x => x['highscore'] === userData.current))
+  //   })
+  //   .catch(error=>{
+  //     console.log(error)
+  //   })}
+  // }, [])
   
     return (
       <View style={styles.container}>

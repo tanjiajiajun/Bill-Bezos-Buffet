@@ -18,6 +18,7 @@ const LoginScreen = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
+        navigation.navigate("MainStack")
       }
     })
     return unsubscribe
@@ -45,7 +46,7 @@ const LoginScreen = () => {
       behavior="padding"
       backgroundColor="black"
     >
-
+    
     <AnimatedBackground/>
 
       <Image 
@@ -102,7 +103,6 @@ const LoginScreen = () => {
 
       </View>
 
-    
     </KeyboardAvoidingView>
   )
 }
@@ -118,13 +118,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-
   headerTextContainer:{
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 40,
     color: 'white',
-    backgroundColor:"black"
   },
 
   inputContainer: {
@@ -139,8 +137,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     
   },
-
-
   eye:{
     position: 'absolute',
     right: 10,

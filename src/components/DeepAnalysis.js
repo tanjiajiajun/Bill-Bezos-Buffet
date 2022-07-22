@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from 'react-native'
+
 import React , {useState} from 'react'
 import { AreaChart, Grid, LineChart, XAxis, YAxis } from 'react-native-svg-charts'
 import * as shape from 'd3-shape'
@@ -7,9 +8,11 @@ import { Circle, G, Line, Rect, Path } from 'react-native-svg'
 export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDataPoints}) {
 
 
+
     //data points from AnimatedStock. Have to pass as property in function DeepAnalysis and subsequently in EndModal
     const data = gameArrayDataPoints
     const dummyDateData=[ 50, 10, 40, 95, 85 ]
+
 
     const max = Math.max.apply(Math, data);
     const indexOfMaxPoint = data.indexOf(max);
@@ -109,6 +112,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     
     },
+
 
     returnstext: {
         fontSize: 15,

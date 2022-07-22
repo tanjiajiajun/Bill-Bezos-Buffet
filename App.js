@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, ThemeProvider } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import LoginStack from './src/screens/LoginStack';
@@ -12,6 +12,7 @@ const Stack = createStackNavigator();
 export default function App() {
   
   return (
+
     <NavigationContainer screenOptions={{gestureEnabled: false}}>
 
       <Stack.Navigator>

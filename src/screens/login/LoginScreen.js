@@ -15,6 +15,8 @@ const LoginScreen = () => {
   const { passwordVisibility, rightIcon, handlePasswordVisibility } = useTogglePasswordVisibility();
   const navigation = useNavigation()
 
+
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
@@ -101,7 +103,6 @@ const LoginScreen = () => {
         </TouchableOpacity>
 
       </View>
-
     
     </KeyboardAvoidingView>
   )
@@ -110,8 +111,6 @@ const LoginScreen = () => {
 export default LoginScreen
 
 const styles = StyleSheet.create({
-
-
   container: {
     flex: 1,
     justifyContent: 'center',

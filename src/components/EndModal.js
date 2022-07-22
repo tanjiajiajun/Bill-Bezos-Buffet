@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity, Share } from 'react-native'
 import React, {useState} from 'react'
-
 import DeepAnalysis from './DeepAnalysis'
+
 
 export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypointer, startdate, enddate, ticker }) {
 
@@ -67,7 +67,8 @@ export default function EndModal({ ended, sendDataToParnet, amnt, gamearraypoint
 
     } else {
         return (
-            <DeepAnalysis showDeep={showDeep} gameArray={gamearraypointer} exitDeepAnalysis={exitDeepAnalysis}/>
+            <DeepAnalysis showDeep={showDeep} gameArrayDataPoints={gamearraypointer} exitDeepAnalysis={exitDeepAnalysis}
+            />
         )
     }
 }

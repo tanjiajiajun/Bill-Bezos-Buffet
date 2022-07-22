@@ -23,35 +23,7 @@ const RegisterScreen = () => {
 
     const navigation = useNavigation()
 
-    // const creds123 = (userCredential) => {
-    //     const user1 = userCredential.user;
-    //     userCredential.user1.sendEmailVerification();
-    //     auth.signOut();
-    //     console.log('Registered with:', user1.email);
-    //     navigation.navigate("VerifyEmail")
-    // }
-    // const handleSignUp = async () => {
-    //     try {
-    //         const { user } = await auth.createUserWithEmailAndPassword(email,password)
-    //         await createUserDocument(user, {name})
-    //         await creds123(userCredential)
-    
-            
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
 
-
-    // }
-
-    function validate_password(password) {
-        let check = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
-        if (password.match(check)) {
-           console.log("Your password is strong.");
-        } else {
-          console.log("Meh, not so much.");
-        }
-      }
 
     const handleSignUp = () => {
         auth.createUserWithEmailAndPassword(email,password)
@@ -61,7 +33,7 @@ const RegisterScreen = () => {
             const user = userCredential.user;
             userCredential.user.sendEmailVerification();
             auth.signOut();
-            alert("Email sent");
+            alert("Email Sent! You may need to check junk mail for the email");
 
             console.log('Registered with:', user.email);
         })
@@ -77,7 +49,7 @@ const RegisterScreen = () => {
         backgroundColor="black"
         >
 
-        <AnimatedBackground/>
+            <AnimatedBackground/>
 
             <Text style={styles.headerTextContainer}>Create account</Text>
 
@@ -87,12 +59,14 @@ const RegisterScreen = () => {
                     value={name}
                     onChangeText={text => setName(text)}
                     style={styles.input}
+                    autoCapitalize={"none"}
                 />
                 <TextInput
                     placeholder="Email"
                     value={email}
                     onChangeText={text => setEmail(text)}
                     style={styles.input}
+                    autoCapitalize={"none"}
                 />
                 <TextInput
                     placeholder="Password"
@@ -100,6 +74,7 @@ const RegisterScreen = () => {
                     onChangeText={text => setPassword(text)}
                     style={styles.input}
                     secureTextEntry={passwordVisibility}
+                    autoCapitalize={"none"}
                 />
 
                 <TouchableOpacity onPress={handlePasswordVisibility} style={styles.eye}>

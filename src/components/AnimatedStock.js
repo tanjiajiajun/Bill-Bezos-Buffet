@@ -132,7 +132,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
         var id;
         var iv;
         // when game ends
-        if (count >= 599) {
+        if (count >= 50) {  /////////////////////bryan reduce this number so he can test modals without waiting was 599
             if (holdChecker == true) {
                 handleLongOnPressOut()
             }else if (shortHoldChecker == true) {
@@ -410,6 +410,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
 
 
 
+
     // const Decorator = ({ x, y, data }) => {
     //     return data.map((value, index) => (
     //         <Circle
@@ -424,6 +425,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
     // }
 
 
+
     return (
     <SafeAreaView style={styles.container}>
 
@@ -431,7 +433,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
         ended={end} 
         sendDataToParnet={sendDataToParnet} 
         amnt={amount} 
-        gamearraypointer={gameArray} 
+        gamearraypointer={gameArray2} 
         startdate={datepointer[randomint]} 
         enddate={datepointer[randomint+300]} 
         ticker={tickerpointer}

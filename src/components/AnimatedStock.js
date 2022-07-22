@@ -132,7 +132,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
         var id;
         var iv;
         // when game ends
-        if (count >= 50) {  /////////////////////bryan reduce this number so he can test modals without waiting was 599
+        if (count >= 599) {  /////////////////////bryan reduce this number so he can test modals without waiting was 599
             if (holdChecker == true) {
                 handleLongOnPressOut()
             }else if (shortHoldChecker == true) {
@@ -433,7 +433,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
         ended={end} 
         sendDataToParnet={sendDataToParnet} 
         amnt={amount} 
-        gamearraypointer={gameArray2} 
+        gamearraypointer={gameArray} 
         startdate={datepointer[randomint]} 
         enddate={datepointer[randomint+300]} 
         ticker={tickerpointer}

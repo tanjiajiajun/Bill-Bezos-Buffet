@@ -49,23 +49,7 @@ function LeaderboardScreen() {
       console.log(error)
     })
   }, [leaderboardData])
-  // useEffect(() => {
-  //   if (leaderboardData.length==0){
-  //     console.log('wtf')
-  //   }else {
-  //   const userRef = firestore.collection('users').doc(auth.currentUser.uid)
-  //   userRef.get()
-  //   .then((doc) => {
-  //     setAvgreturns(doc.data()['avgreturns'])
-  //     userData.current=doc.data()['highscore']
-  //   })
-  //   .then(() => {
-  //     console.log(leaderboardData.findIndex(x => x['highscore'] === userData.current))
-  //   })
-  //   .catch(error=>{
-  //     console.log(error)
-  //   })}
-  // }, [])
+
   
     return (
       <View style={styles.container}>

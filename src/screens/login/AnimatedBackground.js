@@ -1,6 +1,6 @@
 import React, {useMemo, useState, useEffect} from 'react';
-import { TouchableWithoutFeedback, Image, StyleSheet, Dimensions, View } from 'react-native';
-import Animated, { Easing, stopClock } from 'react-native-reanimated';
+import { Image, StyleSheet, Dimensions, View } from 'react-native';
+import Animated, { EasingNode, stopClock } from 'react-native-reanimated';
 
 
 const imageSize = {
@@ -40,7 +40,7 @@ const {
     const config = {
         duration: 5000,
         toValue: 1,
-        easing: Easing.inOut(Easing.linear),
+        easing: EasingNode.inOut(EasingNode.linear),
     };
 
     return block([
@@ -101,7 +101,7 @@ const {
           <Animated.View style={[styles.image, { transform: [{ translateX }]}]}>
             <Image
               style={styles.image}
-            source={require('../../../assets/clouds.png')}
+            source={require('../../../assets/StockBackground.png')}
             resizeMode="repeat"
         />
       </Animated.View>
@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
         alignItems: "stretch",
         bottom: 0,
         right: 0
-
     },
 
     image:{

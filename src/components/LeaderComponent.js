@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image } from 'react-native'
+import React, {useState, useEffect} from 'react'
 import { auth, firestore } from './firebase'
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
-export default function LeaderComponent({name, highscore, index}) {
+
+export default function LeaderComponent({name, highscore, index, imageURL}) {
+
     return (
     <View style={styles.container}>
         <View style={styles.rankNumber}>
             <Text style={styles.texts}>{index + 1}</Text>
         </View>
-        <View style={styles.profPic}></View>
+        <Image source={{uri : imageURL}} style={styles.profPic}/>
         <View style={styles.nameContainer}>
             <Text style={styles.texts}>{name}</Text>
         </View>

@@ -38,7 +38,7 @@ function LeaderboardScreen() {
     const userRef = firestore.collection('users').doc(auth.currentUser.uid)
     userRef.get()
     .then((doc) => {
-      setAvgreturns(doc.data()['avgreturns'])
+      setAvgreturns(doc.data()['highscore'])
       userData.current=doc.data()['highscore']
     })
     .then(() => {
@@ -79,15 +79,14 @@ function LeaderboardScreen() {
           </View>
           <View style={styles.profPic}></View>
           <View style={styles.yourAvgReturns}>
-            <Text style={styles.yourStandingText}>AVG. RETURNS:</Text>
+            <Text style={styles.yourStandingText}>HIGHSCORE:</Text>
             <Text style={styles.yourStandingText}>{avgreturns}%</Text>
           </View>
         </LinearGradient>
 
         <View style={styles.leaderboard}>
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>Weekly Top</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>All-Time Average</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>All-Time Highsores</Text></TouchableOpacity>
           </View>
           <View style={styles.line}></View>
         </View>
@@ -182,7 +181,7 @@ function LeaderboardScreen() {
       marginHorizontal: 25
     },
     yourAvgReturns: {
-      marginHorizontal: 20,
+      marginHorizontal: 30,
       alignItems:'center'
     }
 

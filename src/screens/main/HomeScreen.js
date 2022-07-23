@@ -5,8 +5,10 @@ import { auth, firestore } from '../../components/firebase';
 
 import StockDataGetter from '../../components/StockDataGetter';
 import BottomSheet from '../../components/BottomSheet';
-import { LinearGradient } from 'expo-linear-gradient'
-import Svg, { Path } from 'react-native-svg'
+import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Path } from 'react-native-svg';
+import { doc, collection, onSnapshot } from "firebase/firestore";
+
 
 
 const HomeScreen = (props) => {
@@ -22,6 +24,11 @@ const HomeScreen = (props) => {
         }).catch((err)=>{
             console.log(err)
         })  
+
+        const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
+            setName(doc.data()["name"])
+          })
+          return unsub
 
     },[])
 

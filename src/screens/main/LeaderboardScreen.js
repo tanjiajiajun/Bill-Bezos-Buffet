@@ -3,8 +3,8 @@ import { Image, View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView
 import { LinearGradient } from 'expo-linear-gradient'
 import WavyHeader from '../../components/WavyHeader';
 import LeaderComponent from '../../components/LeaderComponent';
-import { onSnapshot, collection, query, orderBy } from 'firebase/firestore';
-import { auth, firestore  } from '../../components/firebase'
+import { doc, onSnapshot, collection, query, orderBy } from 'firebase/firestore';
+import { auth, firestore  } from '../../components/firebase';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
@@ -14,7 +14,7 @@ function LeaderboardScreen() {
   const [leaderboardData, setLeaderboardData] = useState([])
   const [rank, setRank] = useState('')
   const [avgreturns, setAvgreturns] = useState('')
-  const userData = useRef([])
+  const userData = useRef(0)
 
 
   useEffect(() => {
@@ -24,23 +24,39 @@ function LeaderboardScreen() {
       setAvgreturns(doc.data()['avgreturns'])
       userData.current=doc.data()['highscore']
     })
+    .then(() => {
+      console.log(leaderboardData.findIndex(x => x['highscore'] === userData.current))
+    })
     .catch(error=>{
       console.log(error)
     })
+
     const storage = getStorage();
     const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
     getDownloadURL(reference).then((x) => {
     setURL(x);
     })
+
     const collectionRef = collection(firestore, 'users')
     const q = query(collectionRef, orderBy("highscore", "desc"))
+
     const unsub = onSnapshot(q, (snapshot) => {
       setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
       setRank(leaderboardData.findIndex(x => x['highscore'] == userData.current))
-    }) //arranging in highscore
+    })
+
     return unsub
   }
   , [])
+
+
+  useEffect(() => {
+    const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
+      setURL(doc.data()["profpic"])
+    })
+    return unsub
+  })
+
   
     return (
       <View style={styles.container}>

@@ -48,6 +48,7 @@ function LeaderboardScreen() {
     })
   }, [leaderboardData])
 
+  useEffect(() => {
     const storage = getStorage();
     const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
     getDownloadURL(reference).then((x) => {

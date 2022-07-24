@@ -8,6 +8,9 @@
 //this principle. You can create only a single theme, but I’m going to create a light and a dark theme that we can switch between later.
 //There is also an object for the common  colors that both themes use.
 
+import * as React from 'react';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+
 const White = '#fff';
 const Black = '#000000'
 const Yahoo_Purple = '#f1c40f';
@@ -19,24 +22,20 @@ const WineRed = '#840B55';
 const HotPink = '#ec296d';
 const MustardYellow = "#D3F33D";
 
-const common = {
- PRIMARY: Yahoo_Purple,
- SUCCESS: LongYesGreen,
- ERROR: ShortNoRed,
-};
+const lightTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: White,
+    },
+  };
 
-const light = {
- ...common,
- BACKGROUND: White,
- TEXT: Black,
- TEXT_SECONDARY: Yahoo_Purple,
-};
+const darkTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: Black,
+    },
+  };
 
-const dark = {
- ...common,
- BACKGROUND: Black,
- TEXT: White,
- TEXT_SECONDARY: Yahoo_Purple,
-};
-
-export const colors = {light, dark};
+export const colors = {lightTheme, darkTheme};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,9 +13,11 @@ import ResetPasswordSplashScreen from './login/ResetPasswordSplashScreen';
 
 const Stack = createStackNavigator();
 
+
 const LoginStackNavigator = () => {
 
     return (
+
         <Stack.Navigator initialRouteName="LoginScreen">
 
             <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
@@ -38,7 +40,7 @@ const LoginStackNavigator = () => {
                 backgroundColor:"black",
                 elevation: 0,
                 shadowOpacity: 0,
-                borderBottomWidth: 0,
+                borderBottomWidthi: 0,
                 }
                 }}/>
                 
@@ -56,9 +58,8 @@ const LoginStackNavigator = () => {
             <Stack.Screen name="ResetPasswordSplashScreen" component={ResetPasswordSplashScreen} options={{headerShown: false}}/>
 
 
-
-
         </Stack.Navigator>
+
   );
 }
 

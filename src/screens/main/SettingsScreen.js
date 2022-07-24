@@ -4,12 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import WavyHeader from '../../components/WavyHeader';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-//import * as ImagePicker from "react-native-image-picker"
-import * as ImagePicker from 'expo-image-picker';  // not react-image-picker
+import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { auth, firestore } from '../../components/firebase';
-import { doc, collection, onSnapshot } from "firebase/firestore";
-import { openInbox, openComposer } from "react-native-email-link";
+import { doc, onSnapshot } from "firebase/firestore";
+import { openComposer } from "react-native-email-link";
 
 
 
@@ -27,7 +26,6 @@ function SettingsScreen() {
       const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
       getDownloadURL(reference).then((x) => {
       setURL(x);
-      console.log("url file from firebase", imageURL);
       })
       const docRef = firestore.collection('users').doc(auth.currentUser.uid)
       docRef.get()
@@ -40,11 +38,8 @@ function SettingsScreen() {
           console.log(err)
         })
 
-
-
         const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
           setName(doc.data()["name"])
-          console.log("Current data: ", doc.data()["name"]);
         })
         return unsub
     
@@ -68,8 +63,7 @@ function SettingsScreen() {
     });
   }
 
-const pickImage = async () => { //expo-image-picker
-  // No permissions request is necessary for launching the image library
+const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
@@ -77,20 +71,16 @@ const pickImage = async () => { //expo-image-picker
     quality: 0.5,
   });
 
-  console.log(result);
-
   if (!result.cancelled) {
     const uri = result.uri;
     setImage(uri);
-    console.log("uri file from machine", image)
-    const storage = getStorage();  //the storage itself
-    const imageRef = ref(storage, `profilepics/${auth.currentUser.uid}`);  //how the image will be addressed inside the storage.
+    const storage = getStorage();
+    const imageRef = ref(storage, `profilepics/${auth.currentUser.uid}`);  
     const img = await fetch(uri);
     const bytes = await img.blob();
 
     await uploadBytes(imageRef,bytes).then(() => {
       alert("Image Uploaded")
-      console.log("Image Uploaded");
       getDownloadURL(imageRef).then((x) => {
       setURL(x);
       })

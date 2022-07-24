@@ -7,7 +7,7 @@ import StockDataGetter from '../../components/StockDataGetter';
 import BottomSheet from '../../components/BottomSheet';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Path } from 'react-native-svg';
-import { doc, collection, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 
 
 

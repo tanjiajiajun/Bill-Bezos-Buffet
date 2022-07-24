@@ -1,17 +1,9 @@
 import React from 'react';
-
-
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-
 import SettingsScreen from './main/SettingsScreen';
 import ChangeUsernamePage from './main/ChangeUsernamePage';
 import ChangePasswordPage from './main/ChangePasswordPage';
 import DeleteAccountPage from './main/DeleteAccountPage';
-
-
-
 
 const Stack = createStackNavigator();
 

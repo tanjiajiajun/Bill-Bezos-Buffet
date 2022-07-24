@@ -1,10 +1,8 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-
-import { auth, createUserDocument } from '../../components/firebase';
-
-import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility';
+import { auth, createUserDocument } from '../../components/firebase'
+import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { AnimatedBackground } from './AnimatedBackground'
 

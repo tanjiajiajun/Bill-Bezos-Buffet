@@ -1,16 +1,10 @@
 import React from 'react';
-
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import HomeScreen from './main/HomeScreen'
-import SettingsStack from './SettingsStack'
-import LeaderboardScreen from './main/LeaderboardScreen'
-
-
+import HomeScreen from './main/HomeScreen';
+import SettingsStack from './SettingsStack';
+import LeaderboardScreen from './main/LeaderboardScreen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-
 
 const Tab = createBottomTabNavigator();
 

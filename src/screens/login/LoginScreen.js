@@ -8,23 +8,20 @@ import { AnimatedBackground } from './AnimatedBackground'
 
 
 
-
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { passwordVisibility, rightIcon, handlePasswordVisibility } = useTogglePasswordVisibility();
   const navigation = useNavigation()
 
-
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
+        navigation.navigate("MainStack")
       }
     })
     return unsubscribe
   }, [])
-
 
   const handleLogin = () => {
     auth
@@ -42,6 +39,7 @@ const LoginScreen = () => {
   }
 
   return (
+
     <KeyboardAvoidingView
       style={styles.container}
       behavior="padding"
@@ -103,27 +101,29 @@ const LoginScreen = () => {
         </TouchableOpacity>
 
       </View>
-    
+
     </KeyboardAvoidingView>
+
+
   )
 }
 
 export default LoginScreen
 
 const styles = StyleSheet.create({
+
+
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
 
-
   headerTextContainer:{
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 40,
     color: 'white',
-    backgroundColor:"black"
   },
 
   inputContainer: {
@@ -138,8 +138,6 @@ const styles = StyleSheet.create({
     marginTop: 5,
     
   },
-
-
   eye:{
     position: 'absolute',
     right: 10,

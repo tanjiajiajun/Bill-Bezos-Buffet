@@ -16,7 +16,6 @@ export default function App() {
     <NavigationContainer screenOptions={{gestureEnabled: false}}>
 
       <Stack.Navigator>
-      
 
         <Stack.Screen name="LoginStack" component={LoginStack} options={{headerShown: false}}/>
         

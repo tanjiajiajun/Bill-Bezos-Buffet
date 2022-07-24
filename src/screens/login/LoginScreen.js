@@ -45,7 +45,7 @@ const LoginScreen = () => {
       behavior="padding"
       backgroundColor="black"
     >
-
+    
     <AnimatedBackground/>
 
       <Image 

@@ -31,8 +31,46 @@ const HomeScreen = (props) => {
           return unsub
 
     },[])
+ 
+    const [fees, setFees] = useState(0)
+    const [stopLoss, setStopLoss] = useState(0)
+    const [takeProfit, setTakeProfit] = useState(0)
 
+    const [D20, setD20] = useState(false)
+    const [D50, setD50] = useState(false)
+    const [D200, setD200] = useState(false)
 
+    const showD20 = () => {
+        if (D20 == true) {
+            setD20(false)
+        } else if (D20 == false) {
+            setD20(true)
+            setD50(false)
+            setD200(false)
+        }
+    }
+
+    const showD50 = () => {
+        if (D50 == true) {
+            setD50(false)
+        } else if (D50 == false) {
+            setD50(true)
+            setD20(false)
+            setD200(false)
+        }
+    }
+    
+    const showD200 = () => {
+        if (D200 == true) {
+            setD200(false)
+        } else if (D200 == false) {
+            setD200(true)
+            setD50(false)
+            setD20(false)
+        }
+    }
+    
+    
     return (
         <View style={styles.container}>
             <View style={styles.top}>
@@ -69,8 +107,25 @@ const HomeScreen = (props) => {
             </LinearGradient>
 
 
-            <StockDataGetter/>
-            <BottomSheet/>
+            <StockDataGetter 
+                fees={fees} 
+                stopLoss={stopLoss} 
+                takeProfit={takeProfit}
+                D20={D20}
+                D50={D50}
+                D200={D200}
+                />
+            <BottomSheet 
+                setFees={setFees} 
+                setStopLoss={setStopLoss} 
+                setTakeProfit={setTakeProfit} 
+                D20={D20}
+                D50={D50}
+                D200={D200}
+                showD20={showD20}
+                showD50={showD50}
+                showD200={showD200}
+                />
 
             </View>
 

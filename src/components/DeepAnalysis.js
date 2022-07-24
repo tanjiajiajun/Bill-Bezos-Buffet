@@ -13,6 +13,7 @@ export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDat
     const data = gameArrayDataPoints
 
 
+
     const max = Math.max.apply(Math, data);
     const indexOfMaxPoint = data.indexOf(max);
 

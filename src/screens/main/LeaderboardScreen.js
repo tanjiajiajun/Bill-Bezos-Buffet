@@ -17,20 +17,39 @@ function LeaderboardScreen() {
   const userData = useRef(0)
 
 
+   useEffect(() => {
+
+    const collectionRef = collection(firestore, 'users')
+    const q = query(collectionRef, orderBy("highscore", "desc"))
+
+    const unsub = onSnapshot(q, (snapshot) => {
+      setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
+
+    })
+  
+    
+    return unsub
+  }
+  , [])
+
   useEffect(() => {
     const userRef = firestore.collection('users').doc(auth.currentUser.uid)
     userRef.get()
     .then((doc) => {
-      setAvgreturns(doc.data()['avgreturns'])
+      setAvgreturns(doc.data()['highscore'])
       userData.current=doc.data()['highscore']
     })
     .then(() => {
-      console.log(leaderboardData.findIndex(x => x['highscore'] === userData.current))
+
+      let x = 1 + leaderboardData.findIndex(x => x['highscore'] === userData.current)
+      setRank(x)
     })
     .catch(error=>{
       console.log(error)
     })
+  }, [leaderboardData])
 
+  useEffect(() => {
     const storage = getStorage();
     const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
     getDownloadURL(reference).then((x) => {
@@ -56,7 +75,6 @@ function LeaderboardScreen() {
     })
     return unsub
   })
-
   
     return (
       <View style={styles.container}>
@@ -89,15 +107,14 @@ function LeaderboardScreen() {
           </View>
           <Image source={{uri : imageURL}} style={styles.profPic}/>
           <View style={styles.yourAvgReturns}>
-            <Text style={styles.yourStandingText}>AVG. RETURNS:</Text>
+            <Text style={styles.yourStandingText}>HIGHSCORE:</Text>
             <Text style={styles.yourStandingText}>{avgreturns}%</Text>
           </View>
         </LinearGradient>
 
         <View style={styles.leaderboard}>
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>Weekly Top</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>All-Time Average</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>All-Time Highsores</Text></TouchableOpacity>
           </View>
         </View>
 
@@ -182,7 +199,6 @@ function LeaderboardScreen() {
       justifyContent: 'center',
       border:1,
       height: 50,
-      
     }, 
 
     leaderboard: {
@@ -209,9 +225,15 @@ function LeaderboardScreen() {
       height: 1,
       width: '100%',
       backgroundColor:'black',
-
     }, 
-
-
+    
+    yourRank: {
+      alignItems: 'center',
+      marginHorizontal: 25
+    },
+    yourAvgReturns: {
+      marginHorizontal: 30,
+      alignItems:'center'
+    }
 
   })

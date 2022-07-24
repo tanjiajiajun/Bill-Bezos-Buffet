@@ -9,7 +9,7 @@ export default function LeaderComponent({name, highscore, index, imageURL}) {
     return (
     <View style={styles.container}>
         <View style={styles.rankNumber}>
-            <Text style={styles.texts}>{index}</Text>
+            <Text style={styles.texts}>{index + 1}</Text>
         </View>
         <Image source={{uri : imageURL}} style={styles.profPic}/>
         <View style={styles.nameContainer}>

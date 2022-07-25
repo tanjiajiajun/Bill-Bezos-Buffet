@@ -114,7 +114,7 @@ function LeaderboardScreen() {
 
         <View style={styles.leaderboard}>
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>All-Time Highsores</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.button}><Text style={styles.buttontext}>All-Time Highscores</Text></TouchableOpacity>
           </View>
         </View>
 

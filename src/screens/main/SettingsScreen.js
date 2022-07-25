@@ -39,8 +39,12 @@ function SettingsScreen() {
         })
 
         const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
-          setName(doc.data()["name"])
-        })
+
+          setName(doc.data()['name'])
+
+      })
+
+        
         return unsub
     
       },[])
@@ -68,7 +72,7 @@ const pickImage = async () => {
     mediaTypes: ImagePicker.MediaTypeOptions.All,
     allowsEditing: true,
     aspect: [4, 3],
-    quality: 0.5,
+    quality: 0.1,
   });
 
   if (!result.cancelled) {
@@ -80,19 +84,19 @@ const pickImage = async () => {
     const bytes = await img.blob();
 
     await uploadBytes(imageRef,bytes).then(() => {
-      alert("Image Uploaded")
       getDownloadURL(imageRef).then((x) => {
       setURL(x);
+      alert("Image Uploaded")
+      const docRef = firestore.collection('users').doc(auth.currentUser.uid)
+      docRef.update({
+        profpic: x
+      });
+        (error) => {
+        alert(error);
+        };
       })
     });
 
-    const docRef = firestore.collection('users').doc(auth.currentUser.uid)
-    docRef.update({
-      profpic: imageURL
-    });
-      (error) => {
-      alert(error);
-      };
     }
   }
 

@@ -29,8 +29,8 @@ Warning: This app is designed with iOS in mind. If possible, run the app on iOS 
 
 ### App can be tested by cloning our github repository as well
 
-1. clone our repository
-2. open it on VS code
-3. type npm install expo on the vscode terminal
-4. type expo start, a qr code will be generated
-5. scan with your preferred device to start testing
+1. Clone our repository
+2. Open it on VS code
+3. Type npm install expo on the vscode terminal
+4. Type expo start, a qr code will be generated
+5. Scan with your preferred device to start testing

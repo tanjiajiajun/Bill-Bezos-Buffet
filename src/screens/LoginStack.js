@@ -1,9 +1,7 @@
 import React from 'react';
 
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
 
 import RegisterScreen from './login/RegisterScreen'
 import LoginScreen from './login/LoginScreen';
@@ -54,9 +52,6 @@ const LoginStackNavigator = () => {
                 }}/>
 
             <Stack.Screen name="ResetPasswordSplashScreen" component={ResetPasswordSplashScreen} options={{headerShown: false}}/>
-
-
-
 
         </Stack.Navigator>
   );

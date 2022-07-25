@@ -8,7 +8,6 @@ import { AnimatedBackground } from './AnimatedBackground'
 
 
 
-
 const LoginScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -23,7 +22,6 @@ const LoginScreen = () => {
     })
     return unsubscribe
   }, [])
-
 
   const handleLogin = () => {
     auth
@@ -41,6 +39,7 @@ const LoginScreen = () => {
   }
 
   return (
+
     <KeyboardAvoidingView
       style={styles.container}
       behavior="padding"
@@ -104,6 +103,8 @@ const LoginScreen = () => {
       </View>
 
     </KeyboardAvoidingView>
+
+
   )
 }
 

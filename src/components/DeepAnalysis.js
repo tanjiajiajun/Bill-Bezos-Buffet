@@ -11,7 +11,7 @@ export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDat
 
     //data points from AnimatedStock. Have to pass as property in function DeepAnalysis and subsequently in EndModal
     const data = gameArrayDataPoints
-    const dummyDateData=[ 50, 10, 40, 95, 85 ]
+
 
 
     const max = Math.max.apply(Math, data);
@@ -41,10 +41,6 @@ export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDat
         ))
         }
 
-    
-//find a way to display the horizontal x axis with date of max and min if possible
-
-
 
     const Line = () => (
         <Path
@@ -60,8 +56,6 @@ export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDat
 
                 <Text style={styles.returnstext}>This is how the stock performed</Text>
                 
-
-
                 <AreaChart
                 style={{ height: 300 }}
                 data={data}
@@ -76,13 +70,6 @@ export default function DeepAnalysis({ showDeep , exitDeepAnalysis, gameArrayDat
                     minMaxIndexdata={minMaxIndexdata}
                 />
             </AreaChart>
-
-            <XAxis
-                    data={dummyDateData}
-                    style={styles.xAxisContainer}
-                    contentInset={verticalContentInset}
-                    svg={axesSvg}
-                />
 
                 <View style={styles.wrapper}>
                     <TouchableOpacity onPress={exitDeepAnalysis}>

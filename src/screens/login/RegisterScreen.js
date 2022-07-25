@@ -1,16 +1,10 @@
 import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-
-import { auth, createUserDocument } from '../../components/firebase';
-import { getAuth, sendEmailVerification } from "firebase/auth";
-
-import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility';
+import { auth, createUserDocument } from '../../components/firebase'
+import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { AnimatedBackground } from './AnimatedBackground'
-
-
-import { doc, setDoc, addDoc, collection, updateDoc } from 'firebase/firestore' 
 
 
 const RegisterScreen = () => {
@@ -20,10 +14,7 @@ const RegisterScreen = () => {
 
     const { passwordVisibility, rightIcon, handlePasswordVisibility } = useTogglePasswordVisibility();
 
-
     const navigation = useNavigation()
-
-
 
     const handleSignUp = () => {
         auth.createUserWithEmailAndPassword(email,password)
@@ -40,7 +31,6 @@ const RegisterScreen = () => {
         .catch(error => alert(error.message))
 
     }
-
 
     return (
         <KeyboardAvoidingView

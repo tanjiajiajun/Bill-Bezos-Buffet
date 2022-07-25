@@ -66,11 +66,7 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
         })
 
     }
-    // fake data to use while API is not connected (obselete)
-    // const data = require('../data/AAPL.json')
 
-    // functions that add fake data (mid pt of every 2 pts of gamearray) 
-    // to increase no. of data points 
     const split = function (a) {
         for(let i=0;i<a.length-1;i++){
             let b = (a[i] + a[i+1]) / 2
@@ -132,7 +128,8 @@ function AnimatedStock({ datapointer , datepointer, tickerpointer, passbackfn, f
         var id;
         var iv;
         // when game ends
-        if (count >= 599) {  /////////////////////bryan reduce this number so he can test modals without waiting was 599
+        if (count >= 599) {
+
             if (holdChecker == true) {
                 handleLongOnPressOut()
             }else if (shortHoldChecker == true) {

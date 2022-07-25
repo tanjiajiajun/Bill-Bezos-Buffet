@@ -3,8 +3,8 @@ import { Image, View, Text, StyleSheet, Dimensions, TouchableOpacity, ScrollView
 import { LinearGradient } from 'expo-linear-gradient'
 import WavyHeader from '../../components/WavyHeader';
 import LeaderComponent from '../../components/LeaderComponent';
-import { onSnapshot, collection, query, orderBy } from 'firebase/firestore';
-import { auth, firestore  } from '../../components/firebase'
+import { doc, onSnapshot, collection, query, orderBy } from 'firebase/firestore';
+import { auth, firestore  } from '../../components/firebase';
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 
@@ -40,6 +40,7 @@ function LeaderboardScreen() {
       userData.current=doc.data()['highscore']
     })
     .then(() => {
+
       let x = 1 + leaderboardData.findIndex(x => x['highscore'] === userData.current)
       setRank(x)
     })
@@ -54,17 +55,26 @@ function LeaderboardScreen() {
     getDownloadURL(reference).then((x) => {
     setURL(x);
     })
+
     const collectionRef = collection(firestore, 'users')
     const q = query(collectionRef, orderBy("highscore", "desc"))
+
     const unsub = onSnapshot(q, (snapshot) => {
       setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
       setRank(leaderboardData.findIndex(x => x['highscore'] == userData.current))
-    }) //arranging in highscore
+    })
+
     return unsub
   }
   , [])
 
 
+  useEffect(() => {
+    const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
+      setURL(doc.data()["profpic"])
+    })
+    return unsub
+  })
   
     return (
       <View style={styles.container}>
@@ -189,7 +199,6 @@ function LeaderboardScreen() {
       justifyContent: 'center',
       border:1,
       height: 50,
-      
     }, 
 
     leaderboard: {
@@ -216,7 +225,6 @@ function LeaderboardScreen() {
       height: 1,
       width: '100%',
       backgroundColor:'black',
-
     }, 
     
     yourRank: {
@@ -227,8 +235,5 @@ function LeaderboardScreen() {
       marginHorizontal: 30,
       alignItems:'center'
     }
-
-
-
 
   })

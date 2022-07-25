@@ -5,17 +5,12 @@ import { getAuth, updatePassword, reauthenticateWithCredential, EmailAuthProvide
 import { useTogglePasswordVisibility } from '../../components/useTogglePasswordVisibility';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-
-
-
-
 const ChangePasswordPage= () => {
 
     const navigation = useNavigation()
 
     const [email, setEmail] = useState('')
     const [oldPassword, setOldPassword] = useState('')
-    //Dont really know how to force only can reauthenticate user then users can change password function so im just gonna allow them to change passwords with or without reauthentication
     const [newPassword, setNewPassword] = useState('')
 
     const { passwordVisibility, rightIcon, handlePasswordVisibility } = useTogglePasswordVisibility();
@@ -31,14 +26,12 @@ const ChangePasswordPage= () => {
             reauthenticateWithCredential(user, credential).then(() => {
                 console.log("Successfully reauthenticated")
                 updatePassword(user, newPassword).then(() => {
-                    alert("Successfully Changed PASSWORD")
-                    console.log("Successfully Changed PASSWORD")
+                    alert("Successfully Changed Password")
                   }).catch((error) => {
                     alert(error.message)
                   });
                 navigation.navigate("SettingsScreen")
             }).catch((error) => {
-                console.log("Unsuccessfully reauthenticated")
                 alert(error.message)
               });
     } else {
@@ -50,12 +43,9 @@ const ChangePasswordPage= () => {
     <View
         style={styles.container}>
 
-
-
         <Text style={styles.headerTextContainer}>
         Change Password
         </Text>
-
 
         <View style={styles.inputContainer}>
         <TextInput
@@ -64,7 +54,6 @@ const ChangePasswordPage= () => {
                 onChangeText={text => setEmail(text)}
                 style={styles.input}
                 autoCapitalize={"none"}
-
             />
         </View>
 
@@ -75,7 +64,6 @@ const ChangePasswordPage= () => {
                 onChangeText={text => setOldPassword(text)}
                 style={styles.input}
                 autoCapitalize={"none"}
-
             />
         </View>
 
@@ -95,7 +83,6 @@ const ChangePasswordPage= () => {
             </TouchableOpacity>
 
         </View>
-
 
         <TouchableOpacity
                 onPress={changePassword}

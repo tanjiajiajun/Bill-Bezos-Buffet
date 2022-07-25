@@ -3,7 +3,9 @@ import { StyleSheet, Text, TouchableOpacity, View, TextInput, Modal } from 'reac
 import { useNavigation } from '@react-navigation/core'
 import { getAuth, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from "firebase/auth";
 import { doc, deleteDoc } from "firebase/firestore";
-import { firestore  } from '../../components/firebase'
+import { firestore  } from '../../components/firebase';
+import { getStorage, ref, deleteObject } from "firebase/storage";
+
 
 const DeleteAccountPage= () => {
 
@@ -15,13 +17,19 @@ const DeleteAccountPage= () => {
     const auth = getAuth();
     const user = auth.currentUser;
     const credential = EmailAuthProvider.credential(email, oldPassword);
+    const collectionRef = firestore.collection('users')
+    const userRef = firestore.collection('users').doc(auth.currentUser.uid)
+
+    const storage = getStorage();
+    const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
+    //find a way to delete the pic and user data without throwing error because of snapshot
+
+
+
 
     const confirmDeleteData = () => {
         reauthenticateWithCredential(user, credential).then(() => {
             console.log("Successfully reauthenticated")
-            const collectionRef = firestore.collection('users')
-            const userRef = firestore.collection('users').doc(auth.currentUser.uid)
-            deleteDoc(doc(collectionRef, user.uid));
             //collectionRef.doc(userRef).delete();
             console.log("DATA successfully deleted")
             setModalVisible(false)
@@ -49,6 +57,7 @@ const DeleteAccountPage= () => {
             alert(error);
             console.log(error)})
         }
+
 
     return(
         <View

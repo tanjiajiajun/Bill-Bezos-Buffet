@@ -17,11 +17,8 @@ const DeleteAccountPage= () => {
     const auth = getAuth();
     const user = auth.currentUser;
     const credential = EmailAuthProvider.credential(email, oldPassword);
-    const collectionRef = firestore.collection('users')
-    const userRef = firestore.collection('users').doc(auth.currentUser.uid)
 
     const storage = getStorage();
-    const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
     //find a way to delete the pic and user data without throwing error because of snapshot
 
 
@@ -30,13 +27,29 @@ const DeleteAccountPage= () => {
     const confirmDeleteData = () => {
         reauthenticateWithCredential(user, credential).then(() => {
             console.log("Successfully reauthenticated")
-            //collectionRef.doc(userRef).delete();
-            console.log("DATA successfully deleted")
+            const imageRef = ref(storage, `profilepics/${auth.currentUser.uid}`);
+
+
+                deleteObject(imageRef).then(() => {
+                    console.log("Got Profile Pic in database, deleting")
+                }).catch((error) => {
+                    console.log("hello no pic if this shows it works")
+                });
+
+
+            deleteDoc(doc(firestore, 'users', auth.currentUser.uid)).then(() => {
+                console.log("DATA successfully deleted")
+
+            }).catch((error) => {
+                alert("hello no data if this shows it works")
+            });
+
             setModalVisible(false)
             setModalVisible2(true)
+
         }).catch((error) => {
             console.log("Unsuccessfully reauthenticated", error)
-            alert("Password or Email is incorrect. Unable to delete account")
+           alert("Password or Email is incorrect. Unable to delete account")
         });
     }
 
@@ -49,14 +62,21 @@ const DeleteAccountPage= () => {
       }
 
     const confirmDeleteAccount = () => {
-        deleteUser(user).then(() => {
-            alert("Account successfully deleted")
-            console.log("Account successfully deleted")
-            navigation.replace("LoginStack")
-        }).catch((error) => {
-            alert(error);
-            console.log(error)})
-        }
+
+
+            deleteUser(user).then(() => {
+                alert("Account successfully deleted")
+                console.log("Account successfully deleted")
+                setModalVisible2(false)
+                navigation.replace("LoginStack")
+
+                
+            }).catch((error) => {
+                alert(error);
+                console.log(error)})
+
+
+}
 
 
     return(

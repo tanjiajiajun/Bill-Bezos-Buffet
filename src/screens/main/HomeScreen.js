@@ -25,11 +25,6 @@ const HomeScreen = (props) => {
             console.log(err)
         })  
 
-        const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
-            setName(doc.data()["name"])
-          })
-          return unsub
-
     },[])
  
     const [fees, setFees] = useState(0)

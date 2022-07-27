@@ -16,21 +16,12 @@ function LeaderboardScreen() {
   const [avgreturns, setAvgreturns] = useState('')
   const userData = useRef(0)
 
+  const storage = getStorage();
+  const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
+  getDownloadURL(reference).then((x) => {
+  setURL(x);
+  })
 
-   useEffect(() => {
-
-    const collectionRef = collection(firestore, 'users')
-    const q = query(collectionRef, orderBy("highscore", "desc"))
-
-    const unsub = onSnapshot(q, (snapshot) => {
-      setLeaderboardData(snapshot.docs.map((doc) => doc.data()))
-
-    })
-  
-    
-    return unsub
-  }
-  , [])
 
   useEffect(() => {
     const userRef = firestore.collection('users').doc(auth.currentUser.uid)
@@ -40,7 +31,6 @@ function LeaderboardScreen() {
       userData.current=doc.data()['highscore']
     })
     .then(() => {
-
       let x = 1 + leaderboardData.findIndex(x => x['highscore'] === userData.current)
       setRank(x)
     })
@@ -50,11 +40,6 @@ function LeaderboardScreen() {
   }, [leaderboardData])
 
   useEffect(() => {
-    const storage = getStorage();
-    const reference = ref(storage, `profilepics/${auth.currentUser.uid}`);
-    getDownloadURL(reference).then((x) => {
-    setURL(x);
-    })
 
     const collectionRef = collection(firestore, 'users')
     const q = query(collectionRef, orderBy("highscore", "desc"))
@@ -69,12 +54,6 @@ function LeaderboardScreen() {
   , [])
 
 
-  useEffect(() => {
-    const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
-      setURL(doc.data()["profpic"])
-    })
-    return unsub
-  })
   
     return (
       <View style={styles.container}>

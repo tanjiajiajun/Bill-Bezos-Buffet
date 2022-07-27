@@ -24,7 +24,7 @@ Warning: This app is designed with iOS in mind. If possible, run the app on iOS 
 
 ### On Android
 
-1. Download the app: https://expo.dev/artifacts/bca337d5-4f8f-4d93-a854-84697e75ba59
+1. Download the app: https://expo.dev/artifacts/546541b1-8855-4477-9b47-61b2d974d068
 2. A .apk file should be downloaded, open it on your local android device to start testing
 
 ### App can be tested by cloning our github repository as well

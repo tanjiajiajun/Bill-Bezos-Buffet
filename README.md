@@ -6,6 +6,8 @@ Orbital (a.k.a., CP2106: Independent Software Development Project) is the NUS Sc
 
 @tanjiajiajun and @neverdivideby0 Orbital Project is about creating an application called "Bulls vs Bears" that allows the user to simulate their actions in the Finance market at any point in time of company's ticker symbols.
 
+Our README documentation https://docs.google.com/document/d/1SijkssWcYSd_HjwoYK-91LI1v9D2I0eajnJRMrwI50Y/edit?usp=sharing
+
 We are inspired by Bloomberg's The Trading Game <br />
 https://www.bloomberg.com/features/2015-stock-chart-trading-game/
 

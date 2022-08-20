@@ -38,16 +38,20 @@ function SettingsScreen() {
           console.log(err)
         })
 
-        const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
+
+
+
+
+      },[])
+
+      useEffect(() => {
+                const unsub = onSnapshot(doc(firestore, 'users', auth.currentUser.uid), (doc) => {
 
           setName(doc.data()['name'])
+          return unsub
 
       })
-
-        
-        return unsub
-    
-      },[])
+      })
 
   const handleSignOut = () => {
     auth
@@ -89,7 +93,7 @@ const pickImage = async () => {
       alert("Image Uploaded")
       const docRef = firestore.collection('users').doc(auth.currentUser.uid)
       docRef.update({
-        profpic: x
+        profpic: x  //most effective way clean this up above
       });
         (error) => {
         alert(error);
